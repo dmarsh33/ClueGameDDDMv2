@@ -11,7 +11,7 @@ import experiment.BoardCell;
 import experiment.IntBoard;
 
 public class IntBoardTests {
-	private static IntBoard board;
+	private IntBoard board;
 
 	@Before
 	public void setUpIntBoard() {
