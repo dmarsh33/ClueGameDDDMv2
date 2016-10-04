@@ -24,6 +24,8 @@ public class IntBoard {
 		}
 		ROWS = rows;
 		COLUMNS = columns;
+		visited = new HashSet<BoardCell>();
+		targets = new HashSet<BoardCell>();
 		calcAdjacencies(grid);
 		
 		return;
@@ -48,7 +50,7 @@ public class IntBoard {
 		if(cell.getRow() != 0){
 			list.add(grid[cell.getRow()-1][cell.getColumn()]);
 		}
-		System.out.println("Test");
+//		System.out.println("Test");
 		return list;
 	}
 	
@@ -56,11 +58,11 @@ public class IntBoard {
 		// Fills map
 		for(int i = 0; i < ROWS; i++){
 			for(int j = 0; j < COLUMNS; j++){
-				System.out.println(i+" "+j);
-				System.out.println(grid[i][j].getColumn());
+//				System.out.println(i+" "+j);
+//				System.out.println(grid[i][j].getColumn());
 				BoardCell cell = grid[i][j];
 				Set<BoardCell> list = generateAdjList(grid[i][j]);
-				System.out.println(list.toString());
+//				System.out.println(list.toString());
 				adjMtx.put(cell, list);
 				
 			}
@@ -69,16 +71,31 @@ public class IntBoard {
 	}
 	
 	public void calcTargets(BoardCell startCell, int pathLength) {
+		Set<BoardCell> adj = getAdjList(startCell);
+		
+		for(BoardCell cell:adj){
+			if(visited.contains(cell)){
+				continue;
+			}
+			else {
+				visited.add(cell);
+				if(pathLength == 1){
+					targets.add(cell);
+				} else {
+					System.out.println(pathLength);
+					calcTargets(cell, pathLength-1);
+				}
+				visited.remove(cell);
+			}
+		}
 		return;
 	}
 	
 	public Set<BoardCell> getTargets() {
-		Set<BoardCell> targets = new HashSet<BoardCell>();
 		return targets;
 	}
 	
 	public Set<BoardCell> getAdjList(BoardCell cell) {
-		//System.out.println(adjMtx.get(cell).toString());
 		return adjMtx.get(cell);
 	}
 	
