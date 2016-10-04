@@ -1,5 +1,6 @@
 package experiment;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -14,7 +15,7 @@ public class IntBoard {
 	public IntBoard(int rows, int columns) {
 		super();
 		grid = new BoardCell[rows][columns];
-		
+		adjMtx = new HashMap<BoardCell, Set<BoardCell>>();
 		for(int i = 0; i < rows; i++){
 			for(int j = 0; j < columns; j++){
 				BoardCell cell = new BoardCell(i,j);
@@ -53,10 +54,15 @@ public class IntBoard {
 	
 	public void calcAdjacencies(BoardCell[][] grid) {
 		// Fills map
-		System.out.println(ROWS);
 		for(int i = 0; i < ROWS; i++){
 			for(int j = 0; j < COLUMNS; j++){
-				adjMtx.put(grid[i][j], generateAdjList(grid[i][j]));
+				System.out.println(i+" "+j);
+				System.out.println(grid[i][j].getColumn());
+				BoardCell cell = grid[i][j];
+				Set<BoardCell> list = generateAdjList(grid[i][j]);
+				System.out.println(list.toString());
+				adjMtx.put(cell, list);
+				
 			}
 		}
 		return;
