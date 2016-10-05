@@ -1,8 +1,9 @@
-package experiment;
+package clueGame;
 
 public class BoardCell {
 	private int row;
 	private int column;
+	private char initial;
 	
 	public BoardCell(int row, int column) {
 		super();
@@ -24,6 +25,26 @@ public class BoardCell {
 
 	public void setRow(int row) {
 		this.row = row;
+	}
+	
+	public boolean isWalkway(){
+		return false;
+	}
+	public boolean isRoom(){
+		return false;
+	}
+	public boolean isDoorway(){
+		return false;
+	}
+
+	public DoorDirection getDoorDirection() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public char getInitial() {
+		// TODO Auto-generated method stub
+		return initial;
 	}
 	
 }
