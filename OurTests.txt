@@ -1,0 +1,14 @@
+For our door direction test:
+The Officer's Quarters has a door that opens RIGHT.
+The Main Deck has a door that opens DOWN.
+The Greenhouse has a door that opens LEFT.
+The Crew's Quarters has a door that opens UP.
+
+For our number of doorways test, we have 13 doorways
+in our layout. We tested to see if our map contains 13 doors.
+
+For test rooms and room initials we picked rooms that were far away from
+eachother so we could test both reading in the legend and ensuring that the
+board was generated properly. For example, Main Deck and the Engine Room 
+were both tested and were on opposite ends of the board.
+

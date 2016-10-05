@@ -1,0 +1,11 @@
+M, Main Deck, Card
+B, Medical Bay, Card
+C, Crew Quarters, Card
+E, Engine Room, Card
+S, Shuttle Bay, Card
+T, Transporter Room, Card
+G, Greenhouse, Card
+K, Kirk's Office, Card
+O, Officer's Quarters, Card
+X, Closet, Other
+W, Walkway, Other

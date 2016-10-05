@@ -4,11 +4,13 @@ public class BoardCell {
 	private int row;
 	private int column;
 	private char initial;
+	private DoorDirection direction;
 	
 	public BoardCell(int row, int column) {
 		super();
 		this.setRow(row);
 		this.setColumn(column);
+		this.direction = DoorDirection.NONE;
 	}
 
 	public int getColumn() {
@@ -39,7 +41,7 @@ public class BoardCell {
 
 	public DoorDirection getDoorDirection() {
 		// TODO Auto-generated method stub
-		return null;
+		return direction;
 	}
 
 	public char getInitial() {

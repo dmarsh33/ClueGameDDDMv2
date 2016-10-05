@@ -25,6 +25,7 @@ public class Board {
 	}
 	public void initialize(){
 		rooms = new HashMap<Character, String>();
+		board = new BoardCell[numRows][numColumns];
 	}
 	public void loadRoomConfig(){
 		
@@ -40,6 +41,8 @@ public class Board {
 	}
 	public void setConfigFiles(String string, String string2) {
 		// TODO Auto-generated method stub
+		boardConfigFile = string;
+		roomConfigFile = string2;
 		
 	}
 	public Map<Character, String> getLegend() {

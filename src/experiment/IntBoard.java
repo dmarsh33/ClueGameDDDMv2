@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import clueGame.Board;
+import clueGame.BoardCell;
+
 public class IntBoard {
 	private Map<BoardCell, Set<BoardCell>> adjMtx;
 	private Set<BoardCell> visited;
