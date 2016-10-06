@@ -31,29 +31,40 @@ public class Board {
 	}
 	
 	public void initialize() {
+		numRows = 0;
+		numColumns = 0;
 		rooms = new HashMap<Character, String>();
 		board = new BoardCell[numRows][numColumns];
-		try {
-			loadBoardConfig();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		try {
 			loadRoomConfig();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		try {
+			loadBoardConfig();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
-	
+	// Need to increase exception handling. Such as incorrect number of commas 
 	public void loadRoomConfig() throws FileNotFoundException{
 		FileReader reader = new FileReader(roomConfigFile);
 		Scanner in = new Scanner(reader);
 		while (in.hasNextLine()){
 			String dataLine = in.nextLine();
 			String[] dataArray = dataLine.split(",");
-			rooms.put(dataArray[0].charAt(0), dataArray[1].toString());
+			switch(dataArray[2]){
+			case " Card": // Account for space
+				break;
+			case " Other": // Account for space
+				break;
+			default:
+				throw new BadConfigFormatException("Improper Legend format.");
+			}
+			rooms.put(dataArray[0].charAt(0), dataArray[1].substring(1)); // substring is required to account for a space after the comma
 		}
 	}
 	
@@ -66,16 +77,20 @@ public class Board {
 			String dataLine = in.nextLine();
 			String[] dataArray = dataLine.split(",");
 			rows.add(dataArray);
+			if(numColumns == 0){
+				numColumns = rows.get(0).length;
+			} else if (numColumns != dataArray.length){
+				throw new BadConfigFormatException("Incorrect number of columns.");
+			}
 		}
 		
 		numRows = rows.size();
-		numColumns = rows.get(0).length;
 		board = new BoardCell[numRows][numColumns];
 		DoorDirection dir;
 		for(int i=0; i<numRows; i++){
 			for(int j=0; j<numColumns; j++){
 				if(rows.get(i)[j].length() > 1){
-					System.out.println(rows.get(i)[j].charAt(1));
+//					System.out.println(rows.get(i)[j].charAt(1));
 					switch(rows.get(i)[j].charAt(1)){
 						case 'U':
 							dir = DoorDirection.UP;
@@ -95,7 +110,12 @@ public class Board {
 				} else {
 					dir = DoorDirection.NONE;
 				}
-				board[i][j] = new BoardCell(i,j,rows.get(i)[j].charAt(0),dir);
+				if(rooms.containsKey(rows.get(i)[j].charAt(0))){
+					board[i][j] = new BoardCell(i,j,rows.get(i)[j].charAt(0),dir);
+				} else {
+					throw new BadConfigFormatException("Invalid room type");
+				}
+				
 			}
 		}
 	}
