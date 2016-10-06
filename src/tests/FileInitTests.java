@@ -26,14 +26,9 @@ public class FileInitTests {
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files
-		board.setConfigFiles("LayoutJLRG.csv", "LegendJLRG.txt");		
+		board.setConfigFiles("data/LayoutJLRG.csv", "data/LegendJLRG.txt");		
 		// Initialize will load BOTH config files 
-		try {
-			board.initialize();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		board.initialize();
 	}
 	
 	@Test
@@ -57,12 +52,12 @@ public class FileInitTests {
 	@Test
 	public void FourDoorDirections() {
 		// Test right direction
-		BoardCell room = board.getCellAt(21, 8);
+		BoardCell room = board.getCellAt(8, 21);
 		assertTrue(room.isDoorway());
 		assertEquals(DoorDirection.RIGHT, room.getDoorDirection());
 		
 		// Test down direction
-		room = board.getCellAt(11, 5);
+		room = board.getCellAt(5, 11);
 		assertTrue(room.isDoorway());
 		assertEquals(DoorDirection.DOWN, room.getDoorDirection());
 		
@@ -72,7 +67,7 @@ public class FileInitTests {
 		assertEquals(DoorDirection.LEFT, room.getDoorDirection());
 		
 		// Test up direction
-		room = board.getCellAt(3, 8);
+		room = board.getCellAt(8, 3);
 		assertTrue(room.isDoorway());
 		assertEquals(DoorDirection.UP, room.getDoorDirection());
 		
@@ -102,12 +97,12 @@ public class FileInitTests {
 	public void testRoomInitials() {
 		// TODO: Change initials and coor to match our layout
 		// Test all room cells to ensure correct room initials
-		assertEquals('K', board.getCellAt(20, 1).getInitial());
-		assertEquals('S', board.getCellAt(11, 17).getInitial());
-		assertEquals('G', board.getCellAt(19, 18).getInitial());
-		assertEquals('C', board.getCellAt(3, 9).getInitial());
+		assertEquals('K', board.getCellAt(1, 20).getInitial());
+		assertEquals('S', board.getCellAt(17, 11).getInitial());
+		assertEquals('G', board.getCellAt(18, 19).getInitial());
+		assertEquals('C', board.getCellAt(9, 3).getInitial());
 		// Test a walkway
-		assertEquals('W', board.getCellAt(8, 15).getInitial());
+		assertEquals('W', board.getCellAt(15, 8).getInitial());
 		// Test the closet
 		assertEquals('X', board.getCellAt(11,11).getInitial());
 	}

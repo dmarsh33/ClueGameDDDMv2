@@ -6,11 +6,12 @@ public class BoardCell {
 	private char initial;
 	private DoorDirection direction;
 	
-	public BoardCell(int row, int column) {
+	public BoardCell(int row, int column, char init, DoorDirection dir) {
 		super();
 		this.setRow(row);
 		this.setColumn(column);
-		this.direction = DoorDirection.NONE;
+		this.initial = init;
+		this.direction = dir;
 	}
 
 	public int getColumn() {
@@ -36,16 +37,20 @@ public class BoardCell {
 		return false;
 	}
 	public boolean isDoorway(){
-		return false;
+//		System.out.println(direction);
+		if(direction == DoorDirection.NONE){
+			return false;
+		} else{
+			return true;
+		}
+//		return (direction != DoorDirection.NONE);
 	}
 
 	public DoorDirection getDoorDirection() {
-		// TODO Auto-generated method stub
 		return direction;
 	}
 
 	public char getInitial() {
-		// TODO Auto-generated method stub
 		return initial;
 	}
 	

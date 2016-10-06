@@ -30,16 +30,30 @@ public class Board {
 		return theInstance;
 	}
 	
-	public void initialize() throws FileNotFoundException{
+	public void initialize() {
 		rooms = new HashMap<Character, String>();
 		board = new BoardCell[numRows][numColumns];
-		loadBoardConfig();
+		try {
+			loadBoardConfig();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			loadRoomConfig();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void loadRoomConfig() throws FileNotFoundException{
 		FileReader reader = new FileReader(roomConfigFile);
 		Scanner in = new Scanner(reader);
 		while (in.hasNextLine()){
+			String dataLine = in.nextLine();
+			String[] dataArray = dataLine.split(",");
+			rooms.put(dataArray[0].charAt(0), dataArray[1].toString());
 		}
 	}
 	
@@ -49,17 +63,40 @@ public class Board {
 		
 		ArrayList<String[]> rows = new ArrayList<String[]>();
 		while (in.hasNextLine()){
-			String dataLine = in.next();
+			String dataLine = in.nextLine();
 			String[] dataArray = dataLine.split(",");
 			rows.add(dataArray);
 		}
 		
-		for(int i=0; i<rows.size(); i++){
-			for(int j=0; j<rows.get(i).length; j++){
-				System.out.print(rows.get(i)[j]);
-				System.out.print(" ");
+		numRows = rows.size();
+		numColumns = rows.get(0).length;
+		board = new BoardCell[numRows][numColumns];
+		DoorDirection dir;
+		for(int i=0; i<numRows; i++){
+			for(int j=0; j<numColumns; j++){
+				if(rows.get(i)[j].length() > 1){
+					System.out.println(rows.get(i)[j].charAt(1));
+					switch(rows.get(i)[j].charAt(1)){
+						case 'U':
+							dir = DoorDirection.UP;
+							break;
+						case 'D':
+							dir = DoorDirection.DOWN;
+							break;
+						case 'L':
+							dir = DoorDirection.LEFT;
+							break;
+						case 'R':
+							dir = DoorDirection.RIGHT;
+							break;
+						default:
+							dir = DoorDirection.NONE;
+					}
+				} else {
+					dir = DoorDirection.NONE;
+				}
+				board[i][j] = new BoardCell(i,j,rows.get(i)[j].charAt(0),dir);
 			}
-			System.out.println();
 		}
 	}
 	
