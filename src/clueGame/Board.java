@@ -1,8 +1,13 @@
 package clueGame;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
+import java.util.Vector;
 
 public class Board {
 	private int numRows;
@@ -19,20 +24,45 @@ public class Board {
 	private static Board theInstance = new Board();
 	// ctor is private to ensure only one can be created
 	private Board() {}
+	
 	// this method returns the only Board
 	public static Board getInstance() {
 		return theInstance;
 	}
-	public void initialize(){
+	
+	public void initialize() throws FileNotFoundException{
 		rooms = new HashMap<Character, String>();
 		board = new BoardCell[numRows][numColumns];
+		loadBoardConfig();
 	}
-	public void loadRoomConfig(){
+	
+	public void loadRoomConfig() throws FileNotFoundException{
+		FileReader reader = new FileReader(roomConfigFile);
+		Scanner in = new Scanner(reader);
+		while (in.hasNextLine()){
+		}
+	}
+	
+	public void loadBoardConfig() throws FileNotFoundException{
+		FileReader reader = new FileReader(boardConfigFile);
+		Scanner in = new Scanner(reader);
 		
-	}
-	public void loadBoardConfig(){
+		ArrayList<String[]> rows = new ArrayList<String[]>();
+		while (in.hasNextLine()){
+			String dataLine = in.next();
+			String[] dataArray = dataLine.split(",");
+			rows.add(dataArray);
+		}
 		
+		for(int i=0; i<rows.size(); i++){
+			for(int j=0; j<rows.get(i).length; j++){
+				System.out.print(rows.get(i)[j]);
+				System.out.print(" ");
+			}
+			System.out.println();
+		}
 	}
+	
 	public void calcAdjacencies(){
 		
 	}
