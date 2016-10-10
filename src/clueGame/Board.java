@@ -23,7 +23,12 @@ public class Board {
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
 	// ctor is private to ensure only one can be created
-	private Board() {}
+	private Board() {
+		numRows = 0;
+		numColumns = 0;
+		rooms = new HashMap<Character, String>();
+		board = new BoardCell[numRows][numColumns];
+	}
 	
 	// this method returns the only Board
 	public static Board getInstance() {
@@ -31,10 +36,6 @@ public class Board {
 	}
 	
 	public void initialize() {
-		numRows = 0;
-		numColumns = 0;
-		rooms = new HashMap<Character, String>();
-		board = new BoardCell[numRows][numColumns];
 		try {
 			loadRoomConfig();
 		} catch (FileNotFoundException e) {
