@@ -124,7 +124,7 @@ public class Board {
 	public void calcAdjacencies(){
 		
 	}
-	public void calcTargets(BoardCell cell, int pathLength){
+	public void calcTargets(int x, int y, int pathLength){
 		
 	}
 	public void setConfigFiles(String string, String string2) {
@@ -148,6 +148,16 @@ public class Board {
 	public BoardCell getCellAt(int i, int j) {
 		// TODO Auto-generated method stub
 		return board[i][j];
+	}
+
+	public Set<BoardCell> getAdjList(int i, int j) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Set<BoardCell> getTargets() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
