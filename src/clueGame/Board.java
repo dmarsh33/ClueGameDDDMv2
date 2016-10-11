@@ -212,37 +212,6 @@ public class Board {
 		findAllTargets(x,y,pathLength);
 	}
 	
-	
-	
-	
-	
-	
-	
-/*	private void calculateTargets(int x, int y, int pathLength){
-		Set<BoardCell> adj = getAdjList(x,y);
-		
-		for(BoardCell cell:adj){
-			if(visited.contains(cell)){
-				continue;
-			}
-			else {
-				visited.add(cell);
-				if(pathLength == 1){
-					targets.add(cell);
-				} else {
-					calculateTargets(cell.getRow(), cell.getColumn(), pathLength-1);
-				}
-				visited.remove(cell);
-			}
-		}
-		return;
-	}
-	
-	public void calcTargets(int x, int y, int pathLength){
-		targets.clear();
-		visited.clear();
-		calculateTargets(x,y,pathLength);
-	}*/
 	public void setConfigFiles(String string, String string2) {
 		boardConfigFile = string;
 		roomConfigFile = string2;
