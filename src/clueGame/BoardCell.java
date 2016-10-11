@@ -31,19 +31,17 @@ public class BoardCell {
 	}
 	
 	public boolean isWalkway(){
-		return false;
+		return initial == 'W';
 	}
 	public boolean isRoom(){
 		return false;
 	}
 	public boolean isDoorway(){
-//		System.out.println(direction);
 		if(direction == DoorDirection.NONE){
 			return false;
 		} else{
 			return true;
 		}
-//		return (direction != DoorDirection.NONE);
 	}
 
 	public DoorDirection getDoorDirection() {

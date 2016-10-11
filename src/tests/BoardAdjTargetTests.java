@@ -15,7 +15,7 @@ public class BoardAdjTargetTests {
 	public static void setUp() {
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
-		board.setConfigFiles("data/CR_ClueLayout.csv", "data/CR_ClueLegend.txt");		
+		board.setConfigFiles("data/LayoutJLRG.csv", "data/LegendJLRG.txt");		
 		board.initialize();
 	}
 	
@@ -207,13 +207,17 @@ public class BoardAdjTargetTests {
 		// Includes a path that doesn't have enough length
 		board.calcTargets(7, 0, 4);
 		targets= board.getTargets();
-		assertEquals(6, targets.size());
+		for(BoardCell c:targets){
+			System.out.println(c.getRow()+" "+c.getColumn());
+		}
+		assertEquals(7, targets.size());
 		assertTrue(targets.contains(board.getCellAt(6, 3)));
-		assertTrue(targets.contains(board.getCellAt(7, 3)));	
+		assertTrue(targets.contains(board.getCellAt(5, 2)));	
 		assertTrue(targets.contains(board.getCellAt(8, 3)));	
 		assertTrue(targets.contains(board.getCellAt(7, 4)));	
 		assertTrue(targets.contains(board.getCellAt(8, 1)));
 		assertTrue(targets.contains(board.getCellAt(7, 2)));
+		assertTrue(targets.contains(board.getCellAt(6, 1)));
 	}
 	
 	// Tests of just walkways plus one door, 6 steps

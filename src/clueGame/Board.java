@@ -4,10 +4,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.Vector;
 
 public class Board {
 	private int numRows;
@@ -17,6 +17,7 @@ public class Board {
 	private Map<Character,String> rooms;
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
 	private Set<BoardCell> targets;
+	private Set<BoardCell> visited;
 	private String boardConfigFile;
 	private String roomConfigFile;
 	
@@ -48,6 +49,10 @@ public class Board {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		adjMatrix = new HashMap<BoardCell, Set<BoardCell>>();
+		visited = new HashSet<BoardCell>();
+		targets = new HashSet<BoardCell>();
+		calcAdjacencies();
 		
 	}
 	// Need to increase exception handling. Such as incorrect number of commas 
@@ -122,27 +127,134 @@ public class Board {
 	}
 	
 	public void calcAdjacencies(){
-		
+		// Fills map
+		for(int i = 0; i < numRows; i++){
+			for(int j = 0; j < numColumns; j++){
+				BoardCell cell = board[i][j];
+				Set<BoardCell> list = generateAdjList(i,j);
+				adjMatrix.put(cell, list);
+			}
+		}
+		return;
 	}
+	
+	private boolean isInBound(int x, int y){
+		if(x >= 0 && x <= numRows-1){
+			if(y >= 0 && y <= numColumns-1){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean isValidAdj(int x, int y, DoorDirection dir){
+		if(isInBound(x,y)){
+			if(board[x][y].isWalkway()){
+				return true;
+			} else if (board[x][y].getDoorDirection() == dir){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private Set<BoardCell> generateAdjList(int x, int y) {
+		Set<BoardCell> list = new HashSet<BoardCell>();
+//		System.out.println(cell.isWalkway() + " " + cell.getInitial());
+		if(!board[x][y].isWalkway() && !board[x][y].isDoorway()){
+			return list;
+		}
+		// Check Right
+		if(isValidAdj(x,y+1,DoorDirection.LEFT)){
+			list.add(board[x][y+1]);
+		}
+		// Check Left
+		if(isValidAdj(x,y-1, DoorDirection.RIGHT)){
+			list.add(board[x][y-1]);
+		}
+		// Check Down
+		if(isValidAdj(x+1,y, DoorDirection.UP)){
+			list.add(board[x+1][y]);
+		}
+		// Check Up
+		if(isValidAdj(x-1,y, DoorDirection.DOWN)){
+			list.add(board[x-1][y]);
+		}
+		return list;
+	}
+
+	
+	
+	public void findAllTargets(int x, int y, int pathLength){
+		Set<BoardCell> adj = getAdjList(x,y);
+		
+		for(BoardCell cell:adj){
+			if(visited.contains(cell)){
+				continue;
+			}
+			else {
+				visited.add(cell);
+				if(pathLength == 1 || cell.isDoorway()){
+					targets.add(cell);
+				} else {
+					findAllTargets(cell.getRow(), cell.getColumn(), pathLength-1);
+				}
+				visited.remove(cell);
+			}
+		}
+		return;
+	}
+	
 	public void calcTargets(int x, int y, int pathLength){
-		
+		visited.clear();
+		targets.clear();
+		visited.add(board[x][y]);
+		findAllTargets(x,y,pathLength);
 	}
+	
+	
+	
+	
+	
+	
+	
+/*	private void calculateTargets(int x, int y, int pathLength){
+		Set<BoardCell> adj = getAdjList(x,y);
+		
+		for(BoardCell cell:adj){
+			if(visited.contains(cell)){
+				continue;
+			}
+			else {
+				visited.add(cell);
+				if(pathLength == 1){
+					targets.add(cell);
+				} else {
+					calculateTargets(cell.getRow(), cell.getColumn(), pathLength-1);
+				}
+				visited.remove(cell);
+			}
+		}
+		return;
+	}
+	
+	public void calcTargets(int x, int y, int pathLength){
+		targets.clear();
+		visited.clear();
+		calculateTargets(x,y,pathLength);
+	}*/
 	public void setConfigFiles(String string, String string2) {
-		// TODO Auto-generated method stub
 		boardConfigFile = string;
 		roomConfigFile = string2;
 		
 	}
 	public Map<Character, String> getLegend() {
-		// TODO Auto-generated method stub
 		return rooms;
 	}
 	public int getNumRows() {
-		// TODO Auto-generated method stub
 		return numRows;
 	}
 	public int getNumColumns() {
-		// TODO Auto-generated method stub
 		return numColumns;
 	}
 	public BoardCell getCellAt(int i, int j) {
@@ -151,13 +263,11 @@ public class Board {
 	}
 
 	public Set<BoardCell> getAdjList(int i, int j) {
-		// TODO Auto-generated method stub
-		return null;
+		return adjMatrix.get(board[i][j]);
 	}
 
 	public Set<BoardCell> getTargets() {
-		// TODO Auto-generated method stub
-		return null;
+		return targets;
 	}
 
 }
