@@ -321,6 +321,7 @@ public class Board {
 		Card person = null;
 		Card location = null;
 		Card tool = null;
+		//NEED TO MAKE THIS RANDOM
 		for(Card c:initialDeck){
 			if(c.getType()==CardType.PERSON){
 				name = c.getCardName();
