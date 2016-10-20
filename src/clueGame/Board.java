@@ -61,6 +61,7 @@ public class Board {
 	}
 	
 	public void loadPlayerConfig() throws FileNotFoundException{
+		System.out.println("here");
 		FileReader reader = new FileReader(playerConfigFile);
 		Scanner in = new Scanner(reader);
 		while (in.hasNextLine()){
