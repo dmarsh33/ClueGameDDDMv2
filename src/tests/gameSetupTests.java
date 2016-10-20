@@ -33,20 +33,19 @@ public class gameSetupTests {
 		// Initialize will load all config files 
 		board.initialize();
 		
-		//human = new Card("Human", CardType.PERSON);
-		//computer1 = new Card("Rader", CardType.PERSON);
-		//computer2 = new Card("CPW", CardType.PERSON);
-		//room1 = new Card("Alderson", CardType.ROOM);
-		//room2 = new Card("Berthoud", CardType.ROOM);
-		//room3 = new Card("Hill", CardType.ROOM);
-		//weapon1 = new Card("Acid", CardType.WEAPON);
-		//weapon2 = new Card("Hammer", CardType.WEAPON);
+		human = new Card("Human", CardType.PERSON);
+		computer1 = new Card("Rader", CardType.PERSON);
+		computer2 = new Card("CPW", CardType.PERSON);
+		room1 = new Card("Alderson", CardType.ROOM);
+		room2 = new Card("Berthoud", CardType.ROOM);
+		room3 = new Card("Hill", CardType.ROOM);
+		weapon1 = new Card("Acid", CardType.WEAPON);
+		weapon2 = new Card("Hammer", CardType.WEAPON);
 	}
 	
 	@Test
 	//This tests that all of the people are loaded correctly by testing that the human player and first and last computer players have the correct colors and starting locations
 	public void testloadPeople(){
-		System.out.println("here");
 		Map<String,Player> people = board.getPlayers();
 		//test human
 		Player testhuman = people.get("Human");
@@ -63,7 +62,38 @@ public class gameSetupTests {
 		assertEquals(Color.magenta, testComputer2.getColor());
 		assertEquals(10, testComputer2.getRow());
 		assertEquals(0, testComputer2.getCol());
-	
+	}
+	@Test
+	//This tests that the deck of cards was created with correct card names and types.
+	public void testCreateDeck(){
+		Map<String, Card> deck = board.getDeck();
+		//tests human card
+		Card test = deck.get("Human");
+		assertTrue(test.equals(human));
+		//tests computer card at top of list
+		test = deck.get("Rader");
+		assertTrue(test.equals(computer1));
+		//tests computer player at bottom of list
+		test = deck.get("CPW");
+		assertTrue(test.equals(computer2));
+		//tests room card at top of list
+		test = deck.get("Alderson");
+		assertTrue(test.equals(room1));
+		//tests room card in middle of list
+		test = deck.get("Berthoud");
+		assertTrue(test.equals(room2));
+		//tests room card at bottom of list
+		test = deck.get("Hill");
+		assertTrue(test.equals(room3));
+		//tests weapon card at top of list
+		test = deck.get("Acid");
+		assertTrue(test.equals(weapon1));
+		//tests weapon card at bottom of list
+		test = deck.get("Hammer");
+		assertTrue(test.equals(weapon2));
+		//tests that the the deck contains 21 cards
+		assertEquals(21, deck.size());
+		
 	}
 	
 }

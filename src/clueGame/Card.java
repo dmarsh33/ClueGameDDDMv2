@@ -12,7 +12,21 @@ public class Card {
 	}
 
 
-	public boolean equals(){
-		return true; //FIX
+	public String getCardName() {
+		return cardName;
+	}
+
+
+	public CardType getType() {
+		return type;
+	}
+
+
+	public boolean equals(Card card){
+		if(this.cardName.equalsIgnoreCase(card.getCardName()) && this.type == card.getType()){
+			return true;
+		}
+		else
+			return false;
 	}
 }

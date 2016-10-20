@@ -21,6 +21,7 @@ public class Board {
 	private Map<String, Player> people;
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
+	private Map<String,Card> deck;
 	private String boardConfigFile;
 	private String roomConfigFile;
 	private String weaponConfigFile;
@@ -35,7 +36,7 @@ public class Board {
 		rooms = new HashMap<Character, String>();
 		board = new BoardCell[numRows][numColumns];
 		people = new HashMap<String, Player>();
-		
+		deck = new HashMap<String, Card>();
 	}
 	
 	// this method returns the only Board
@@ -81,6 +82,8 @@ public class Board {
 			int column = Integer.parseInt(col);
 			Player player = new Player(name, r, column, c);
 			people.put(name, player);
+			Card card = new Card(name, CardType.PERSON);
+			deck.put(name, card);
 		}
 	
 	}
@@ -100,6 +103,11 @@ public class Board {
 	public void loadWeaponConfig() throws FileNotFoundException{
 		FileReader reader = new FileReader(weaponConfigFile);
 		Scanner in = new Scanner(reader);
+		while(in.hasNextLine()){
+			String name = in.nextLine();
+			Card card = new Card(name, CardType.WEAPON);
+			deck.put(name, card);
+		}
 	
 	}
 	// Need to increase exception handling. Such as incorrect number of commas 
@@ -109,6 +117,7 @@ public class Board {
 		while (in.hasNextLine()){
 			String dataLine = in.nextLine();
 			String[] dataArray = dataLine.split(",");
+
 			switch(dataArray[2]){
 			case " Card": // Account for space
 				break;
@@ -118,6 +127,10 @@ public class Board {
 				throw new BadConfigFormatException("Improper Legend format.");
 			}
 			rooms.put(dataArray[0].charAt(0), dataArray[1].substring(1)); // substring is required to account for a space after the comma
+			if(dataArray[2].substring(1).equalsIgnoreCase("card")){
+				Card card = new Card(dataArray[1].substring(1), CardType.ROOM);
+				deck.put(dataArray[1].substring(1), card);
+			}
 		}
 	}
 	
@@ -292,6 +305,9 @@ public class Board {
 	}
 	public boolean checkAccusation(Solution accusation){
 		return false;
+	}
+	public Map<String, Card> getDeck(){
+		return null;
 	}
 
 }
