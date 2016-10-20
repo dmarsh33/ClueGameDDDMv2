@@ -26,6 +26,9 @@ public class Board {
 	private String roomConfigFile;
 	private String weaponConfigFile;
 	private String playerConfigFile;
+	private Set<Card> dealtCards;
+	private Set<Card> initialDeck;
+	private Map<Player, Set<Card>> hand;
 	
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
@@ -37,6 +40,9 @@ public class Board {
 		board = new BoardCell[numRows][numColumns];
 		people = new HashMap<String, Player>();
 		deck = new HashMap<String, Card>();
+		initialDeck = new HashSet<Card>();
+		dealtCards = new HashSet<Card>();
+		hand = new HashMap<Player, Set<Card>>();
 	}
 	
 	// this method returns the only Board
@@ -296,7 +302,9 @@ public class Board {
 	public Set<BoardCell> getTargets() {
 		return targets;
 	}
-	
+	public void dealCards(){
+		selectAnswer();
+	}
 	public void selectAnswer(){
 		
 	}
@@ -306,8 +314,17 @@ public class Board {
 	public boolean checkAccusation(Solution accusation){
 		return false;
 	}
+	public Set<Card> getDealtCards(){
+		return dealtCards;
+	}
+	public Set<Card> getInitialDeck(){
+		return initialDeck;
+	}
 	public Map<String, Card> getDeck(){
 		return deck;
+	}
+	public Map<Player, Set<Card>> getHand(){
+		return hand;
 	}
 
 }

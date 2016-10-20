@@ -3,13 +3,13 @@ package clueGame;
 import java.awt.Color;
 
 public class Player {
-	private String PlayerName;
+	private String playerName;
 	private int row;
 	private int col;
 	private Color color;
 	
 	public String getPlayerName() {
-		return PlayerName;
+		return playerName;
 	}
 
 	public int getRow() {
@@ -26,7 +26,7 @@ public class Player {
 
 	public Player(String playerName, int row, int col, Color color) {
 		super();
-		PlayerName = playerName;
+		playerName = playerName;
 		this.row = row;
 		this.col = col;
 		this.color = color;
@@ -35,5 +35,12 @@ public class Player {
 	public Card disproveSuggestion(Solution suggestion){
 		return null;
 		
+	}
+	public boolean equals(Player p){
+		if(this.playerName.equalsIgnoreCase(p.getPlayerName())){
+			return true;
+		}
+		else
+			return false;
 	}
 }

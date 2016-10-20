@@ -93,6 +93,38 @@ public class gameSetupTests {
 		assertTrue(test.equals(weapon2));
 		//tests that the the deck contains 21 cards
 		assertEquals(21, deck.size());
+	}
+	
+	@Test
+	//this tests that cards are dealt correctly
+	public void testDealCards(){
+		board.dealCards();
+		Set<Card> dealtCards = board.getDealtCards();
+		Set<Card> initialDeck = board.getInitialDeck();
+		//test that all cards were dealt
+		assertEquals(21, dealtCards.size());
+		assertEquals(0, initialDeck.size());
+		//test that all players have roughly same number of cards (should be 3 cards)
+		Map<Player, Set<Card>> hand = board.getHand();
+		for(Player p: hand.keySet()){
+			assertEquals(3, hand.get(p).size());
+		}
+		//test that no cards are dealt twice
+		for(Player p: hand.keySet()){
+			Set<Card> playerCards = hand.get(p);
+			for(Player p2: hand.keySet()){
+				Set<Card> otherPlayerCards = hand.get(p2);
+				if(p.equals(p2))
+					continue;
+				else{
+					for(Card c:playerCards){
+						for(Card c2:otherPlayerCards){
+							assertFalse(c.equals(c2));
+						}
+					}
+				}
+			}
+		}
 		
 	}
 	
