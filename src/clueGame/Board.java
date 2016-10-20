@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -16,10 +17,13 @@ public class Board {
 	private BoardCell[][] board;
 	private Map<Character,String> rooms;
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
+	private Map<String, Player> people;
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
 	private String boardConfigFile;
 	private String roomConfigFile;
+	private String weaponConfigFile;
+	private String playerConfigFile;
 	
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
@@ -40,7 +44,8 @@ public class Board {
 		try {
 			loadRoomConfig();
 			loadBoardConfig();
-			loadPeopleConfig();
+			loadPlayerConfig();
+			loadWeaponConfig();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,8 +57,14 @@ public class Board {
 		
 	}
 	
-	public void loadPeopleConfig() throws FileNotFoundException{
-		FileReader reader = new FileReader(roomConfigFile);
+	public void loadPlayerConfig() throws FileNotFoundException{
+		FileReader reader = new FileReader(playerConfigFile);
+		Scanner in = new Scanner(reader);
+	
+	}
+	
+	public void loadWeaponConfig() throws FileNotFoundException{
+		FileReader reader = new FileReader(weaponConfigFile);
 		Scanner in = new Scanner(reader);
 	
 	}
@@ -214,13 +225,18 @@ public class Board {
 		findAllTargets(x,y,pathLength);
 	}
 	
-	public void setConfigFiles(String string, String string2) {
+	public void setConfigFiles(String string, String string2, String string3, String string4) {
 		boardConfigFile = string;
 		roomConfigFile = string2;
+		playerConfigFile = string3;
+		weaponConfigFile = string4;
 		
 	}
 	public Map<Character, String> getLegend() {
 		return rooms;
+	}
+	public Map<String, Player> getPlayers(){
+		return people;
 	}
 	public int getNumRows() {
 		return numRows;
@@ -239,6 +255,16 @@ public class Board {
 
 	public Set<BoardCell> getTargets() {
 		return targets;
+	}
+	
+	public void selectAnswer(){
+		
+	}
+	public Card handleSuggestion(){
+		return null;
+	}
+	public boolean checkAccusation(Solution accusation){
+		return false;
 	}
 
 }

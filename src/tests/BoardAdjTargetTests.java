@@ -15,7 +15,7 @@ public class BoardAdjTargetTests {
 	public static void setUp() {
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
-		board.setConfigFiles("data/LayoutJLRG.csv", "data/LegendJLRG.txt");		
+		board.setConfigFiles("data/LayoutJLRG.csv", "data/LegendJLRG.txt", "data/people.txt", "data/weapons.txt");		
 		board.initialize();
 	}
 	
