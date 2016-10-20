@@ -12,6 +12,10 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class Board {
+	private String boardConfigFile;
+	private String roomConfigFile;
+	private String weaponConfigFile;
+	private String playerConfigFile;
 	private int numRows;
 	private int numColumns;
 	public final int MAX_BOARD_SIZE = 50;
@@ -19,16 +23,14 @@ public class Board {
 	private Map<Character,String> rooms;
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
 	private Map<String, Player> people;
+	private Set<Player> players;
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
 	private Map<String,Card> deck;
-	private String boardConfigFile;
-	private String roomConfigFile;
-	private String weaponConfigFile;
-	private String playerConfigFile;
 	private Set<Card> dealtCards;
 	private Set<Card> initialDeck;
 	private Map<Player, Set<Card>> hand;
+	private Solution answer;
 	
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
@@ -43,6 +45,7 @@ public class Board {
 		initialDeck = new HashSet<Card>();
 		dealtCards = new HashSet<Card>();
 		hand = new HashMap<Player, Set<Card>>();
+		players = new HashSet<Player>();
 	}
 	
 	// this method returns the only Board
@@ -303,10 +306,40 @@ public class Board {
 		return targets;
 	}
 	public void dealCards(){
+		for(String s:deck.keySet()){
+			initialDeck.add(deck.get(s));
+		}
 		selectAnswer();
+		for(Card c:initialDeck){
+			System.out.println(c.getCardName());
+		}
 	}
 	public void selectAnswer(){
-		
+		String name = null;
+		String room = null;
+		String weapon = null;
+		Card person = null;
+		Card location = null;
+		Card tool = null;
+		for(Card c:initialDeck){
+			if(c.getType()==CardType.PERSON){
+				name = c.getCardName();
+				person = c;
+			}
+			else if(c.getType()==CardType.ROOM){
+				room = c.getCardName();
+				location = c;
+			}
+			else if(c.getType()==CardType.WEAPON){
+				weapon = c.getCardName();
+				tool = c;
+			}
+		}
+		answer = new Solution(name, weapon, room);
+		System.out.println(name + " " + weapon + " "+ room);
+		initialDeck.remove(person);
+		initialDeck.remove(location);
+		initialDeck.remove(tool);		
 	}
 	public Card handleSuggestion(){
 		return null;

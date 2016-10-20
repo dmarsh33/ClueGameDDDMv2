@@ -102,7 +102,7 @@ public class gameSetupTests {
 		Set<Card> dealtCards = board.getDealtCards();
 		Set<Card> initialDeck = board.getInitialDeck();
 		//test that all cards were dealt
-		assertEquals(21, dealtCards.size());
+		assertEquals(18, dealtCards.size());
 		assertEquals(0, initialDeck.size());
 		//test that all players have roughly same number of cards (should be 3 cards)
 		Map<Player, Set<Card>> hand = board.getHand();
