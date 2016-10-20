@@ -307,7 +307,7 @@ public class Board {
 		return false;
 	}
 	public Map<String, Card> getDeck(){
-		return null;
+		return deck;
 	}
 
 }
