@@ -26,7 +26,6 @@ public class gameSetupTests {
 	
 	@BeforeClass
 	public static void setUp(){
-		System.out.println("Here");
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use our config files
@@ -34,19 +33,20 @@ public class gameSetupTests {
 		// Initialize will load all config files 
 		board.initialize();
 		
-		human = new Card("Human", CardType.PERSON);
-		computer1 = new Card("Rader", CardType.PERSON);
-		computer2 = new Card("CPW", CardType.PERSON);
-		room1 = new Card("Alderson", CardType.ROOM);
-		room2 = new Card("Berthoud", CardType.ROOM);
-		room3 = new Card("Hill", CardType.ROOM);
-		weapon1 = new Card("Acid", CardType.WEAPON);
-		weapon2 = new Card("Hammer", CardType.WEAPON);
+		//human = new Card("Human", CardType.PERSON);
+		//computer1 = new Card("Rader", CardType.PERSON);
+		//computer2 = new Card("CPW", CardType.PERSON);
+		//room1 = new Card("Alderson", CardType.ROOM);
+		//room2 = new Card("Berthoud", CardType.ROOM);
+		//room3 = new Card("Hill", CardType.ROOM);
+		//weapon1 = new Card("Acid", CardType.WEAPON);
+		//weapon2 = new Card("Hammer", CardType.WEAPON);
 	}
 	
 	@Test
 	//This tests that all of the people are loaded correctly by testing that the human player and first and last computer players have the correct colors and starting locations
-	public static void testloadPeople(){
+	public void testloadPeople(){
+		System.out.println("here");
 		Map<String,Player> people = board.getPlayers();
 		//test human
 		Player testhuman = people.get("Human");

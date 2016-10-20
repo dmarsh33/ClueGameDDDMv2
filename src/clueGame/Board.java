@@ -59,14 +59,19 @@ public class Board {
 		calcAdjacencies();
 		
 	}
-	
+	public void setConfigFiles(String string, String string2, String string3, String string4) {
+		boardConfigFile = string;
+		roomConfigFile = string2;
+		playerConfigFile = string3;
+		weaponConfigFile = string4;
+		
+	}
 	public void loadPlayerConfig() throws FileNotFoundException{
-		System.out.println("here");
 		FileReader reader = new FileReader(playerConfigFile);
 		Scanner in = new Scanner(reader);
 		while (in.hasNextLine()){
 			String line = in.nextLine();
-			String [] things = line.split(",");
+			String [] things = line.split(", ");
 			String name = things[0];
 			String color = things[1];
 			String row = things[2];
@@ -254,13 +259,6 @@ public class Board {
 		findAllTargets(x,y,pathLength);
 	}
 	
-	public void setConfigFiles(String string, String string2, String string3, String string4) {
-		boardConfigFile = string;
-		roomConfigFile = string2;
-		playerConfigFile = string3;
-		weaponConfigFile = string4;
-		
-	}
 	public Map<Character, String> getLegend() {
 		return rooms;
 	}

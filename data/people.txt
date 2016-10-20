@@ -1,4 +1,4 @@
-0Human, blue, 0, 6
+Human, blue, 0, 6
 Rader, red, 0, 18
 Hellman, yellow, 13, 24
 Snieder, orange, 23, 17
