@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.lang.reflect.Field;
 import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -33,6 +34,8 @@ public class Board {
 		numColumns = 0;
 		rooms = new HashMap<Character, String>();
 		board = new BoardCell[numRows][numColumns];
+		people = new HashMap<String, Player>();
+		
 	}
 	
 	// this method returns the only Board
@@ -60,9 +63,34 @@ public class Board {
 	public void loadPlayerConfig() throws FileNotFoundException{
 		FileReader reader = new FileReader(playerConfigFile);
 		Scanner in = new Scanner(reader);
+		while (in.hasNextLine()){
+			String line = in.nextLine();
+			String [] things = line.split(",");
+			String name = things[0];
+			String color = things[1];
+			String row = things[2];
+			String col = things[3];
+			Color c = convertColor(color);
+			int r = Integer.parseInt(row);
+			int column = Integer.parseInt(col);
+			Player player = new Player(name, r, column, c);
+			people.put(name, player);
+		}
 	
 	}
-	
+	// Be sure to trim the color, we don't want spaces around the name
+	public Color convertColor(String strColor) {
+	    Color color; 
+	    try {     
+	        // We can use reflection to convert the string to a color
+	        Field field = Class.forName("java.awt.Color").getField(strColor.trim());     
+	        color = (Color)field.get(null); 
+	    } catch (Exception e) {  
+	        color = null; // Not defined  
+	    }
+	    return color;
+	}
+
 	public void loadWeaponConfig() throws FileNotFoundException{
 		FileReader reader = new FileReader(weaponConfigFile);
 		Scanner in = new Scanner(reader);
