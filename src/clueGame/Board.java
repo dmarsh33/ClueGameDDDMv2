@@ -39,12 +39,8 @@ public class Board {
 	public void initialize() {
 		try {
 			loadRoomConfig();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
 			loadBoardConfig();
+			loadPeopleConfig();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -54,6 +50,12 @@ public class Board {
 		targets = new HashSet<BoardCell>();
 		calcAdjacencies();
 		
+	}
+	
+	public void loadPeopleConfig() throws FileNotFoundException{
+		FileReader reader = new FileReader(roomConfigFile);
+		Scanner in = new Scanner(reader);
+	
 	}
 	// Need to increase exception handling. Such as incorrect number of commas 
 	public void loadRoomConfig() throws FileNotFoundException{
