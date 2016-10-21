@@ -100,10 +100,9 @@ public class gameSetupTests {
 	public void testDealCards(){
 		board.dealCards();
 		ArrayList<Card> dealtCards = board.getDealtCards();
-		ArrayList<Card> initialDeck = board.getInitialDeck();
 		//test that all cards were dealt
 		assertEquals(18, dealtCards.size());
-		//test that all players have roughly same number of cards (should be 3 cards)
+		//test that all players have roughly same number of cards (should be 3 cards for our case)
 		Map<Player, Set<Card>> hand = board.getHand();
 		for(Player p: hand.keySet()){
 			assertEquals(3, hand.get(p).size());
@@ -115,7 +114,9 @@ public class gameSetupTests {
 			Set<Card> playerCards = hand.get(p);
 			cards.addAll(playerCards);
 		}
-		System.out.println(dealtCards.size() + " " + cards.size());
+		//dealtCards is an ArrayList that contains all the cards that have been dealt
+		//cards is a set of all the cards that each player has
+		//Because sets do not contain duplicates these two data structures will be the same size if no cards are dealt twice
 		assertEquals(dealtCards.size(), cards.size());
 	}
 	

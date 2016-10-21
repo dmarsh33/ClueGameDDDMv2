@@ -43,6 +43,9 @@ public class Board {
 		dealtCards = new ArrayList<Card>();
 		hand = new HashMap<Player, Set<Card>>();
 		players = new ArrayList<Player>();
+		adjMatrix = new HashMap<BoardCell, Set<BoardCell>>();
+		visited = new HashSet<BoardCell>();
+		targets = new HashSet<BoardCell>();
 	}
 	
 	// this method returns the only Board
@@ -57,14 +60,10 @@ public class Board {
 			loadPlayerConfig();
 			loadWeaponConfig();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		adjMatrix = new HashMap<BoardCell, Set<BoardCell>>();
-		visited = new HashSet<BoardCell>();
-		targets = new HashSet<BoardCell>();
-		calcAdjacencies();
-		
+
+		calcAdjacencies();	
 	}
 	public void setConfigFiles(String string, String string2, String string3, String string4) {
 		boardConfigFile = string;
@@ -362,9 +361,6 @@ public class Board {
 	}
 	public ArrayList<Card> getDealtCards(){
 		return dealtCards;
-	}
-	public ArrayList<Card> getInitialDeck(){
-		return initialDeck;
 	}
 	public Map<String, Card> getDeck(){
 		return deck;
