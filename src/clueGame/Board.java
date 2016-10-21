@@ -65,13 +65,14 @@ public class Board {
 
 		calcAdjacencies();	
 	}
+	
 	public void setConfigFiles(String string, String string2, String string3, String string4) {
 		boardConfigFile = string;
 		roomConfigFile = string2;
 		playerConfigFile = string3;
-		weaponConfigFile = string4;
-		
+		weaponConfigFile = string4;	
 	}
+	
 	public void loadPlayerConfig() throws FileNotFoundException{
 		FileReader reader = new FileReader(playerConfigFile);
 		Scanner in = new Scanner(reader);
@@ -89,10 +90,9 @@ public class Board {
 			people.put(name, player);
 			Card card = new Card(name, CardType.PERSON);
 			deck.put(name, card);
-		}
-	
+		}	
 	}
-	// Be sure to trim the color, we don't want spaces around the name
+
 	public Color convertColor(String strColor) {
 	    Color color; 
 	    try {     
@@ -141,8 +141,7 @@ public class Board {
 	
 	public void loadBoardConfig() throws FileNotFoundException{
 		FileReader reader = new FileReader(boardConfigFile);
-		Scanner in = new Scanner(reader);
-		
+		Scanner in = new Scanner(reader);		
 		ArrayList<String[]> rows = new ArrayList<String[]>();
 		while (in.hasNextLine()){
 			String dataLine = in.nextLine();
@@ -153,15 +152,13 @@ public class Board {
 			} else if (numColumns != dataArray.length){
 				throw new BadConfigFormatException("Incorrect number of columns.");
 			}
-		}
-		
+		}		
 		numRows = rows.size();
 		board = new BoardCell[numRows][numColumns];
 		DoorDirection dir;
 		for(int i=0; i<numRows; i++){
 			for(int j=0; j<numColumns; j++){
 				if(rows.get(i)[j].length() > 1){
-//					System.out.println(rows.get(i)[j].charAt(1));
 					switch(rows.get(i)[j].charAt(1)){
 						case 'U':
 							dir = DoorDirection.UP;
@@ -225,7 +222,6 @@ public class Board {
 	
 	private Set<BoardCell> generateAdjList(int x, int y) {
 		Set<BoardCell> list = new HashSet<BoardCell>();
-//		System.out.println(cell.isWalkway() + " " + cell.getInitial());
 		if(!board[x][y].isWalkway() && !board[x][y].isDoorway()){
 			return list;
 		}
@@ -248,8 +244,6 @@ public class Board {
 		return list;
 	}
 
-	
-	
 	public void findAllTargets(int x, int y, int pathLength){
 		Set<BoardCell> adj = getAdjList(x,y);
 		
@@ -280,15 +274,19 @@ public class Board {
 	public Map<Character, String> getLegend() {
 		return rooms;
 	}
+	
 	public Map<String, Player> getPlayers(){
 		return people;
 	}
+	
 	public int getNumRows() {
 		return numRows;
 	}
+	
 	public int getNumColumns() {
 		return numColumns;
 	}
+	
 	public BoardCell getCellAt(int i, int j) {
 		return board[i][j];
 	}
@@ -300,6 +298,7 @@ public class Board {
 	public Set<BoardCell> getTargets() {
 		return targets;
 	}
+	
 	public void dealCards(){
 		for(String s:deck.keySet()){
 			initialDeck.add(deck.get(s));
@@ -325,6 +324,7 @@ public class Board {
 			}					
 		}
 	}
+	
 	public void selectAnswer(){
 		String name = null;
 		String room = null;
@@ -353,20 +353,25 @@ public class Board {
 		initialDeck.remove(location);
 		initialDeck.remove(tool);		
 	}
+	
 	public Card handleSuggestion(){
 		return null;
 	}
+	
 	public boolean checkAccusation(Solution accusation){
 		return false;
 	}
+	
 	public ArrayList<Card> getDealtCards(){
 		return dealtCards;
 	}
+	
 	public Map<String, Card> getDeck(){
 		return deck;
 	}
+	
 	public Map<Player, Set<Card>> getHand(){
 		return hand;
 	}
-
+	
 }
