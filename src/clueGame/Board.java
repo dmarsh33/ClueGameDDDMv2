@@ -4,12 +4,9 @@ import java.lang.reflect.Field;
 import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
+
+import javax.swing.plaf.synth.SynthStyle;
 
 public class Board {
 	private String boardConfigFile;
@@ -23,12 +20,12 @@ public class Board {
 	private Map<Character,String> rooms;
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
 	private Map<String, Player> people;
-	private Set<Player> players;
+	private ArrayList<Player> players;
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
 	private Map<String,Card> deck;
-	private Set<Card> dealtCards;
-	private Set<Card> initialDeck;
+	private ArrayList<Card> dealtCards;
+	private ArrayList<Card> initialDeck;
 	private Map<Player, Set<Card>> hand;
 	private Solution answer;
 	
@@ -42,10 +39,10 @@ public class Board {
 		board = new BoardCell[numRows][numColumns];
 		people = new HashMap<String, Player>();
 		deck = new HashMap<String, Card>();
-		initialDeck = new HashSet<Card>();
-		dealtCards = new HashSet<Card>();
+		initialDeck = new ArrayList<Card>();
+		dealtCards = new ArrayList<Card>();
 		hand = new HashMap<Player, Set<Card>>();
-		players = new HashSet<Player>();
+		players = new ArrayList<Player>();
 	}
 	
 	// this method returns the only Board
@@ -294,7 +291,6 @@ public class Board {
 		return numColumns;
 	}
 	public BoardCell getCellAt(int i, int j) {
-		// TODO Auto-generated method stub
 		return board[i][j];
 	}
 
@@ -309,9 +305,25 @@ public class Board {
 		for(String s:deck.keySet()){
 			initialDeck.add(deck.get(s));
 		}
+		//to shuffle deck
+		Collections.shuffle(initialDeck);
+		for(String st:people.keySet()){
+			players.add(people.get(st));
+			Set<Card> set= new HashSet<Card>();
+			hand.put(people.get(st), set);
+		}
 		selectAnswer();
-		for(Card c:initialDeck){
-			System.out.println(c.getCardName());
+		int numPlayers = players.size();
+		for(int i = 0; i < numPlayers; i++){
+			for (int j = 0; j< initialDeck.size(); j++){
+				if(j%numPlayers == i){
+					Player p = players.get(i);
+					Set<Card> temp = hand.get(p);
+					temp.add(initialDeck.get(j));
+					hand.put(players.get(i), temp);
+					dealtCards.add(initialDeck.get(j));
+				}
+			}					
 		}
 	}
 	public void selectAnswer(){
@@ -321,8 +333,9 @@ public class Board {
 		Card person = null;
 		Card location = null;
 		Card tool = null;
-		//NEED TO MAKE THIS RANDOM
-		for(Card c:initialDeck){
+		for(int i = 0; i < 101; i++){
+			int random = new Random().nextInt(initialDeck.size()-1);
+			Card c = initialDeck.get(random);
 			if(c.getType()==CardType.PERSON){
 				name = c.getCardName();
 				person = c;
@@ -337,7 +350,6 @@ public class Board {
 			}
 		}
 		answer = new Solution(name, weapon, room);
-		System.out.println(name + " " + weapon + " "+ room);
 		initialDeck.remove(person);
 		initialDeck.remove(location);
 		initialDeck.remove(tool);		
@@ -348,10 +360,10 @@ public class Board {
 	public boolean checkAccusation(Solution accusation){
 		return false;
 	}
-	public Set<Card> getDealtCards(){
+	public ArrayList<Card> getDealtCards(){
 		return dealtCards;
 	}
-	public Set<Card> getInitialDeck(){
+	public ArrayList<Card> getInitialDeck(){
 		return initialDeck;
 	}
 	public Map<String, Card> getDeck(){

@@ -99,33 +99,23 @@ public class gameSetupTests {
 	//this tests that cards are dealt correctly
 	public void testDealCards(){
 		board.dealCards();
-		Set<Card> dealtCards = board.getDealtCards();
-		Set<Card> initialDeck = board.getInitialDeck();
+		ArrayList<Card> dealtCards = board.getDealtCards();
+		ArrayList<Card> initialDeck = board.getInitialDeck();
 		//test that all cards were dealt
 		assertEquals(18, dealtCards.size());
-		assertEquals(0, initialDeck.size());
 		//test that all players have roughly same number of cards (should be 3 cards)
 		Map<Player, Set<Card>> hand = board.getHand();
 		for(Player p: hand.keySet()){
 			assertEquals(3, hand.get(p).size());
 		}
 		//test that no cards are dealt twice
+		//THIS DOESNT WORK
+		Set<Card> cards = new HashSet<Card>();
 		for(Player p: hand.keySet()){
 			Set<Card> playerCards = hand.get(p);
-			for(Player p2: hand.keySet()){
-				Set<Card> otherPlayerCards = hand.get(p2);
-				if(p.equals(p2))
-					continue;
-				else{
-					for(Card c:playerCards){
-						for(Card c2:otherPlayerCards){
-							assertFalse(c.equals(c2));
-						}
-					}
-				}
-			}
+			cards.addAll(playerCards);
 		}
-		
+		assertEquals(dealtCards, cards);
 	}
 	
 }

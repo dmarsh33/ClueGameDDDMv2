@@ -26,7 +26,7 @@ public class Player {
 
 	public Player(String playerName, int row, int col, Color color) {
 		super();
-		playerName = playerName;
+		this.playerName = playerName;
 		this.row = row;
 		this.col = col;
 		this.color = color;
