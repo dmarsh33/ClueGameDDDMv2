@@ -21,7 +21,7 @@ public class ComputerPlayer extends Player{
 	public void makeAccusation(){
 		
 	}
-	public void createSuggestion(){
-		
+	public Solution createSuggestion(Set<Card> hand){
+		return null;
 	}
 }
