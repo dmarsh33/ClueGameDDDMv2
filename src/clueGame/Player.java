@@ -4,8 +4,8 @@ import java.awt.Color;
 
 public class Player {
 	private String playerName;
-	private int row;
-	private int col;
+	protected int row;
+	protected int col;
 	private Color color;
 	
 	public String getPlayerName() {

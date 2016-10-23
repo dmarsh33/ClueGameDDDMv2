@@ -27,6 +27,7 @@ public class Board {
 	private ArrayList<Card> dealtCards;
 	private ArrayList<Card> initialDeck;
 	private Map<Player, Set<Card>> hand;
+	private Map<Player, Set<Card>> seen;
 	private Solution answer;
 	
 	// variable used for singleton pattern
@@ -42,6 +43,7 @@ public class Board {
 		initialDeck = new ArrayList<Card>();
 		dealtCards = new ArrayList<Card>();
 		hand = new HashMap<Player, Set<Card>>();
+		seen = new HashMap<Player, Set<Card>>();
 		players = new ArrayList<Player>();
 		adjMatrix = new HashMap<BoardCell, Set<BoardCell>>();
 		visited = new HashSet<BoardCell>();
@@ -323,6 +325,7 @@ public class Board {
 				}
 			}					
 		}
+		seen = hand;
 	}
 	
 	public void selectAnswer(){
@@ -350,8 +353,11 @@ public class Board {
 		}
 		answer = new Solution(name, weapon, room);
 		initialDeck.remove(person);
+		dealtCards.add(person);
 		initialDeck.remove(location);
+		dealtCards.add(location);
 		initialDeck.remove(tool);		
+		dealtCards.add(tool);
 	}
 	
 	public Card handleSuggestion(){
