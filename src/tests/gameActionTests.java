@@ -12,6 +12,7 @@ import clueGame.BoardCell;
 import clueGame.Card;
 import clueGame.CardType;
 import clueGame.ComputerPlayer;
+import clueGame.Solution;
 
 public class gameActionTests {
 	private static Board board;
@@ -26,6 +27,7 @@ public class gameActionTests {
 	}
 	
 	@Test
+	//This tests selecting a target location for the computer player
 	public void selectTarget(){
 		//Testing that if player cant enter room, target is selected randomly, pathlength = 3
 		board.calcTargets(0,18,3);
@@ -147,5 +149,24 @@ public class gameActionTests {
 		assertTrue(loc4>0);
 		assertTrue(loc5>0);
 		assertTrue(other==0);		
+	}
+	
+	@Test 
+	//Tests checking an accusation
+	public void checkAccusationTest(){
+		//deals the cards 
+		board.dealCards();
+		//Tests that the entire solution is correct
+		Solution testCorrect = board.getSolution();
+		assertTrue(board.checkAccusation(testCorrect));
+		//Tests soluton with incorrect weapon
+		Solution testIncorrectWeapon = new Solution(board.getSolution().getPerson(), "x", board.getSolution().getRoom());
+		assertFalse(board.checkAccusation(testIncorrectWeapon));
+		//Tests solution with incorrect person
+		Solution testIncorrectPerson = new Solution("x", board.getSolution().getWeapon(), board.getSolution().getRoom());
+		assertFalse(board.checkAccusation(testIncorrectPerson));
+		//Tests solution with incorrect room
+		Solution testIncorrectRoom = new Solution(board.getSolution().getPerson(), board.getSolution().getWeapon(), "x");
+		assertFalse(board.checkAccusation(testIncorrectRoom));
 	}
 }

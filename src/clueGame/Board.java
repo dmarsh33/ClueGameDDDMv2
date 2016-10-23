@@ -374,4 +374,8 @@ public class Board {
 		return hand;
 	}
 	
+	public Solution getSolution(){
+		return answer;
+	}
+	
 }
