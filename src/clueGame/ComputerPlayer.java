@@ -24,24 +24,13 @@ public class ComputerPlayer extends Player{
 	public void makeAccusation(){
 		
 	}
-	public Solution createSuggestion(Set<Card> seen, Board board){
-		ArrayList<Card> hand2 = new ArrayList<Card>(seen);
-		System.out.println(seen.size());
-		ArrayList<Card> totalCards = board.getDealtCards();
-		ArrayList<Card> dealtCards = new ArrayList<Card>();
-		for(Card c: totalCards){
-			for(Card j: hand2){
-				if(!c.getCardName().equals(j.getCardName()) && !dealtCards.contains(c)){
-					dealtCards.add(c);
-				}
-			}
-		}
+	public Solution createSuggestion(Set<Card> notSeen){
 		ArrayList<Card> people = new ArrayList<Card>();
 		ArrayList<Card> weapon = new ArrayList<Card>();
 		String person;
 		String tool;
-		Character r;
-		for(Card c: dealtCards){
+		String room = null;
+		for(Card c: notSeen){
 			System.out.println(c.getCardName());
 			if(c.getType()== CardType.PERSON){
 				people.add(c);
@@ -60,9 +49,10 @@ public class ComputerPlayer extends Player{
 		Collections.shuffle(weapon);
 		person = people.get(0).getCardName();
 		tool = weapon.get(0).getCardName();
-		r = board.getCellAt(this.row, this.col).getInitial();
+		//PROBLEM WITH GETTING ROOM WITHOUT BOARD!!
+		/*r = board.getCellAt(this.row, this.col).getInitial();
 		Map<Character, String> rooms = board.getLegend();
-		String room = rooms.get(r);
+		String room = rooms.get(r);*/
 		Solution guess = new Solution(person, tool, room);
 		return guess;
 	}

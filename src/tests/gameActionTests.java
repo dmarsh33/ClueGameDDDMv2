@@ -205,73 +205,61 @@ public class gameActionTests {
 		testHand.add(room1);
 		testHand.add(weapon1);
 		//tests to see if the suggestion room is the same room the player is in for two rooms
-		/*Solution correctRoom = test.createSuggestion(testHand, board);
+		Solution correctRoom = test.createSuggestion(testHand);
 		assertTrue(correctRoom.getRoom().equals("Brown"));
 		ComputerPlayer test2 = new ComputerPlayer("CPW", 3, 6, Color.red);
-		Solution correctRoom2 = test2.createSuggestion(testHand, board);
-		assertTrue(correctRoom2.getRoom().equals("Hill"));*/
+		Solution correctRoom2 = test2.createSuggestion(testHand);
+		assertTrue(correctRoom2.getRoom().equals("Hill"));
 		//Tests if only one weapon or person is not seen, it is selected as a suggestion
-		testHand.add(computer1);
-		testHand.add(computer2);
-		testHand.add(computer3);
-		testHand.add(computer4);
-		testHand.add(weapon2);
-		testHand.add(weapon3);
-		testHand.add(weapon4);
-		testHand.add(weapon5);
-		Solution onlyOneLeft = test.createSuggestion(testHand, board);
+		Solution onlyOneLeft = test.createSuggestion(testHand);
 		System.out.println(onlyOneLeft.getPerson() + " " + onlyOneLeft.getWeapon());
-		assertTrue(onlyOneLeft.getPerson().equals("Hellman") && onlyOneLeft.getWeapon().equals("Gravimeter"));
+		assertTrue(onlyOneLeft.getPerson().equals("Human") && onlyOneLeft.getWeapon().equals("Acid"));
 		//Tests if the suggestion is randomly chosen when more than one card is not seen of each type
-		/*testHand.clear();
-		testHand.add(human);
-		testHand.add(room1);
-		testHand.add(weapon1);
 		testHand.add(computer1);
 		testHand.add(computer2);
 		testHand.add(weapon2);
 		testHand.add(weapon3);
-		int comp3 = 0;
-		int comp4 = 0;
-		int comp5 = 0;
+		int human = 0;
+		int comp1 = 0;
+		int comp2 = 0;
+		int w1= 0;
+		int w2 = 0;
 		int w3 = 0;
-		int w4 = 0;
-		int w5 = 0;
 		int other = 0;
 		for(int i = 1; i < 100; i++){
-			Solution randomTest = test.createSuggestion(testHand, board);
-			if(randomTest.getPerson().equals("Snieder")){
-				comp3++;
+			Solution randomTest = test.createSuggestion(testHand);
+			if(randomTest.getPerson().equals("Human")){
+				human++;
 			}
-			else if(randomTest.getPerson().equals("Sava")){
-				comp4++;
+			else if(randomTest.getPerson().equals("Rader")){
+				comp1++;
 			}
-			else if(randomTest.getPerson().equals("Hellman")){
-				comp5++;
+			else if(randomTest.getPerson().equals("CPW")){
+				comp2++;
 			}
 			else {
 				other++;
 			}
-			if(randomTest.getWeapon().equals("Gravimeter")){
+			if(randomTest.getWeapon().equals("Acid")){
+				w1++;
+			}
+			else if(randomTest.getWeapon().equals("Hammer")){
+				w2++;
+			}
+			else if(randomTest.getWeapon().equals("Laser")){
 				w3++;
-			}
-			else if(randomTest.getWeapon().equals("Quartz")){
-				w4++;
-			}
-			else if(randomTest.getWeapon().equals("Beaker")){
-				w5++;
 			}
 			else {
 				other++;
 			}
 			
 		}
-		assertTrue(comp3>0);
-		assertTrue(comp4>0);
-		assertTrue(comp5>0);
+		assertTrue(human>0);
+		assertTrue(comp1>0);
+		assertTrue(comp2>0);
+		assertTrue(w1>0);
+		assertTrue(w2>0);
 		assertTrue(w3>0);
-		assertTrue(w4>0);
-		assertTrue(w5>0);
-		assertTrue(other==0);*/	
+		assertTrue(other==0);	
 	}
 }
