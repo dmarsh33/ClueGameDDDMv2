@@ -208,7 +208,6 @@ public class gameActionTests {
 		Character r = board.getCellAt(15, 21).getInitial();
 		Map<Character, String> rooms = board.getLegend();
 		String room = rooms.get(r);
-		System.out.println(room);
 		//tests to see if the suggestion room is the same room the player is in for two rooms
 		Solution correctRoom = test.createSuggestion(notSeen, room);
 		assertTrue(correctRoom.getRoom().equals("Brown"));
@@ -216,7 +215,6 @@ public class gameActionTests {
 		r = board.getCellAt(3, 6).getInitial();
 		rooms = board.getLegend();
 		room = rooms.get(r);
-		System.out.println(room);
 		Solution correctRoom2 = test2.createSuggestion(notSeen, room);
 		assertTrue(correctRoom2.getRoom().equals("Hill"));
 		//Tests if only one weapon or person is not seen, it is selected as a suggestion
@@ -269,5 +267,46 @@ public class gameActionTests {
 		assertTrue(w2>0);
 		assertTrue(w3>0);
 		assertTrue(other==0);	
+	}
+	
+	@Test
+	//This test checks the disproveSuggestion method if Player
+	public void disproveSuggestionTest(){
+		ComputerPlayer test = new ComputerPlayer("Rader", 15, 21, Color.red);
+		Set<Card> hand = new  HashSet<Card>();
+		hand.add(human);
+		hand.add(room1);
+		hand.add(weapon1);
+		//Tests if that the method will return the one card that the player can disprove if they do no have any of the other cards
+		Solution guess = new Solution("Human", "Hill", "Gravimeter");
+		assertEquals(test.disproveSuggestion(guess, hand).getCardName(), "Human");
+		//Tests that the card will be randomly selected to be shown if the player has multiple cards in common
+		guess = new Solution("Human", "Alderson", "Acid");
+		int room= 0;
+		int weapon = 0;
+		int person = 0;
+		int other = 0;
+		for(int i = 1; i < 100; i++){
+			if(test.disproveSuggestion(guess, hand).getCardName().equals("Human")){
+				person++;
+			}
+			else if(test.disproveSuggestion(guess, hand).getCardName().equals("Alderson")){
+				room++;
+			}
+			else if(test.disproveSuggestion(guess, hand).getCardName().equals("Acid")){
+				weapon++;
+			}
+			else {
+				other++;
+			}
+			
+		}
+		assertTrue(room>0);
+		assertTrue(weapon>0);
+		assertTrue(person>0);
+		assertTrue(other==0);	
+		//Returns null if player has no cards in common with guess
+		guess = new Solution("Sava", "Hill", "Gravimeter");
+		assertEquals(test.disproveSuggestion(guess, hand), null);
 	}
 }

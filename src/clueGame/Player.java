@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.util.Set;
 
 public class Player {
 	private String playerName;
@@ -32,7 +33,7 @@ public class Player {
 		this.color = color;
 	}
 
-	public Card disproveSuggestion(Solution suggestion){
+	public Card disproveSuggestion(Solution suggestion, Set<Card> hand){
 		return null;
 		
 	}
