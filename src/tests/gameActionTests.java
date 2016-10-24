@@ -287,13 +287,14 @@ public class gameActionTests {
 		int person = 0;
 		int other = 0;
 		for(int i = 1; i < 100; i++){
-			if(test.disproveSuggestion(guess, hand).getCardName().equals("Human")){
+			Card c =  test.disproveSuggestion(guess, hand);
+			if(c.getCardName().equalsIgnoreCase("Human")){
 				person++;
 			}
-			else if(test.disproveSuggestion(guess, hand).getCardName().equals("Alderson")){
+			else if(c.getCardName().equalsIgnoreCase("Alderson")){
 				room++;
 			}
-			else if(test.disproveSuggestion(guess, hand).getCardName().equals("Acid")){
+			else if(c.getCardName().equalsIgnoreCase("Acid")){
 				weapon++;
 			}
 			else {

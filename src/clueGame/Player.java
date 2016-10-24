@@ -1,6 +1,8 @@
 package clueGame;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Set;
 
 public class Player {
@@ -34,8 +36,25 @@ public class Player {
 	}
 
 	public Card disproveSuggestion(Solution suggestion, Set<Card> hand){
-		return null;
-		
+		ArrayList<Card> inCommon = new ArrayList<Card>();
+		for(Card c: hand){
+			if(c.getCardName().equalsIgnoreCase(suggestion.getPerson())){
+				inCommon.add(c);
+			}
+			if(c.getCardName().equalsIgnoreCase(suggestion.getWeapon())){
+				inCommon.add(c);
+			}
+			if(c.getCardName().equalsIgnoreCase(suggestion.getRoom())){
+				inCommon.add(c);
+			}
+		}
+		Collections.shuffle(inCommon);
+		if(inCommon.size() == 0){
+			return null;
+		}
+		else{
+			return inCommon.get(0);
+		}
 	}
 	public boolean equals(Player p){
 		if(this.playerName.equalsIgnoreCase(p.getPlayerName())){
