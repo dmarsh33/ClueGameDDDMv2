@@ -199,26 +199,34 @@ public class gameActionTests {
 	public void createSuggestionTest(){
 		board.dealCards();
 		ComputerPlayer test = new ComputerPlayer("Rader", 15, 21, Color.red);
-		//creating a test hand of cards seen
-		Set<Card> testHand = new HashSet<Card>();
-		testHand.add(human);
-		testHand.add(room1);
-		testHand.add(weapon1);
+		//creating a test hand of cards the player has not seen
+		Set<Card> notSeen = new HashSet<Card>();
+		notSeen.add(human);
+		notSeen.add(room1);
+		notSeen.add(weapon1);
+		//This gets the room that the player is currently in
+		Character r = board.getCellAt(15, 21).getInitial();
+		Map<Character, String> rooms = board.getLegend();
+		String room = rooms.get(r);
+		System.out.println(room);
 		//tests to see if the suggestion room is the same room the player is in for two rooms
-		Solution correctRoom = test.createSuggestion(testHand);
+		Solution correctRoom = test.createSuggestion(notSeen, room);
 		assertTrue(correctRoom.getRoom().equals("Brown"));
 		ComputerPlayer test2 = new ComputerPlayer("CPW", 3, 6, Color.red);
-		Solution correctRoom2 = test2.createSuggestion(testHand);
+		r = board.getCellAt(3, 6).getInitial();
+		rooms = board.getLegend();
+		room = rooms.get(r);
+		System.out.println(room);
+		Solution correctRoom2 = test2.createSuggestion(notSeen, room);
 		assertTrue(correctRoom2.getRoom().equals("Hill"));
 		//Tests if only one weapon or person is not seen, it is selected as a suggestion
-		Solution onlyOneLeft = test.createSuggestion(testHand);
-		System.out.println(onlyOneLeft.getPerson() + " " + onlyOneLeft.getWeapon());
+		Solution onlyOneLeft = test2.createSuggestion(notSeen, room);
 		assertTrue(onlyOneLeft.getPerson().equals("Human") && onlyOneLeft.getWeapon().equals("Acid"));
 		//Tests if the suggestion is randomly chosen when more than one card is not seen of each type
-		testHand.add(computer1);
-		testHand.add(computer2);
-		testHand.add(weapon2);
-		testHand.add(weapon3);
+		notSeen.add(computer1);
+		notSeen.add(computer2);
+		notSeen.add(weapon2);
+		notSeen.add(weapon3);
 		int human = 0;
 		int comp1 = 0;
 		int comp2 = 0;
@@ -227,7 +235,7 @@ public class gameActionTests {
 		int w3 = 0;
 		int other = 0;
 		for(int i = 1; i < 100; i++){
-			Solution randomTest = test.createSuggestion(testHand);
+			Solution randomTest = test2.createSuggestion(notSeen, room);
 			if(randomTest.getPerson().equals("Human")){
 				human++;
 			}
