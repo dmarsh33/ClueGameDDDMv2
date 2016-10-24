@@ -310,4 +310,10 @@ public class gameActionTests {
 		guess = new Solution("Sava", "Hill", "Gravimeter");
 		assertEquals(test.disproveSuggestion(guess, hand), null);
 	}
+	
+	@Test
+	//
+	public void handleSuggestionTest(){
+		
+	}
 }
