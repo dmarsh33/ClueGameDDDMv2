@@ -350,10 +350,10 @@ public class gameActionTests {
 		assertTrue(board.handleSuggestion(raderAccuser,suggestionHuman).getCardName().equalsIgnoreCase("CPW"));
 		//Human is accuser - Tests that returns null if only human can disprove and human is accuser
 		ArrayList<Player> humanAccuser = new ArrayList<Player>();
-		raderAccuser.add(rader);
-		raderAccuser.add(CPW);
-		raderAccuser.add(sava);
-		raderAccuser.add(humanPlayer);
+		humanAccuser.add(rader);
+		humanAccuser.add(CPW);
+		humanAccuser.add(sava);
+		humanAccuser.add(humanPlayer);
 		Solution suggestionHuman2 = new Solution("Snieder", "Gravimeter", "Library");
 		assertTrue(board.handleSuggestion(humanAccuser, suggestionHuman2)==null);
 		//Rader is accuser - Tests that if two players can disprove, the first one in the list is the one to show the card
@@ -361,12 +361,11 @@ public class gameActionTests {
 		assertTrue(board.handleSuggestion(raderAccuser, suggestion2Players).getCardName().equalsIgnoreCase("Hammer"));
 		//CPW is accuser - Tests that if human and another player can disprove, the first one returns card
 		ArrayList<Player> CPWAccuser = new ArrayList<Player>();
-		raderAccuser.add(sava);
-		raderAccuser.add(humanPlayer);
-		raderAccuser.add(rader);
-		raderAccuser.add(CPW);
+		CPWAccuser.add(sava);
+		CPWAccuser.add(humanPlayer);
+		CPWAccuser.add(rader);
+		CPWAccuser.add(CPW);
 		Solution suggestion2Players2 = new Solution("Sava", "Quartz", "Hill");
-		//FIX THIS
 		assertTrue(board.handleSuggestion(CPWAccuser, suggestion2Players2).getCardName().equalsIgnoreCase("Sava"));
 	}
 }
