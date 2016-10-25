@@ -26,8 +26,6 @@ public class Board {
 	private Map<String,Card> deck;
 	private ArrayList<Card> dealtCards;
 	private ArrayList<Card> initialDeck;
-	private Map<Player, Set<Card>> hand;
-	private Map<Player, Set<Card>> seen;
 	private Solution answer;
 	
 	// variable used for singleton pattern
@@ -42,8 +40,6 @@ public class Board {
 		deck = new HashMap<String, Card>();
 		initialDeck = new ArrayList<Card>();
 		dealtCards = new ArrayList<Card>();
-		hand = new HashMap<Player, Set<Card>>();
-		seen = new HashMap<Player, Set<Card>>();
 		players = new ArrayList<Player>();
 		adjMatrix = new HashMap<BoardCell, Set<BoardCell>>();
 		visited = new HashSet<BoardCell>();
@@ -309,23 +305,18 @@ public class Board {
 		Collections.shuffle(initialDeck);
 		for(String st:people.keySet()){
 			players.add(people.get(st));
-			Set<Card> set= new HashSet<Card>();
-			hand.put(people.get(st), set);
 		}
 		selectAnswer();
 		int numPlayers = players.size();
 		for(int i = 0; i < numPlayers; i++){
 			for (int j = 0; j< initialDeck.size(); j++){
 				if(j%numPlayers == i){
-					Player p = players.get(i);
-					Set<Card> temp = hand.get(p);
-					temp.add(initialDeck.get(j));
-					hand.put(players.get(i), temp);
+					players.get(i).setHand(initialDeck.get(j));
+					players.get(i).setSeen(initialDeck.get(j));;
 					dealtCards.add(initialDeck.get(j));
 				}
 			}					
 		}
-		seen = hand;
 	}
 	
 	public void selectAnswer(){
@@ -372,12 +363,11 @@ public class Board {
 		return dealtCards;
 	}
 	
+	public ArrayList<Player> getPlayersList(){
+		return players;
+	}
 	public Map<String, Card> getDeck(){
 		return deck;
-	}
-	
-	public Map<Player, Set<Card>> getHand(){
-		return hand;
 	}
 	
 	public Solution getSolution(){

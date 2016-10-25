@@ -10,21 +10,9 @@ public class Solution {
 		this.weapon = weapon;
 		this.room = room;
 	}
-	
-	public String getPerson() {
-		return person;
-	}
-
-	public String getWeapon() {
-		return weapon;
-	}
-
-	public String getRoom() {
-		return room;
-	}
 
 	public boolean equals(Solution test){
-		if(this.person.equals(test.getPerson()) && this.weapon.equals(test.getWeapon()) && this.room.equals(test.getRoom())){
+		if(this.person.equals(test.person) && this.weapon.equals(test.weapon) && this.room.equals(test.room)){
 			return true;
 		}
 		else{

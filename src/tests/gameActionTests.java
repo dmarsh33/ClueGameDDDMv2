@@ -18,16 +18,18 @@ import clueGame.Solution;
 public class gameActionTests {
 	private static Board board;
 	private static Card human; 
-	private static Card computer1;
-	private static Card computer2;
-	private static Card computer3;
-	private static Card computer4;
-	private static Card room1;
-	private static Card weapon1;
-	private static Card weapon2;
-	private static Card weapon3;
-	private static Card weapon4;
-	private static Card weapon5;
+	private static Card raderCard;
+	private static Card CPWCard;
+	private static Card SavaCard;
+	private static Card SniederCard;
+	private static Card AldersonCard;
+	private static Card StrattonCard;
+	private static Card LibraryCard;
+	private static Card AcidCard;
+	private static Card HammerCard;
+	private static Card LaserCard;
+	private static Card QuartzCard;
+	private static Card BeakerCard;
 	@BeforeClass
 	public static void setUp(){
 		// Board is singleton, get the only instance
@@ -38,16 +40,18 @@ public class gameActionTests {
 		board.initialize();
 		
 		human = new Card("Human", CardType.PERSON);
-		computer1 = new Card("Rader", CardType.PERSON);
-		computer2 = new Card("CPW", CardType.PERSON);
-		computer3 = new Card("Sava", CardType.PERSON);
-		computer4 = new Card("Snieder", CardType.PERSON);
-		room1 = new Card("Alderson", CardType.ROOM);
-		weapon1 = new Card("Acid", CardType.WEAPON);
-		weapon2 = new Card("Hammer", CardType.WEAPON);
-		weapon3 = new Card("Laser", CardType.WEAPON);
-		weapon4 = new Card("Quartz", CardType.WEAPON);
-		weapon5 = new Card("Beaker", CardType.WEAPON);
+		raderCard = new Card("Rader", CardType.PERSON);
+		CPWCard = new Card("CPW", CardType.PERSON);
+		SavaCard = new Card("Sava", CardType.PERSON);
+		SniederCard = new Card("Snieder", CardType.PERSON);
+		AldersonCard = new Card("Alderson", CardType.ROOM);
+		AcidCard = new Card("Acid", CardType.WEAPON);
+		HammerCard = new Card("Hammer", CardType.WEAPON);
+		LaserCard = new Card("Laser", CardType.WEAPON);
+		QuartzCard = new Card("Quartz", CardType.WEAPON);
+		BeakerCard = new Card("Beaker", CardType.WEAPON);
+		StrattonCard = new Card("Stratton", CardType.ROOM);
+		LibraryCard = new Card("Library", CardType.ROOM);
 	}
 	
 	@Test
@@ -184,13 +188,13 @@ public class gameActionTests {
 		Solution testCorrect = board.getSolution();
 		assertTrue(board.checkAccusation(testCorrect));
 		//Tests soluton with incorrect weapon
-		Solution testIncorrectWeapon = new Solution(board.getSolution().getPerson(), "x", board.getSolution().getRoom());
+		Solution testIncorrectWeapon = new Solution(board.getSolution().person, "x", board.getSolution().room);
 		assertFalse(board.checkAccusation(testIncorrectWeapon));
 		//Tests solution with incorrect person
-		Solution testIncorrectPerson = new Solution("x", board.getSolution().getWeapon(), board.getSolution().getRoom());
+		Solution testIncorrectPerson = new Solution("x", board.getSolution().weapon, board.getSolution().room);
 		assertFalse(board.checkAccusation(testIncorrectPerson));
 		//Tests solution with incorrect room
-		Solution testIncorrectRoom = new Solution(board.getSolution().getPerson(), board.getSolution().getWeapon(), "x");
+		Solution testIncorrectRoom = new Solution(board.getSolution().person, board.getSolution().weapon, "x");
 		assertFalse(board.checkAccusation(testIncorrectRoom));
 	}
 	
@@ -202,29 +206,29 @@ public class gameActionTests {
 		//creating a test hand of cards the player has not seen
 		Set<Card> notSeen = new HashSet<Card>();
 		notSeen.add(human);
-		notSeen.add(room1);
-		notSeen.add(weapon1);
+		notSeen.add(AldersonCard);
+		notSeen.add(AcidCard);
 		//This gets the room that the player is currently in
 		Character r = board.getCellAt(15, 21).getInitial();
 		Map<Character, String> rooms = board.getLegend();
 		String room = rooms.get(r);
 		//tests to see if the suggestion room is the same room the player is in for two rooms
 		Solution correctRoom = test.createSuggestion(notSeen, room);
-		assertTrue(correctRoom.getRoom().equals("Brown"));
+		assertTrue(correctRoom.room.equals("Brown"));
 		ComputerPlayer test2 = new ComputerPlayer("CPW", 3, 6, Color.red);
 		r = board.getCellAt(3, 6).getInitial();
 		rooms = board.getLegend();
 		room = rooms.get(r);
 		Solution correctRoom2 = test2.createSuggestion(notSeen, room);
-		assertTrue(correctRoom2.getRoom().equals("Hill"));
+		assertTrue(correctRoom2.room.equals("Hill"));
 		//Tests if only one weapon or person is not seen, it is selected as a suggestion
 		Solution onlyOneLeft = test2.createSuggestion(notSeen, room);
-		assertTrue(onlyOneLeft.getPerson().equals("Human") && onlyOneLeft.getWeapon().equals("Acid"));
+		assertTrue(onlyOneLeft.person.equals("Human") && onlyOneLeft.weapon.equals("Acid"));
 		//Tests if the suggestion is randomly chosen when more than one card is not seen of each type
-		notSeen.add(computer1);
-		notSeen.add(computer2);
-		notSeen.add(weapon2);
-		notSeen.add(weapon3);
+		notSeen.add(raderCard);
+		notSeen.add(CPWCard);
+		notSeen.add(HammerCard);
+		notSeen.add(LaserCard);
 		int human = 0;
 		int comp1 = 0;
 		int comp2 = 0;
@@ -234,25 +238,25 @@ public class gameActionTests {
 		int other = 0;
 		for(int i = 1; i < 100; i++){
 			Solution randomTest = test2.createSuggestion(notSeen, room);
-			if(randomTest.getPerson().equals("Human")){
+			if(randomTest.person.equals("Human")){
 				human++;
 			}
-			else if(randomTest.getPerson().equals("Rader")){
+			else if(randomTest.person.equals("Rader")){
 				comp1++;
 			}
-			else if(randomTest.getPerson().equals("CPW")){
+			else if(randomTest.person.equals("CPW")){
 				comp2++;
 			}
 			else {
 				other++;
 			}
-			if(randomTest.getWeapon().equals("Acid")){
+			if(randomTest.weapon.equals("Acid")){
 				w1++;
 			}
-			else if(randomTest.getWeapon().equals("Hammer")){
+			else if(randomTest.weapon.equals("Hammer")){
 				w2++;
 			}
-			else if(randomTest.getWeapon().equals("Laser")){
+			else if(randomTest.weapon.equals("Laser")){
 				w3++;
 			}
 			else {
@@ -275,8 +279,8 @@ public class gameActionTests {
 		ComputerPlayer test = new ComputerPlayer("Rader", 15, 21, Color.red);
 		Set<Card> hand = new  HashSet<Card>();
 		hand.add(human);
-		hand.add(room1);
-		hand.add(weapon1);
+		hand.add(AldersonCard);
+		hand.add(AcidCard);
 		//Tests if that the method will return the one card that the player can disprove if they do no have any of the other cards
 		Solution guess = new Solution("Human", "Hill", "Gravimeter");
 		assertEquals(test.disproveSuggestion(guess, hand).getCardName(), "Human");
@@ -314,6 +318,39 @@ public class gameActionTests {
 	@Test
 	//
 	public void handleSuggestionTest(){
-		
+		ComputerPlayer rader= new ComputerPlayer("Rader", 9, 19, Color.red);
+		ComputerPlayer CPW = new ComputerPlayer("CPW", 9, 17, Color.magenta);
+		Player humanPlayer = new Player("Human", 20,5, Color.blue);
+		ComputerPlayer sava = new ComputerPlayer("Sava", 13, 12, Color.green);
+		rader.setHand(AcidCard);
+		rader.setHand(AldersonCard);
+		rader.setHand(human);
+		CPW.setHand(HammerCard);
+		CPW.setHand(StrattonCard);
+		CPW.setHand(raderCard);
+		sava.setHand(LaserCard);
+		sava.setHand(SavaCard);
+		sava.setHand(BeakerCard);
+		humanPlayer.setHand(QuartzCard);
+		humanPlayer.setHand(LibraryCard);
+		humanPlayer.setHand(CPWCard);
+		//Rader is accuser - Tests that if no player can disprove suggestion, returns null
+		Solution suggestionNull = new Solution("Snieder", "Gravimeter", "Hill");
+		assertTrue(board.handleSuggestion()==null);
+		//Tests that only accusing player (rader)  can disprove the suggestion
+		Solution suggestionAccusing = new Solution("Snieder", "Gravimeter", "Alderson");
+		assertTrue(board.handleSuggestion()==null);
+		//Rader is accuser - Tests that if the human can disprove it, the card that the human has is returned
+		Solution suggestionHuman = new Solution("CPW", "Gravimeter", "Hill");
+		assertTrue(board.handleSuggestion().getCardName().equalsIgnoreCase("CPW"));
+		//Human is accuser - Tests that returns null if only human can disprove and human is accuser
+		Solution suggestionHuman2 = new Solution("Snieder", "Gravimeter", "Library");
+		assertTrue(board.handleSuggestion()==null);
+		//Rader is accuser - Tests that if two players can disprove, the first one in the list is the one to show the card
+		Solution suggestion2Players = new Solution("Sava", "Hammer", "Alderson");
+		assertTrue(board.handleSuggestion().getCardName().equalsIgnoreCase("Hammer"));
+		//CPW is accuser - Tests that if human and another player can disprove, the first one returns card
+		Solution suggestion2Players2 = new Solution("Sava", "Quartz", "Hill");
+		assertTrue(board.handleSuggestion().getCardName().equalsIgnoreCase("Sava"));
 	}
 }

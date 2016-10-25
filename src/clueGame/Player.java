@@ -1,16 +1,32 @@
 package clueGame;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Set;
+import java.util.*;
 
 public class Player {
 	private String playerName;
 	protected int row;
 	protected int col;
 	private Color color;
+	protected Set<Card> hand;
+	protected Set<Card> seen;
 	
+	public Set<Card> getHand() {
+		return hand;
+	}
+
+	public void setHand(Card c) {
+		hand.add(c);
+	}
+
+	public Set<Card> getSeen() {
+		return seen;
+	}
+
+	public void setSeen(Card c) {
+		seen.add(c);
+	}
+
 	public String getPlayerName() {
 		return playerName;
 	}
@@ -33,18 +49,20 @@ public class Player {
 		this.row = row;
 		this.col = col;
 		this.color = color;
+		seen = new HashSet<Card>();
+		hand = new HashSet<Card>();
 	}
 
 	public Card disproveSuggestion(Solution suggestion, Set<Card> hand){
 		ArrayList<Card> inCommon = new ArrayList<Card>();
 		for(Card c: hand){
-			if(c.getCardName().equalsIgnoreCase(suggestion.getPerson())){
+			if(c.getCardName().equalsIgnoreCase(suggestion.person)){
 				inCommon.add(c);
 			}
-			if(c.getCardName().equalsIgnoreCase(suggestion.getWeapon())){
+			if(c.getCardName().equalsIgnoreCase(suggestion.weapon)){
 				inCommon.add(c);
 			}
-			if(c.getCardName().equalsIgnoreCase(suggestion.getRoom())){
+			if(c.getCardName().equalsIgnoreCase(suggestion.room)){
 				inCommon.add(c);
 			}
 		}
