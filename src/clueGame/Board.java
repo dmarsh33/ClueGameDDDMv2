@@ -351,7 +351,13 @@ public class Board {
 		dealtCards.add(tool);
 	}
 	
-	public Card handleSuggestion(){
+	public Card handleSuggestion(ArrayList<Player> order, Solution suggestion){
+		for(int i = 0; i < order.size()-1; i++){
+			Card c = order.get(i).disproveSuggestion(suggestion, order.get(i).getHand());
+			if(c!=null){
+				return c;
+			}
+		}
 		return null;
 	}
 	
