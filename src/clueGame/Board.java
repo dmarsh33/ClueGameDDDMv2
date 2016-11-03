@@ -320,20 +320,29 @@ public class Board {
 		Card person = null;
 		Card location = null;
 		Card tool = null;
+		boolean roomSelected = false;
+		boolean personSelected = false;
+		boolean weaponSelected = false;
 		for(int i = 0; i < 101; i++){
 			int random = new Random().nextInt(initialDeck.size()-1);
 			Card c = initialDeck.get(random);
 			if(c.getType()==CardType.PERSON){
 				name = c.getCardName();
 				person = c;
+				personSelected = true;
 			}
 			else if(c.getType()==CardType.ROOM){
 				room = c.getCardName();
 				location = c;
+				roomSelected = true;
 			}
 			else if(c.getType()==CardType.WEAPON){
 				weapon = c.getCardName();
 				tool = c;
+				weaponSelected = true;
+			}
+			if(personSelected && roomSelected && weaponSelected){
+				break;
 			}
 		}
 		answer = new Solution(name, weapon, room);
