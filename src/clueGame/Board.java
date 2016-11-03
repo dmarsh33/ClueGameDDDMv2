@@ -9,23 +9,17 @@ import java.util.*;
 import javax.swing.plaf.synth.SynthStyle;
 
 public class Board {
-	private String boardConfigFile;
-	private String roomConfigFile;
-	private String weaponConfigFile;
-	private String playerConfigFile;
-	private int numRows;
-	private int numColumns;
+	private String boardConfigFile, roomConfigFile, weaponConfigFile, playerConfigFile;
+	private int numRows, numColumns;
 	public final int MAX_BOARD_SIZE = 50;
 	private BoardCell[][] board;
 	private Map<Character,String> rooms;
 	private Map<BoardCell, Set<BoardCell>> adjMatrix;
 	private Map<String, Player> people;
 	private ArrayList<Player> players;
-	private Set<BoardCell> targets;
-	private Set<BoardCell> visited;
+	private Set<BoardCell> targets, visited;
 	private Map<String,Card> deck;
-	private ArrayList<Card> dealtCards;
-	private ArrayList<Card> initialDeck;
+	private ArrayList<Card> dealtCards, initialDeck;
 	private Solution answer;
 	
 	// variable used for singleton pattern
