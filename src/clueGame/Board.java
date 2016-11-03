@@ -10,7 +10,7 @@ import javax.swing.plaf.synth.SynthStyle;
 
 public class Board {
 	private String boardConfigFile, roomConfigFile, weaponConfigFile, playerConfigFile;
-	private int numRows, numColumns;
+	private int numRows, numColumns, peopleCounter, weaponCounter, roomCounter;
 	public final int MAX_BOARD_SIZE = 50;
 	private BoardCell[][] board;
 	private Map<Character,String> rooms;
@@ -18,6 +18,7 @@ public class Board {
 	private Map<String, Player> people;
 	private ArrayList<Player> players;
 	private Set<BoardCell> targets, visited;
+	//deck is used for the purpose of testing
 	private Map<String,Card> deck;
 	private ArrayList<Card> dealtCards, initialDeck;
 	private Solution answer;
@@ -28,6 +29,9 @@ public class Board {
 	private Board() {
 		numRows = 0;
 		numColumns = 0;
+		peopleCounter = 0;
+		weaponCounter = 0;
+		roomCounter = 0;
 		rooms = new HashMap<Character, String>();
 		board = new BoardCell[numRows][numColumns];
 		people = new HashMap<String, Player>();
@@ -81,6 +85,8 @@ public class Board {
 			Player player = new Player(name, r, column, c);
 			people.put(name, player);
 			Card card = new Card(name, CardType.PERSON);
+			initialDeck.add(card);
+			peopleCounter++;
 			deck.put(name, card);
 		}	
 	}
@@ -103,6 +109,8 @@ public class Board {
 		while(in.hasNextLine()){
 			String name = in.nextLine();
 			Card card = new Card(name, CardType.WEAPON);
+			initialDeck.add(card);
+			weaponCounter++;
 			deck.put(name, card);
 		}
 	
@@ -126,11 +134,25 @@ public class Board {
 			rooms.put(dataArray[0].charAt(0), dataArray[1].substring(1)); // substring is required to account for a space after the comma
 			if(dataArray[2].substring(1).equalsIgnoreCase("card")){
 				Card card = new Card(dataArray[1].substring(1), CardType.ROOM);
+				initialDeck.add(card);
+				roomCounter++;
 				deck.put(dataArray[1].substring(1), card);
 			}
 		}
 	}
 	
+	public int getPeopleCounter() {
+		return peopleCounter;
+	}
+
+	public int getWeaponCounter() {
+		return weaponCounter;
+	}
+
+	public int getRoomCounter() {
+		return roomCounter;
+	}
+
 	public void loadBoardConfig() throws FileNotFoundException{
 		FileReader reader = new FileReader(boardConfigFile);
 		Scanner in = new Scanner(reader);		
@@ -292,9 +314,9 @@ public class Board {
 	}
 	
 	public void dealCards(){
-		for(String s:deck.keySet()){
+		/*for(String s:deck.keySet()){
 			initialDeck.add(deck.get(s));
-		}
+		}*/
 		//to shuffle deck
 		Collections.shuffle(initialDeck);
 		for(String st:people.keySet()){
@@ -372,6 +394,10 @@ public class Board {
 		return dealtCards;
 	}
 	
+	public ArrayList<Card> getInitialDeck() {
+		return initialDeck;
+	}
+
 	public ArrayList<Player> getPlayersList(){
 		return players;
 	}

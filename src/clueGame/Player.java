@@ -5,11 +5,9 @@ import java.util.*;
 
 public class Player {
 	private String playerName;
-	protected int row;
-	protected int col;
+	protected int row, col;
 	private Color color;
-	protected Set<Card> hand;
-	protected Set<Card> seen;
+	protected Set<Card> hand, seen;
 	
 	public Set<Card> getHand() {
 		return hand;

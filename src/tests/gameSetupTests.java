@@ -66,7 +66,7 @@ public class gameSetupTests {
 	@Test
 	//This tests that the deck of cards was created with correct card names and types.
 	public void testCreateDeck(){
-		Map<String, Card> deck = board.getDeck();
+		/*Map<String, Card> deck = board.getDeck();
 		//tests human card
 		Card test = deck.get("Human");
 		assertTrue(test.equals(human));
@@ -92,7 +92,17 @@ public class gameSetupTests {
 		test = deck.get("Hammer");
 		assertTrue(test.equals(weapon2));
 		//tests that the the deck contains 21 cards
-		assertEquals(21, deck.size());
+		assertEquals(21, deck.size());*/
+		ArrayList<Card> testDeck = board.getInitialDeck();
+		
+		assertEquals(21, testDeck.size()); //Makes sure that there is the correct number of cards
+		assertEquals(6, board.getPeopleCounter()); 	// Makes sure that there are the correct number of people cards
+		assertEquals(6, board.getWeaponCounter());//Makes sure that there are the correct number of weapon cards
+		assertEquals(9, board.getRoomCounter());	//Makes sure that there are the correct number of room cards
+
+		assertEquals("Marquez", testDeck.get(2).getCardName()); //checks that a person is loaded
+		assertEquals("Hellman", testDeck.get(11).getCardName()); //checks that a weapon is loaded
+		assertEquals("Quartz", testDeck.get(17).getCardName()); //checks that a planet is loaded
 	}
 	
 	@Test

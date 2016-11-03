@@ -4,8 +4,7 @@ import java.awt.Color;
 import java.util.*;
 
 public class ComputerPlayer extends Player{
-	private int row;
-	private int col;
+	private int row, col;
 	public ComputerPlayer(String playerName, int row, int col, Color color) {
 		super(playerName, row, col, color);
 		this.row = row;
@@ -27,8 +26,7 @@ public class ComputerPlayer extends Player{
 	public Solution createSuggestion(Set<Card> notSeen, String room){
 		ArrayList<Card> people = new ArrayList<Card>();
 		ArrayList<Card> weapon = new ArrayList<Card>();
-		String person;
-		String tool;
+		String person, tool;
 		for(Card c: notSeen){
 			if(c.getType()== CardType.PERSON){
 				people.add(c);
