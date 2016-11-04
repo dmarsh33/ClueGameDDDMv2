@@ -64,35 +64,8 @@ public class gameSetupTests {
 		assertEquals(0, testComputer2.getCol());
 	}
 	@Test
-	//This tests that the deck of cards was created with correct card names and types.
-	public void testCreateDeck(){
-		/*Map<String, Card> deck = board.getDeck();
-		//tests human card
-		Card test = deck.get("Human");
-		assertTrue(test.equals(human));
-		//tests computer card at top of list
-		test = deck.get("Rader");
-		assertTrue(test.equals(computer1));
-		//tests computer player at bottom of list
-		test = deck.get("CPW");
-		assertTrue(test.equals(computer2));
-		//tests room card at top of list
-		test = deck.get("Alderson");
-		assertTrue(test.equals(room1));
-		//tests room card in middle of list
-		test = deck.get("Berthoud");
-		assertTrue(test.equals(room2));
-		//tests room card at bottom of list
-		test = deck.get("Hill");
-		assertTrue(test.equals(room3));
-		//tests weapon card at top of list
-		test = deck.get("Acid");
-		assertTrue(test.equals(weapon1));
-		//tests weapon card at bottom of list
-		test = deck.get("Hammer");
-		assertTrue(test.equals(weapon2));
-		//tests that the the deck contains 21 cards
-		assertEquals(21, deck.size());*/
+	//This tests that a deck of cards of people was created and that it has the right number of people.
+	public void testCreateDeckPeople(){
 		ArrayList<Card> testDeck = board.getInitialDeck();
 		
 		assertEquals(21, testDeck.size()); //Makes sure that there is the correct number of cards
@@ -104,6 +77,17 @@ public class gameSetupTests {
 		assertEquals("Hellman", testDeck.get(11).getCardName()); //checks that a weapon is loaded
 		assertEquals("Quartz", testDeck.get(17).getCardName()); //checks that a planet is loaded
 	}
+	@Test
+	//This tests that a deck of cards of weapons was created and that it has the right number of weapons.
+	public void testCreateDeckWeapon(){
+		
+	}
+	@Test
+	//This tests that a deck of cards of rooms was created and that it has the right number of rooms.
+	public void testCreateDeckRoom(){
+		
+	}
+	
 	
 	@Test
 	//this tests that cards are dealt correctly

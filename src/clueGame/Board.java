@@ -10,7 +10,7 @@ import javax.swing.plaf.synth.SynthStyle;
 
 public class Board {
 	private String boardConfigFile, roomConfigFile, weaponConfigFile, playerConfigFile;
-	private int numRows, numColumns, peopleCounter, weaponCounter, roomCounter;
+	private int numRows, numColumns;
 	public final int MAX_BOARD_SIZE = 50;
 	private BoardCell[][] board;
 	private Map<Character,String> rooms;
@@ -20,7 +20,7 @@ public class Board {
 	private Set<BoardCell> targets, visited;
 	//deck is used for the purpose of testing
 	private Map<String,Card> deck;
-	private ArrayList<Card> dealtCards, initialDeck;
+	private ArrayList<Card> dealtCards, deckPeople, deckWeapons, deckRooms;
 	private Solution answer;
 	
 	// variable used for singleton pattern
@@ -29,14 +29,13 @@ public class Board {
 	private Board() {
 		numRows = 0;
 		numColumns = 0;
-		peopleCounter = 0;
-		weaponCounter = 0;
-		roomCounter = 0;
 		rooms = new HashMap<Character, String>();
 		board = new BoardCell[numRows][numColumns];
 		people = new HashMap<String, Player>();
 		deck = new HashMap<String, Card>();
-		initialDeck = new ArrayList<Card>();
+		deckPeople = new ArrayList<Card>();
+		deckWeapons = new ArrayList<Card>();
+		deckRooms = new ArrayList<Card>();
 		dealtCards = new ArrayList<Card>();
 		players = new ArrayList<Player>();
 		adjMatrix = new HashMap<BoardCell, Set<BoardCell>>();
@@ -85,8 +84,7 @@ public class Board {
 			Player player = new Player(name, r, column, c);
 			people.put(name, player);
 			Card card = new Card(name, CardType.PERSON);
-			initialDeck.add(card);
-			peopleCounter++;
+			deckPeople.add(card);
 			deck.put(name, card);
 		}	
 	}
@@ -109,8 +107,7 @@ public class Board {
 		while(in.hasNextLine()){
 			String name = in.nextLine();
 			Card card = new Card(name, CardType.WEAPON);
-			initialDeck.add(card);
-			weaponCounter++;
+			deckWeapons.add(card);
 			deck.put(name, card);
 		}
 	
@@ -134,25 +131,12 @@ public class Board {
 			rooms.put(dataArray[0].charAt(0), dataArray[1].substring(1)); // substring is required to account for a space after the comma
 			if(dataArray[2].substring(1).equalsIgnoreCase("card")){
 				Card card = new Card(dataArray[1].substring(1), CardType.ROOM);
-				initialDeck.add(card);
-				roomCounter++;
+				deckRooms.add(card);
 				deck.put(dataArray[1].substring(1), card);
 			}
 		}
 	}
 	
-	public int getPeopleCounter() {
-		return peopleCounter;
-	}
-
-	public int getWeaponCounter() {
-		return weaponCounter;
-	}
-
-	public int getRoomCounter() {
-		return roomCounter;
-	}
-
 	public void loadBoardConfig() throws FileNotFoundException{
 		FileReader reader = new FileReader(boardConfigFile);
 		Scanner in = new Scanner(reader);		
@@ -314,9 +298,10 @@ public class Board {
 	}
 	
 	public void dealCards(){
-		/*for(String s:deck.keySet()){
+		ArrayList<Card> initialDeck = new ArrayList<Card>();
+		for(String s:deck.keySet()){
 			initialDeck.add(deck.get(s));
-		}*/
+		}
 		//to shuffle deck
 		Collections.shuffle(initialDeck);
 		for(String st:people.keySet()){
