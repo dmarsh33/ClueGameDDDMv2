@@ -298,6 +298,7 @@ public class Board {
 	}
 	
 	public void dealCards(){
+		selectAnswer();
 		ArrayList<Card> initialDeck = new ArrayList<Card>();
 		for(String s:deck.keySet()){
 			initialDeck.add(deck.get(s));
@@ -307,7 +308,6 @@ public class Board {
 		for(String st:people.keySet()){
 			players.add(people.get(st));
 		}
-		selectAnswer();
 		int numPlayers = players.size();
 		for(int i = 0; i < numPlayers; i++){
 			for (int j = 0; j< initialDeck.size(); j++){
@@ -350,9 +350,17 @@ public class Board {
 	public ArrayList<Card> getDealtCards(){
 		return dealtCards;
 	}
-	
-	public ArrayList<Card> getInitialDeck() {
-		return initialDeck;
+
+	public ArrayList<Card> getDeckPeople() {
+		return deckPeople;
+	}
+
+	public ArrayList<Card> getDeckWeapons() {
+		return deckWeapons;
+	}
+
+	public ArrayList<Card> getDeckRooms() {
+		return deckRooms;
 	}
 
 	public ArrayList<Player> getPlayersList(){

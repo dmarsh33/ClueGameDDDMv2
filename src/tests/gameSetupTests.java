@@ -66,26 +66,26 @@ public class gameSetupTests {
 	@Test
 	//This tests that a deck of cards of people was created and that it has the right number of people.
 	public void testCreateDeckPeople(){
-		ArrayList<Card> testDeck = board.getInitialDeck();
-		
-		assertEquals(21, testDeck.size()); //Makes sure that there is the correct number of cards
-		assertEquals(6, board.getPeopleCounter()); 	// Makes sure that there are the correct number of people cards
-		assertEquals(6, board.getWeaponCounter());//Makes sure that there are the correct number of weapon cards
-		assertEquals(9, board.getRoomCounter());	//Makes sure that there are the correct number of room cards
-
-		assertEquals("Marquez", testDeck.get(2).getCardName()); //checks that a person is loaded
-		assertEquals("Hellman", testDeck.get(11).getCardName()); //checks that a weapon is loaded
-		assertEquals("Quartz", testDeck.get(17).getCardName()); //checks that a planet is loaded
+		ArrayList<Card> testPeople = board.getDeckPeople();
+		assertEquals(6, testPeople.size());
+		assertEquals(CardType.PERSON, testPeople.get(0).getType());
+		assertEquals(CardType.PERSON, testPeople.get(5).getType());
 	}
 	@Test
 	//This tests that a deck of cards of weapons was created and that it has the right number of weapons.
 	public void testCreateDeckWeapon(){
-		
+		ArrayList<Card> testWeapons = board.getDeckWeapons();
+		assertEquals(6, testWeapons.size());
+		assertEquals(CardType.WEAPON, testWeapons.get(0).getType());
+		assertEquals(CardType.WEAPON, testWeapons.get(5).getType());
 	}
 	@Test
 	//This tests that a deck of cards of rooms was created and that it has the right number of rooms.
 	public void testCreateDeckRoom(){
-		
+		ArrayList<Card> testRoom = board.getDeckRooms();
+		assertEquals(9, testRoom.size());
+		assertEquals(CardType.ROOM, testRoom.get(0).getType());
+		assertEquals(CardType.ROOM, testRoom.get(5).getType());
 	}
 	
 	
