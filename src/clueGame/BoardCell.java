@@ -1,5 +1,7 @@
 package clueGame;
 
+import java.awt.Graphics;
+
 public class BoardCell {
 	private int row;
 	private int column;
@@ -12,6 +14,10 @@ public class BoardCell {
 		this.setColumn(column);
 		this.initial = init;
 		this.direction = dir;
+	}
+	
+	public void draw(Graphics g){
+		
 	}
 
 	public int getColumn() {

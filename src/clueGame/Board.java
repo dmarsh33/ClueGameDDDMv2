@@ -2,13 +2,15 @@ package clueGame;
 
 import java.lang.reflect.Field;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.*;
 
+import javax.swing.JPanel;
 import javax.swing.plaf.synth.SynthStyle;
 
-public class Board {
+public class Board extends JPanel {
 	private String boardConfigFile, roomConfigFile, weaponConfigFile, playerConfigFile;
 	private int numRows, numColumns;
 	public final int MAX_BOARD_SIZE = 50;
@@ -59,6 +61,10 @@ public class Board {
 		}
 
 		calcAdjacencies();	
+	}
+	
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
 	}
 	
 	public void setConfigFiles(String string, String string2, String string3, String string4) {

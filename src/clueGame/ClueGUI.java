@@ -7,9 +7,15 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class ClueGUI extends JFrame{
+	ClueDialog detectiveNotes;
+	Board board;
 	public ClueGUI(){
+		board = Board.getInstance();
 		setSize(700,400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
+		detectiveNotes = new ClueDialog(board.getDeckPeople(), board.getDeckWeapons(), board.getDeckRooms());
 		createLayout();
 	}
 	public void createLayout(){
@@ -51,9 +57,12 @@ public class ClueGUI extends JFrame{
 		resultPanel.add(resultBox);
 		panel.add(resultPanel);
 		add(panel, BorderLayout.SOUTH);
+		add(detectiveNotes, BorderLayout.EAST);
 	}
+	
+	
 	public static void main(String[] args){
 		ClueGUI clue = new ClueGUI();
-		clue.setVisible(true);
+		clue.setVisible(true); 
 	}
 }
