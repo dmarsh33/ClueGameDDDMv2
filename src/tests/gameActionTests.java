@@ -188,13 +188,13 @@ public class gameActionTests {
 		Solution testCorrect = board.getSolution();
 		assertTrue(board.checkAccusation(testCorrect));
 		//Tests soluton with incorrect weapon
-		Solution testIncorrectWeapon = new Solution(board.getSolution().person, "x", board.getSolution().room);
+		Solution testIncorrectWeapon = new Solution(board.getSolution().getPerson(), "x", board.getSolution().getRoom());
 		assertFalse(board.checkAccusation(testIncorrectWeapon));
 		//Tests solution with incorrect person
-		Solution testIncorrectPerson = new Solution("x", board.getSolution().weapon, board.getSolution().room);
+		Solution testIncorrectPerson = new Solution("x", board.getSolution().getWeapon(), board.getSolution().getRoom());
 		assertFalse(board.checkAccusation(testIncorrectPerson));
 		//Tests solution with incorrect room
-		Solution testIncorrectRoom = new Solution(board.getSolution().person, board.getSolution().weapon, "x");
+		Solution testIncorrectRoom = new Solution(board.getSolution().getPerson(), board.getSolution().getWeapon(), "x");
 		assertFalse(board.checkAccusation(testIncorrectRoom));
 	}
 	
@@ -214,16 +214,16 @@ public class gameActionTests {
 		String room = rooms.get(r);
 		//tests to see if the suggestion room is the same room the player is in for two rooms
 		Solution correctRoom = test.createSuggestion(notSeen, room);
-		assertTrue(correctRoom.room.equals("Brown"));
+		assertTrue(correctRoom.getRoom().equals("Brown"));
 		ComputerPlayer test2 = new ComputerPlayer("CPW", 3, 6, Color.red);
 		r = board.getCellAt(3, 6).getInitial();
 		rooms = board.getLegend();
 		room = rooms.get(r);
 		Solution correctRoom2 = test2.createSuggestion(notSeen, room);
-		assertTrue(correctRoom2.room.equals("Hill"));
+		assertTrue(correctRoom2.getRoom().equals("Hill"));
 		//Tests if only one weapon or person is not seen, it is selected as a suggestion
 		Solution onlyOneLeft = test2.createSuggestion(notSeen, room);
-		assertTrue(onlyOneLeft.person.equals("Human") && onlyOneLeft.weapon.equals("Acid"));
+		assertTrue(onlyOneLeft.getPerson().equals("Human") && onlyOneLeft.getWeapon().equals("Acid"));
 		//Tests if the suggestion is randomly chosen when more than one card is not seen of each type
 		notSeen.add(raderCard);
 		notSeen.add(CPWCard);
@@ -238,25 +238,25 @@ public class gameActionTests {
 		int other = 0;
 		for(int i = 1; i < 100; i++){
 			Solution randomTest = test2.createSuggestion(notSeen, room);
-			if(randomTest.person.equals("Human")){
+			if(randomTest.getPerson().equals("Human")){
 				human++;
 			}
-			else if(randomTest.person.equals("Rader")){
+			else if(randomTest.getPerson().equals("Rader")){
 				comp1++;
 			}
-			else if(randomTest.person.equals("CPW")){
+			else if(randomTest.getPerson().equals("CPW")){
 				comp2++;
 			}
 			else {
 				other++;
 			}
-			if(randomTest.weapon.equals("Acid")){
+			if(randomTest.getWeapon().equals("Acid")){
 				w1++;
 			}
-			else if(randomTest.weapon.equals("Hammer")){
+			else if(randomTest.getWeapon().equals("Hammer")){
 				w2++;
 			}
-			else if(randomTest.weapon.equals("Laser")){
+			else if(randomTest.getWeapon().equals("Laser")){
 				w3++;
 			}
 			else {

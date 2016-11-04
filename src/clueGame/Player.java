@@ -54,13 +54,13 @@ public class Player {
 	public Card disproveSuggestion(Solution suggestion, Set<Card> hand){
 		ArrayList<Card> inCommon = new ArrayList<Card>();
 		for(Card c: hand){
-			if(c.getCardName().equalsIgnoreCase(suggestion.person)){
+			if(c.getCardName().equalsIgnoreCase(suggestion.getPerson())){
 				inCommon.add(c);
 			}
-			if(c.getCardName().equalsIgnoreCase(suggestion.weapon)){
+			if(c.getCardName().equalsIgnoreCase(suggestion.getWeapon())){
 				inCommon.add(c);
 			}
-			if(c.getCardName().equalsIgnoreCase(suggestion.room)){
+			if(c.getCardName().equalsIgnoreCase(suggestion.getRoom())){
 				inCommon.add(c);
 			}
 		}
