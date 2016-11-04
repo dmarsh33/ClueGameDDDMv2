@@ -269,33 +269,6 @@ public class Board {
 		findAllTargets(x,y,pathLength);
 	}
 	
-	public Map<Character, String> getLegend() {
-		return rooms;
-	}
-	
-	public Map<String, Player> getPlayers(){
-		return people;
-	}
-	
-	public int getNumRows() {
-		return numRows;
-	}
-	
-	public int getNumColumns() {
-		return numColumns;
-	}
-	
-	public BoardCell getCellAt(int i, int j) {
-		return board[i][j];
-	}
-
-	public Set<BoardCell> getAdjList(int i, int j) {
-		return adjMatrix.get(board[i][j]);
-	}
-
-	public Set<BoardCell> getTargets() {
-		return targets;
-	}
 	
 	public void dealCards(){
 		selectAnswer();
@@ -343,8 +316,36 @@ public class Board {
 		return null;
 	}
 	
+	
 	public boolean checkAccusation(Solution accusation){
 		return answer.equals(accusation);
+	}
+	public Map<Character, String> getLegend() {
+		return rooms;
+	}
+	
+	public Map<String, Player> getPlayers(){
+		return people;
+	}
+	
+	public int getNumRows() {
+		return numRows;
+	}
+	
+	public int getNumColumns() {
+		return numColumns;
+	}
+	
+	public BoardCell getCellAt(int i, int j) {
+		return board[i][j];
+	}
+
+	public Set<BoardCell> getAdjList(int i, int j) {
+		return adjMatrix.get(board[i][j]);
+	}
+
+	public Set<BoardCell> getTargets() {
+		return targets;
 	}
 	
 	public ArrayList<Card> getDealtCards(){
