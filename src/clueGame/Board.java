@@ -24,7 +24,7 @@ public class Board extends JPanel {
 	private Map<String,Card> deck;
 	private ArrayList<Card> dealtCards, deckPeople, deckWeapons, deckRooms;
 	private Solution answer;
-	
+	//Graphics g = null;
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
 	// ctor is private to ensure only one can be created
@@ -62,9 +62,22 @@ public class Board extends JPanel {
 
 		calcAdjacencies();	
 	}
-	
+
+	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
+		for(int i = 0; i < numRows; i++){
+			for(int j = 0; j < numColumns; j++){
+				getInstance().getCellAt(i, j).draw(g);
+			}
+		}
+		
+
+		for(String p : people.keySet()){
+			Player current = people.get(p);
+			g.setColor(current.getColor());
+			g.fillOval(current.getCol() * 25, current.getRow() * 25, 25, 25);
+		}
 	}
 	
 	public void setConfigFiles(String string, String string2, String string3, String string4) {
@@ -145,7 +158,7 @@ public class Board extends JPanel {
 	
 	public void loadBoardConfig() throws FileNotFoundException{
 		FileReader reader = new FileReader(boardConfigFile);
-		Scanner in = new Scanner(reader);		
+		Scanner in = new Scanner(reader);	
 		ArrayList<String[]> rows = new ArrayList<String[]>();
 		while (in.hasNextLine()){
 			String dataLine = in.nextLine();
@@ -160,6 +173,8 @@ public class Board extends JPanel {
 		numRows = rows.size();
 		board = new BoardCell[numRows][numColumns];
 		DoorDirection dir;
+		boolean isname = false;
+		
 		for(int i=0; i<numRows; i++){
 			for(int j=0; j<numColumns; j++){
 				if(rows.get(i)[j].length() > 1){
@@ -176,18 +191,20 @@ public class Board extends JPanel {
 						case 'R':
 							dir = DoorDirection.RIGHT;
 							break;
+						case 'N':
+							isname = true;
 						default:
 							dir = DoorDirection.NONE;
 					}
 				} else {
 					dir = DoorDirection.NONE;
 				}
+				
 				if(rooms.containsKey(rows.get(i)[j].charAt(0))){
-					board[i][j] = new BoardCell(i,j,rows.get(i)[j].charAt(0),dir);
+					board[i][j] = new BoardCell(i,j,rows.get(i)[j].charAt(0),dir, isname, rooms.get(rows.get(i)[j].charAt(0)));
 				} else {
 					throw new BadConfigFormatException("Invalid room type");
 				}
-				
 			}
 		}
 	}

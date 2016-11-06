@@ -12,6 +12,8 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 public class ClueDialog extends JDialog {
+	Board board;
+	JCheckBox p;
 	ArrayList<JCheckBox> peopleBoxes = new ArrayList<JCheckBox>();
 	ArrayList<JCheckBox> weaponBoxes = new ArrayList<JCheckBox>();
 	ArrayList<JCheckBox> roomBoxes = new ArrayList<JCheckBox>();
@@ -19,34 +21,30 @@ public class ClueDialog extends JDialog {
 	JComboBox<String> weaponGuess = new JComboBox<String>();
 	JComboBox<String> roomGuess = new JComboBox<String>();
 	
-	public ClueDialog(ArrayList<Card> deckPeople, ArrayList<Card> deckWeapons, ArrayList<Card> deckRooms){
-		setSize(500,1000);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		createLayout(deckPeople, deckWeapons, deckRooms);
-	}
-	
-	public void createLayout(ArrayList<Card> deckPeople, ArrayList<Card> deckWeapons, ArrayList<Card> deckRooms){
-		for(Card person : deckPeople){
-			JCheckBox p = new JCheckBox();
+	public ClueDialog(){
+		board = Board.getInstance();
+		setTitle("Detective Notes");
+		setSize(500,600);
+		setLayout(new GridLayout(3, 2));
+		for(Card person : board.getDeckPeople()){
+			p = new JCheckBox();
 			p.setText(person.getCardName());
 			peopleBoxes.add(p);
 			personGuess.addItem(person.getCardName());
 		}
-		for(Card weapon : deckWeapons){
+		for(Card weapon : board.getDeckWeapons()){
 			JCheckBox w = new JCheckBox();
 			w.setText(weapon.getCardName());
-			peopleBoxes.add(w);
-			personGuess.addItem(weapon.getCardName());
+			weaponBoxes.add(w);
+			weaponGuess.addItem(weapon.getCardName());
 		}
-		for(Card room : deckRooms){
+		for(Card room : board.getDeckRooms()){
 			JCheckBox r = new JCheckBox();
 			r.setText(room.getCardName());
-			peopleBoxes.add(r);
-			personGuess.addItem(room.getCardName());
+			roomBoxes.add(r);
+			roomGuess.addItem(room.getCardName());
 		}
 		
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(3, 2));
 		JPanel peoplePanel = new JPanel();
 		JPanel weaponPanel = new JPanel();
 		JPanel roomPanel = new JPanel();
@@ -55,6 +53,7 @@ public class ClueDialog extends JDialog {
 		roomPanel.setLayout(new GridLayout(0, 2));
 		
 		for(JCheckBox peopleBox : peopleBoxes){
+			
 			peoplePanel.add(peopleBox);
 		}
 		for(JCheckBox weaponBox : weaponBoxes){
@@ -80,12 +79,13 @@ public class ClueDialog extends JDialog {
 		weaponGuessPanel.add(weaponGuess);
 		roomGuessPanel.add(roomGuess);
 		
-		panel.add(peoplePanel);
-		panel.add(peopleGuessPanel);
-		panel.add(roomPanel);
-		panel.add(roomGuessPanel);
-		panel.add(weaponPanel);
-		panel.add(weaponGuessPanel);
-		
+		add(peoplePanel);
+		add(peopleGuessPanel);
+		add(roomPanel);
+		add(roomGuessPanel);
+		add(weaponPanel);
+		add(weaponGuessPanel);
 	}
+	
+	
 }

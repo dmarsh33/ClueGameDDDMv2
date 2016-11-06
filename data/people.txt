@@ -1,6 +1,6 @@
 Human, blue, 0, 6
 Rader, red, 0, 18
-Hellman, yellow, 13, 24
+Hellman, cyan, 13, 24
 Snieder, orange, 23, 17
 Sava, green, 23, 7
 CPW, magenta, 10, 0

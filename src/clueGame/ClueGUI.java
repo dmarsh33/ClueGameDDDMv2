@@ -5,17 +5,18 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ClueGUI extends JFrame{
-	ClueDialog detectiveNotes;
 	Board board;
+	private ClueDialog detectiveNotes;
 	public ClueGUI(){
 		board = Board.getInstance();
-		setSize(700,400);
+		board.setConfigFiles("data/boardLayout.csv", "data/layout.txt", "data/people.txt", "data/weapons.txt");		
+		board.initialize();
+		setSize(650,800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		
-		detectiveNotes = new ClueDialog(board.getDeckPeople(), board.getDeckWeapons(), board.getDeckRooms());
 		createLayout();
 	}
 	public void createLayout(){
@@ -57,12 +58,23 @@ public class ClueGUI extends JFrame{
 		resultPanel.add(resultBox);
 		panel.add(resultPanel);
 		add(panel, BorderLayout.SOUTH);
-		add(detectiveNotes, BorderLayout.EAST);
+		add(board, BorderLayout.CENTER);
+		
+		JButton menuButton = new JButton("Menu");
+		add(menuButton, BorderLayout.NORTH);
+		menuButton.addActionListener(new ButtonListener());
+	}
+	class ButtonListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			detectiveNotes = new ClueDialog();
+			detectiveNotes.setVisible(true);
+		}
 	}
 	
 	
 	public static void main(String[] args){
 		ClueGUI clue = new ClueGUI();
 		clue.setVisible(true); 
+		
 	}
 }
