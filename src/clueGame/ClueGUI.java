@@ -13,7 +13,7 @@ public class ClueGUI extends JFrame{
 	private ClueDialog detectiveNotes;
 	public ClueGUI(){
 		board = Board.getInstance();
-		board.setConfigFiles("data/boardLayout.csv", "data/layout.txt", "data/people.txt", "data/weapons.txt");		
+		board.setConfigFiles("data/boardLayout2.csv", "data/layout.txt", "data/people.txt", "data/weapons.txt");		
 		board.initialize();
 		setSize(650,800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -177,6 +177,7 @@ public class Board extends JPanel {
 		
 		for(int i=0; i<numRows; i++){
 			for(int j=0; j<numColumns; j++){
+				isname = false;
 				if(rows.get(i)[j].length() > 1){
 					switch(rows.get(i)[j].charAt(1)){
 						case 'U':
@@ -199,7 +200,7 @@ public class Board extends JPanel {
 				} else {
 					dir = DoorDirection.NONE;
 				}
-				
+				System.out.println(isname);
 				if(rooms.containsKey(rows.get(i)[j].charAt(0))){
 					board[i][j] = new BoardCell(i,j,rows.get(i)[j].charAt(0),dir, isname, rooms.get(rows.get(i)[j].charAt(0)));
 				} else {
