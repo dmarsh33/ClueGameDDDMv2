@@ -61,6 +61,7 @@ public class Board extends JPanel {
 		}
 
 		calcAdjacencies();	
+		dealCards();
 	}
 
 	@Override

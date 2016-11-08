@@ -7,6 +7,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Set;
 
 public class ClueGUI extends JFrame{
 	Board board;
@@ -15,7 +16,7 @@ public class ClueGUI extends JFrame{
 		board = Board.getInstance();
 		board.setConfigFiles("data/boardLayout2.csv", "data/layout.txt", "data/people.txt", "data/weapons.txt");		
 		board.initialize();
-		setSize(650,800);
+		setSize(800,800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		createLayout();
 	}
@@ -59,10 +60,50 @@ public class ClueGUI extends JFrame{
 		panel.add(resultPanel);
 		add(panel, BorderLayout.SOUTH);
 		add(board, BorderLayout.CENTER);
-		
+		add(createMyCardsPanel(), BorderLayout.EAST);
 		JMenuBar menuButton = new JMenuBar();
 		setJMenuBar(menuButton);
 		menuButton.add(createFileMenu());
+		
+		
+	}
+
+	private JPanel createMyCardsPanel(){
+		JPanel myCards = new JPanel();
+		myCards.setLayout(new GridLayout(3,1));
+		myCards.setBorder(new TitledBorder (new EtchedBorder(), "My Cards"));
+		JPanel peoplePanel = new JPanel();
+		peoplePanel.setBorder(new TitledBorder (new EtchedBorder(), "People"));
+		JTextArea peopleBox = new JTextArea(10, 10);
+		peoplePanel.add(peopleBox);
+		JPanel roomsPanel = new JPanel();
+		roomsPanel.setBorder(new TitledBorder (new EtchedBorder(), "Rooms"));
+		JTextArea roomsBox = new JTextArea(10, 10);
+		roomsPanel.add(roomsBox);
+		JPanel weaponsPanel = new JPanel();
+		weaponsPanel.setBorder(new TitledBorder (new EtchedBorder(), "Weapons"));
+		JTextArea weaponsBox = new JTextArea(10, 10);
+		weaponsPanel.add(weaponsBox);
+		Set<Card> humanHand = board.getPlayers().get("Human").getHand();
+		for(Card c : humanHand){
+			switch (c.getType()){
+			case PERSON: 
+				peopleBox.append(c.getCardName() + "\n");
+				break;
+			case WEAPON:
+				weaponsBox.append(c.getCardName() + "\n");
+				break;
+				
+			case ROOM: 
+				roomsBox.append(c.getCardName() + "\n");
+				break;
+			}
+		}
+		
+		myCards.add(peoplePanel);
+		myCards.add(roomsPanel);
+		myCards.add(weaponsPanel);
+		return myCards;
 	}
 	
 	private JMenu createFileMenu(){
@@ -100,6 +141,7 @@ public class ClueGUI extends JFrame{
 	public static void main(String[] args){
 		ClueGUI clue = new ClueGUI();
 		clue.setVisible(true); 
+		JOptionPane.showMessageDialog(clue, "You are the human", "Welcome to Clue!!", JOptionPane.INFORMATION_MESSAGE);
 		
 	}
 }
