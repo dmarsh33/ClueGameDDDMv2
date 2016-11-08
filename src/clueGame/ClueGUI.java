@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 
 public class ClueGUI extends JFrame{
 	Board board;
-	private ClueDialog detectiveNotes;
+	//private ClueDialog detectiveNotes;
 	public ClueGUI(){
 		board = Board.getInstance();
 		board.setConfigFiles("data/boardLayout2.csv", "data/layout.txt", "data/people.txt", "data/weapons.txt");		
@@ -60,16 +60,41 @@ public class ClueGUI extends JFrame{
 		add(panel, BorderLayout.SOUTH);
 		add(board, BorderLayout.CENTER);
 		
-		JButton menuButton = new JButton("Menu");
-		add(menuButton, BorderLayout.NORTH);
-		menuButton.addActionListener(new ButtonListener());
+		JMenuBar menuButton = new JMenuBar();
+		setJMenuBar(menuButton);
+		menuButton.add(createFileMenu());
 	}
-	class ButtonListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			detectiveNotes = new ClueDialog();
-			detectiveNotes.setVisible(true);
+	
+	private JMenu createFileMenu(){
+		JMenu menu = new JMenu("File");
+		menu.add(createDetectiveNotes());
+		menu.add(createFileExitItem());
+		return menu;
+	}
+	
+	private JMenuItem createFileExitItem(){
+		JMenuItem item = new JMenuItem("Exit");
+		class MenuItemListener implements ActionListener{
+			public void actionPerformed(ActionEvent e){
+				System.exit(0);
+			}
 		}
+		item.addActionListener(new MenuItemListener());
+		return item;
 	}
+	
+	private JMenuItem createDetectiveNotes(){
+		JMenuItem notes = new JMenuItem("Detective Notes");
+		class MenuItemListener implements ActionListener{
+			public void actionPerformed(ActionEvent e){
+				ClueDialog detectiveNotes = new ClueDialog();
+				detectiveNotes.setVisible(true);
+			}
+		}
+		notes.addActionListener(new MenuItemListener());
+		return notes;
+	}
+	
 	
 	
 	public static void main(String[] args){

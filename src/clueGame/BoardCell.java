@@ -63,9 +63,7 @@ public class BoardCell {
 			
 			
 		}
-		//System.out.println(name);
 		if(name){
-				//System.out.println(roomName);
 				g.setColor(Color.black);
 				g.drawString(roomName, pixelCol, pixelRow);
 			}

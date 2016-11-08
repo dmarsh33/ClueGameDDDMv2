@@ -200,7 +200,6 @@ public class Board extends JPanel {
 				} else {
 					dir = DoorDirection.NONE;
 				}
-				System.out.println(isname);
 				if(rooms.containsKey(rows.get(i)[j].charAt(0))){
 					board[i][j] = new BoardCell(i,j,rows.get(i)[j].charAt(0),dir, isname, rooms.get(rows.get(i)[j].charAt(0)));
 				} else {
