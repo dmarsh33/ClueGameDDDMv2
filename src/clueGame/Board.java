@@ -63,7 +63,7 @@ public class Board extends JPanel {
 		calcAdjacencies();	
 		dealCards();
 	}
-
+	//comment added
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
