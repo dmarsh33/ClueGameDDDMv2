@@ -11,6 +11,7 @@ import java.util.Set;
 
 public class ClueGUI extends JFrame{
 	Board board;
+	boolean humanPlayerFinished = false;
 	//private ClueDialog detectiveNotes;
 	public ClueGUI(){
 		board = Board.getInstance();
@@ -32,6 +33,8 @@ public class ClueGUI extends JFrame{
 		panel.add(turnPanel);
 		JButton nextPlayer = new JButton("Next Player");
 		panel.add(nextPlayer);
+		//nextPlayer.addActionListener(arg0);
+		//panel.addMouseListener();
 		JButton makeAccusation = new JButton("Make Accusation");
 		panel.add(makeAccusation);
 		JPanel diePanel = new JPanel();
@@ -66,6 +69,22 @@ public class ClueGUI extends JFrame{
 		menuButton.add(createFileMenu());
 		
 		
+	}
+	
+	private class NextPlayerListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			if(humanPlayerFinished){
+				
+			}
+			else{
+				//if(){
+					
+				//}
+				//else{
+					
+				//}
+			}
+		}
 	}
 
 	private JPanel createMyCardsPanel(){
