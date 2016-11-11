@@ -392,6 +392,12 @@ public class Board extends JPanel {
 	public ArrayList<Player> getPlayersList(){
 		return players;
 	}
+	
+	public void reorderPlayers(){
+		players.add(players.get(0));
+		players.remove(0);
+		
+	}
 	public Map<String, Card> getDeck(){
 		return deck;
 	}

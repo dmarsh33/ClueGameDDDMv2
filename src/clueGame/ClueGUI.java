@@ -12,11 +12,15 @@ import java.util.Set;
 public class ClueGUI extends JFrame{
 	Board board;
 	boolean humanPlayerFinished = false;
+	private Player current = null;
+	JTextField turnBox = new JTextField(20);
 	//private ClueDialog detectiveNotes;
 	public ClueGUI(){
 		board = Board.getInstance();
 		board.setConfigFiles("data/boardLayout2.csv", "data/layout.txt", "data/people.txt", "data/weapons.txt");		
 		board.initialize();
+		current = board.getPlayersList().get(0);
+		board.reorderPlayers();
 		setSize(800,800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		createLayout();
@@ -27,13 +31,13 @@ public class ClueGUI extends JFrame{
 		JPanel turnPanel = new JPanel();
 		turnPanel.setLayout(new GridLayout(2,1));
 		JLabel turnLabel = new JLabel("Whose Turn?");
-		JTextField turnBox = new JTextField(20);
 		turnPanel.add(turnLabel);
 		turnPanel.add(turnBox);
 		panel.add(turnPanel);
 		JButton nextPlayer = new JButton("Next Player");
 		panel.add(nextPlayer);
-		//nextPlayer.addActionListener(arg0);
+		nextPlayer.addActionListener(new NextPlayerListener());
+		turnBox.setText("Human");
 		//panel.addMouseListener();
 		JButton makeAccusation = new JButton("Make Accusation");
 		panel.add(makeAccusation);
@@ -74,15 +78,21 @@ public class ClueGUI extends JFrame{
 	private class NextPlayerListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			if(humanPlayerFinished){
-				
+				current = board.getPlayersList().get(0);
+				board.reorderPlayers();
+				turnBox.setText(current.getPlayerName());
+				System.out.println(current.getPlayerName());
 			}
 			else{
-				//if(){
-					
-				//}
-				//else{
-					
-				//}
+				if(current.getPlayerName().equalsIgnoreCase("Human")){
+					JOptionPane.showMessageDialog(null, "You need to finish your turn!");
+				}
+				else{
+					current = board.getPlayersList().get(0);
+					board.reorderPlayers();
+					turnBox.setText(current.getPlayerName());
+					System.out.println(current.getPlayerName());
+				}
 			}
 		}
 	}
