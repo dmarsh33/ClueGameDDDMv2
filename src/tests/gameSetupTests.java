@@ -92,7 +92,6 @@ public class gameSetupTests {
 	@Test
 	//this tests that cards are dealt correctly
 	public void testDealCards(){
-		board.dealCards();
 		ArrayList<Card> dealtCards = board.getDealtCards();
 		//test that all cards were dealt
 		assertEquals(21, dealtCards.size());

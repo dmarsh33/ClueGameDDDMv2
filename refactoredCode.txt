@@ -1,0 +1,56 @@
+Initial Code:
+
+public void selectAnswer(){
+		String name = null;
+		String room = null;
+		String weapon = null;
+		Card person = null;
+		Card location = null;
+		Card tool = null;
+		boolean roomSelected = false;
+		boolean personSelected = false;
+		boolean weaponSelected = false;
+		for(int i = 0; i < 101; i++){
+			int random = new Random().nextInt(initialDeck.size()-1);
+			Card c = initialDeck.get(random);
+			if(c.getType()==CardType.PERSON){
+				name = c.getCardName();
+				person = c;
+				personSelected = true;
+			}
+			else if(c.getType()==CardType.ROOM){
+				room = c.getCardName();
+				location = c;
+				roomSelected = true;
+			}
+			else if(c.getType()==CardType.WEAPON){
+				weapon = c.getCardName();
+				tool = c;
+				weaponSelected = true;
+			}
+			if(personSelected && roomSelected && weaponSelected){
+				break;
+			}
+		}
+		answer = new Solution(name, weapon, room);
+		initialDeck.remove(person);
+		dealtCards.add(person);
+		initialDeck.remove(location);
+		dealtCards.add(location);
+		initialDeck.remove(tool);		
+		dealtCards.add(tool);
+	}
+	
+Changed Code:
+public void selectAnswer(){
+		Collections.shuffle(deckPeople);
+		Collections.shuffle(deckRooms);
+		Collections.shuffle(deckWeapons);
+		answer = new Solution(deckPeople.get(1).getCardName(), deckWeapons.get(1).getCardName(), deckRooms.get(1).getCardName());
+		dealtCards.add(deckPeople.get(1));
+		dealtCards.add(deckWeapons.get(1));
+		dealtCards.add(deckRooms.get(1));
+		deck.remove(deckPeople.get(1).getCardName());
+		deck.remove(deckWeapons.get(1).getCardName());
+		deck.remove(deckRooms.get(1).getCardName());
+	}

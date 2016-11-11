@@ -63,7 +63,7 @@ public class Board extends JPanel {
 		calcAdjacencies();	
 		dealCards();
 	}
-	//comment added
+	
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -302,18 +302,19 @@ public class Board extends JPanel {
 		}
 		//to shuffle deck
 		Collections.shuffle(initialDeck);
+		
 		for(String st:people.keySet()){
 			players.add(people.get(st));
 		}
 		int numPlayers = players.size();
-		for(int i = 0; i < numPlayers; i++){
-			for (int j = 0; j< initialDeck.size(); j++){
-				if(j%numPlayers == i){
-					players.get(i).setHand(initialDeck.get(j));
-					players.get(i).setSeen(initialDeck.get(j));;
-					dealtCards.add(initialDeck.get(j));
-				}
-			}					
+		int i = 0;
+		while(!initialDeck.isEmpty()){
+			players.get(i).setHand(initialDeck.get(0));
+			players.get(i).setSeen(initialDeck.get(0));;
+			dealtCards.add(initialDeck.get(0));
+			initialDeck.remove(0);
+			i++;
+			i = i%players.size();
 		}
 	}
 	
