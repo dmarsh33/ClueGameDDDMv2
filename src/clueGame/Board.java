@@ -26,7 +26,6 @@ public class Board extends JPanel {
 	private Solution answer;
 	private Player currentPlayer = null;
 	private boolean humanPlayerStatus = false;
-	//Graphics g = null;
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
 	// ctor is private to ensure only one can be created
@@ -299,9 +298,7 @@ public class Board extends JPanel {
 
 	public void findAllTargets(int x, int y, int pathLength){
 		Set<BoardCell> adj = getAdjList(x,y);
-		//System.out.println(x + " " + y + " " + pathLength);
 		for(BoardCell cell:adj){
-			//System.out.println(x + " " + y);
 			if(visited.contains(cell)){
 				continue;
 			}
@@ -317,7 +314,6 @@ public class Board extends JPanel {
 				visited.remove(cell);
 			}
 		}
-		//System.out.println(targets.size());
 		return;
 	}
 	
@@ -401,7 +397,6 @@ public class Board extends JPanel {
 	}
 
 	public Set<BoardCell> getAdjList(int i, int j) {
-		//System.out.println(i + " " + j);
 		return adjMatrix.get(board[i][j]);
 	}
 

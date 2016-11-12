@@ -27,15 +27,12 @@ public class ClueGUI extends JFrame{
 		board.initialize();
 		current = board.getPlayersList().get(0);
 		board.reorderPlayers();
-		dieRoll = die.nextInt(5) + 1;
-		System.out.println(dieRoll);
+		dieRoll = die.nextInt(6) + 1;
 		board.calcTargets(current.getRow(), current.getCol(), dieRoll);
 		Set<BoardCell> targets = board.getTargets();
 		for(BoardCell c: targets){
-			//System.out.println(c.getRow());
 			c.setHighlighted(true);
 		}
-		//System.out.println(targets.size());
 		board.setCurrentPlayer(current);
 		board.setHumanPlayerStatus(humanPlayerFinished);
 		setSize(800,800);
@@ -83,6 +80,8 @@ public class ClueGUI extends JFrame{
 		resultPanel.add(resultBox);
 		panel.add(resultPanel);
 		add(panel, BorderLayout.SOUTH);
+		JPanel boardLayout = new JPanel();
+		addMouseListener(new HumanListener());
 		add(board, BorderLayout.CENTER);
 		board.repaint();
 		add(createMyCardsPanel(), BorderLayout.EAST);

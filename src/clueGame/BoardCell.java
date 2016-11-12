@@ -1,7 +1,6 @@
 package clueGame;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -19,6 +18,7 @@ public class BoardCell {
 	private boolean name = false;
 	private String roomName;
 	private boolean highlighted = false;
+	private Color color;
 	public boolean isHighlighted() {
 		return highlighted;
 	}
@@ -42,30 +42,25 @@ public class BoardCell {
 		pixelRow = row * LENGTH;
 		pixelCol = column * HEIGHT;
 		if(isWalkway()){
-			//if human is current player and has not finished turn
-				//for each cell in getTargets
-					//set color
-			//else
-				//for cells not in getTargets
 			if(isHighlighted()){
-				g.setColor(Color.black);
-				//System.out.println("here");
+				color = Color.orange;
+				g.setColor(Color.orange);
 			}
 			else{
 				g.setColor(Color.yellow);
+				color = Color.yellow;
 			}
 			g.fillRect(pixelCol, pixelRow, LENGTH, HEIGHT);
 			g.setColor(Color.black);
 			g.drawRect(pixelCol, pixelRow, LENGTH, HEIGHT);
 		}
 		else{
-			//if it is a doorway AND a target 
-				//set color
-			//else
 			if(isHighlighted()){
-				g.setColor(Color.black);
+				color = Color.orange;
+				g.setColor(Color.orange);
 			}
 			else{
+				color = Color.gray;
 				g.setColor(Color.gray);
 			}
 			g.fillRect(pixelCol, pixelRow, LENGTH, HEIGHT);
@@ -98,7 +93,21 @@ public class BoardCell {
 				g.drawString(roomName, pixelCol, pixelRow);
 			}
 	}
+	
+	public boolean containsClick(int mouseX, int mouseY){
+		//Rectangle r = new Rectangle(pixelCol, pixelRow, LENGTH, HEIGHT);
+		//if(r.contains(new Point(mouseX, mouseY))){
+		//System.out.println(pixelCol + " " + pixelRow + " (" + mouseX + " " + mouseY + ") " + (pixelCol + LENGTH) + " " + (pixelRow + HEIGHT));
+		if((mouseX < (pixelCol + LENGTH)) && (mouseX > (pixelCol)) && (mouseY < (pixelRow + HEIGHT)) && (mouseY > (pixelRow))){
+			System.out.println("in containsclick");
+			return true;
+		}
+		return false;
+	}
 
+	public Color getColor(){
+		return color;
+	}
 	public int getColumn() {
 		return column;
 	}
