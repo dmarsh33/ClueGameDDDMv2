@@ -3,11 +3,13 @@ package clueGame;
 import java.awt.Color;
 import java.util.*;
 
-public class Player {
+public abstract class Player {
 	private String playerName;
 	protected int row, col;
 	private Color color;
 	protected Set<Card> hand, seen;
+	
+	public abstract void makeMove();
 	
 	public Set<Card> getHand() {
 		return hand;

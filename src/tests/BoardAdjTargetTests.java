@@ -227,6 +227,9 @@ public class BoardAdjTargetTests {
 	public void testTargetsSixSteps() {
 		board.calcTargets(23, 16, 6);
 		Set<BoardCell> targets= board.getTargets();
+		for(BoardCell c: targets){
+			System.out.println(c.getInitial());
+		}
 		assertEquals(8, targets.size());
 		assertTrue(targets.contains(board.getCellAt(17, 16)));
 		assertTrue(targets.contains(board.getCellAt(18, 17)));	

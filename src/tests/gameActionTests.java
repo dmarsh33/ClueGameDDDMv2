@@ -12,6 +12,7 @@ import clueGame.BoardCell;
 import clueGame.Card;
 import clueGame.CardType;
 import clueGame.ComputerPlayer;
+import clueGame.HumanPlayer;
 import clueGame.Player;
 import clueGame.Solution;
 
@@ -320,7 +321,7 @@ public class gameActionTests {
 	public void handleSuggestionTest(){
 		ComputerPlayer rader= new ComputerPlayer("Rader", 9, 19, Color.red);
 		ComputerPlayer CPW = new ComputerPlayer("CPW", 9, 17, Color.magenta);
-		Player humanPlayer = new Player("Human", 20,5, Color.blue);
+		Player humanPlayer = new HumanPlayer("Human", 20,5, Color.blue);
 		ComputerPlayer sava = new ComputerPlayer("Sava", 13, 12, Color.green);
 		rader.setHand(AcidCard);
 		rader.setHand(AldersonCard);

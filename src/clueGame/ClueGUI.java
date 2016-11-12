@@ -3,17 +3,23 @@ package clueGame;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.plaf.synth.SynthSpinnerUI;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 import java.util.Set;
 
 public class ClueGUI extends JFrame{
 	Board board;
 	boolean humanPlayerFinished = false;
 	private Player current = null;
+	private int dieRoll;
+	private Random die = new Random();
 	JTextField turnBox = new JTextField(20);
+	JTextField dieBox = new JTextField(20);
+	Set<BoardCell> targets = null;
 	//private ClueDialog detectiveNotes;
 	public ClueGUI(){
 		board = Board.getInstance();
@@ -21,6 +27,17 @@ public class ClueGUI extends JFrame{
 		board.initialize();
 		current = board.getPlayersList().get(0);
 		board.reorderPlayers();
+		dieRoll = die.nextInt(5) + 1;
+		System.out.println(dieRoll);
+		board.calcTargets(current.getRow(), current.getCol(), dieRoll);
+		Set<BoardCell> targets = board.getTargets();
+		for(BoardCell c: targets){
+			//System.out.println(c.getRow());
+			c.setHighlighted(true);
+		}
+		//System.out.println(targets.size());
+		board.setCurrentPlayer(current);
+		board.setHumanPlayerStatus(humanPlayerFinished);
 		setSize(800,800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		createLayout();
@@ -45,9 +62,9 @@ public class ClueGUI extends JFrame{
 		diePanel.setLayout(new GridLayout(1,2));
 		diePanel.setBorder(new TitledBorder (new EtchedBorder(), "Die"));
 		JLabel dieLabel = new JLabel("Roll");
-		JTextField dieBox = new JTextField(20);
 		diePanel.add(dieLabel);
 		diePanel.add(dieBox);
+		dieBox.setText(String.valueOf(dieRoll));
 		panel.add(diePanel);
 		JPanel guessPanel = new JPanel();
 		guessPanel.setLayout(new GridLayout(2,1));
@@ -67,6 +84,7 @@ public class ClueGUI extends JFrame{
 		panel.add(resultPanel);
 		add(panel, BorderLayout.SOUTH);
 		add(board, BorderLayout.CENTER);
+		board.repaint();
 		add(createMyCardsPanel(), BorderLayout.EAST);
 		JMenuBar menuButton = new JMenuBar();
 		setJMenuBar(menuButton);
@@ -77,23 +95,62 @@ public class ClueGUI extends JFrame{
 	
 	private class NextPlayerListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			if(humanPlayerFinished){
-				current = board.getPlayersList().get(0);
-				board.reorderPlayers();
-				turnBox.setText(current.getPlayerName());
-				System.out.println(current.getPlayerName());
+			if(current.getPlayerName().equalsIgnoreCase("Human")){
+				if(humanPlayerFinished){
+					current = board.getPlayersList().get(0);
+					board.setCurrentPlayer(current);
+					board.reorderPlayers();
+					turnBox.setText(current.getPlayerName());
+					dieRoll = die.nextInt(5) + 1;
+					humanPlayerFinished = false;
+					board.setHumanPlayerStatus(humanPlayerFinished);
+					dieBox.setText(String.valueOf(dieRoll));
+					board.calcTargets(current.getCol(), current.getRow(), dieRoll);
+					for(BoardCell c: board.getTargets()){
+						c.setHighlighted(false);
+					}
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "You need to finish your turn!");
+				}
 			}
 			else{
+				current = board.getPlayersList().get(0);
+				board.setCurrentPlayer(current);
+				board.reorderPlayers();
+				turnBox.setText(current.getPlayerName());
+				dieRoll = die.nextInt(5) + 1;
+				dieBox.setText(String.valueOf(dieRoll));
+				board.calcTargets(current.getCol(), current.getRow(), dieRoll);
+			}
+			/*if(humanPlayerFinished){
+				current = board.getPlayersList().get(0);
+				board.setCurrentPlayer(current);
+				board.reorderPlayers();
+				turnBox.setText(current.getPlayerName());
+				dieRoll = die.nextInt(5) + 1;
+				humanPlayerFinished = false;
+				board.setHumanPlayerStatus(humanPlayerFinished);
+				dieBox.setText(String.valueOf(dieRoll));
+				board.calcTargets(current.getCol(), current.getRow(), dieRoll);
+			}
+			else{
+				for(BoardCell c: board.getTargets()){
+					c.setHighlighted(true);
+				}
 				if(current.getPlayerName().equalsIgnoreCase("Human")){
 					JOptionPane.showMessageDialog(null, "You need to finish your turn!");
 				}
 				else{
 					current = board.getPlayersList().get(0);
+					board.setCurrentPlayer(current);
 					board.reorderPlayers();
 					turnBox.setText(current.getPlayerName());
-					System.out.println(current.getPlayerName());
+					dieRoll = die.nextInt(5) + 1;
+					dieBox.setText(String.valueOf(dieRoll));
+					board.calcTargets(current.getCol(), current.getRow(), dieRoll);
 				}
-			}
+			}*/
 		}
 	}
 

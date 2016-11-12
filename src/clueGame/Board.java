@@ -24,6 +24,8 @@ public class Board extends JPanel {
 	private Map<String,Card> deck;
 	private ArrayList<Card> dealtCards, deckPeople, deckWeapons, deckRooms;
 	private Solution answer;
+	private Player currentPlayer = null;
+	private boolean humanPlayerStatus = false;
 	//Graphics g = null;
 	// variable used for singleton pattern
 	private static Board theInstance = new Board();
@@ -72,13 +74,28 @@ public class Board extends JPanel {
 				getInstance().getCellAt(i, j).draw(g);
 			}
 		}
-		
 
 		for(String p : people.keySet()){
 			Player current = people.get(p);
 			g.setColor(current.getColor());
 			g.fillOval(current.getCol() * 25, current.getRow() * 25, 25, 25);
 		}
+	}
+	
+	public void setCurrentPlayer(Player p){
+		currentPlayer = p;
+	}
+	
+	public void setHumanPlayerStatus(boolean h){
+		humanPlayerStatus = h;
+	}
+	
+	public Player getCurrentPlayer(){
+		return currentPlayer;
+	}
+	
+	public boolean  getHumanPlayerStatus(){
+		return humanPlayerStatus;
 	}
 	
 	public void setConfigFiles(String string, String string2, String string3, String string4) {
@@ -91,19 +108,33 @@ public class Board extends JPanel {
 	public void loadPlayerConfig() throws FileNotFoundException{
 		FileReader reader = new FileReader(playerConfigFile);
 		Scanner in = new Scanner(reader);
+		String line = in.nextLine();
+		String [] things = line.split(", ");
+		String name = things[0];
+		String color = things[1];
+		String row = things[2];
+		String col = things[3];
+		Color c = convertColor(color);
+		int r = Integer.parseInt(row);
+		int column = Integer.parseInt(col);
+		Player player = new HumanPlayer(name, r, column, c);
+		people.put(name, player);
+		Card card = new Card(name, CardType.PERSON);
+		deckPeople.add(card);
+		deck.put(name, card);
 		while (in.hasNextLine()){
-			String line = in.nextLine();
-			String [] things = line.split(", ");
-			String name = things[0];
-			String color = things[1];
-			String row = things[2];
-			String col = things[3];
-			Color c = convertColor(color);
-			int r = Integer.parseInt(row);
-			int column = Integer.parseInt(col);
-			Player player = new Player(name, r, column, c);
+			line = in.nextLine();
+			things = line.split(", ");
+			name = things[0];
+			color = things[1];
+			row = things[2];
+			col = things[3];
+			c = convertColor(color);
+			r = Integer.parseInt(row);
+			column = Integer.parseInt(col);
+			player = new ComputerPlayer(name, r, column, c);
 			people.put(name, player);
-			Card card = new Card(name, CardType.PERSON);
+			card = new Card(name, CardType.PERSON);
 			deckPeople.add(card);
 			deck.put(name, card);
 		}	
@@ -268,14 +299,17 @@ public class Board extends JPanel {
 
 	public void findAllTargets(int x, int y, int pathLength){
 		Set<BoardCell> adj = getAdjList(x,y);
-		
+		//System.out.println(x + " " + y + " " + pathLength);
 		for(BoardCell cell:adj){
+			//System.out.println(x + " " + y);
 			if(visited.contains(cell)){
 				continue;
 			}
 			else {
 				visited.add(cell);
+				
 				if(pathLength == 1 || cell.isDoorway()){
+					
 					targets.add(cell);
 				} else {
 					findAllTargets(cell.getRow(), cell.getColumn(), pathLength-1);
@@ -283,6 +317,7 @@ public class Board extends JPanel {
 				visited.remove(cell);
 			}
 		}
+		//System.out.println(targets.size());
 		return;
 	}
 	
@@ -366,6 +401,7 @@ public class Board extends JPanel {
 	}
 
 	public Set<BoardCell> getAdjList(int i, int j) {
+		//System.out.println(i + " " + j);
 		return adjMatrix.get(board[i][j]);
 	}
 
@@ -396,6 +432,7 @@ public class Board extends JPanel {
 	public void reorderPlayers(){
 		players.add(players.get(0));
 		players.remove(0);
+		repaint();
 		
 	}
 	public Map<String, Card> getDeck(){

@@ -42,4 +42,7 @@ public class ComputerPlayer extends Player{
 		Solution guess = new Solution(person, tool, room);
 		return guess;
 	}
+	
+	@Override
+	public void makeMove(){};
 }
