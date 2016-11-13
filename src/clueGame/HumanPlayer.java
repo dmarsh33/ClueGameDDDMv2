@@ -10,7 +10,8 @@ public class HumanPlayer extends Player{
 	}
 
 	@Override
-	public void makeMove(){
-		
+	public void makeMove(int r, int c){
+		row = r;
+		col = c;
 	}
 }

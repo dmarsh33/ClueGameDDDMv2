@@ -314,6 +314,9 @@ public class Board extends JPanel {
 				visited.remove(cell);
 			}
 		}
+		//for (BoardCell c : targets){
+			//System.out.println(c.getRow() + " " + c.getColumn());
+		//}
 		return;
 	}
 	

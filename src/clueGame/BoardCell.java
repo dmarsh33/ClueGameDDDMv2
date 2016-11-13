@@ -95,11 +95,7 @@ public class BoardCell {
 	}
 	
 	public boolean containsClick(int mouseY, int mouseX){
-		//Rectangle r = new Rectangle(pixelCol, pixelRow, LENGTH, HEIGHT);
-		//if(r.contains(new Point(mouseX, mouseY))){
-		//System.out.println(pixelCol + " " + pixelRow + " (" + mouseX + " " + mouseY + ") " + (pixelCol + LENGTH) + " " + (pixelRow + HEIGHT));
 		if((mouseX < (pixelCol + LENGTH)) && (mouseX > (pixelCol)) && (mouseY < (pixelRow + HEIGHT)) && (mouseY > (pixelRow))){
-			System.out.println("in containsclick");
 			return true;
 		}
 		return false;

@@ -9,8 +9,8 @@ public abstract class Player {
 	private Color color;
 	protected Set<Card> hand, seen;
 	
-	public abstract void makeMove();
-	
+	public abstract void makeMove(int r, int c);
+		
 	public Set<Card> getHand() {
 		return hand;
 	}
@@ -80,5 +80,11 @@ public abstract class Player {
 		}
 		else
 			return false;
+	}
+
+	public void setLocation(int r, int c) {
+		// TODO Auto-generated method stub
+		row = r; 
+		col = c;
 	}
 }

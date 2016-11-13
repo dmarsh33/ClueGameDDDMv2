@@ -27,7 +27,7 @@ public class ClueGUI extends JFrame{
 		board.reorderPlayers();
 		dieRoll = die.nextInt(6) + 1;
 		board.calcTargets(current.getRow(), current.getCol(), dieRoll);
-		Set<BoardCell> targets = board.getTargets();
+		targets = board.getTargets();
 		for(BoardCell c: targets){
 			c.setHighlighted(true);
 		}
@@ -90,64 +90,35 @@ public class ClueGUI extends JFrame{
 		
 	}
 	
-	private class NextPlayerListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			if(current.getPlayerName().equalsIgnoreCase("Human")){
-				if(humanPlayerFinished){
-					current = board.getPlayersList().get(0);
-					board.setCurrentPlayer(current);
-					board.reorderPlayers();
-					turnBox.setText(current.getPlayerName());
-					dieRoll = die.nextInt(5) + 1;
+	private class NextPlayerListener implements ActionListener{ //follows second column in flow chart
+		public void actionPerformed(ActionEvent e){ //next player button clicked
+			humanPlayerFinished = board.getHumanPlayerStatus();//is human finished?
+			if(humanPlayerFinished){ // human turn has been finished
+				current = board.getPlayersList().get(0);
+				board.setCurrentPlayer(current); //rotate to next player
+				board.reorderPlayers();
+				turnBox.setText(current.getPlayerName()); //set display
+				dieRoll = die.nextInt(5) + 1; //roll die
+				dieBox.setText(String.valueOf(dieRoll)); //set display
+				board.calcTargets(current.getRow(), current.getCol(), dieRoll); //calc targets
+				if(current.getPlayerName().equalsIgnoreCase("Human")){ //just changed to humans turn
+					board.calcTargets(current.getRow(), current.getCol(), dieRoll);
+					targets = board.getTargets();
+					for(BoardCell c: targets){ //highlight targets
+						c.setHighlighted(true);
+					}
+					repaint();
 					humanPlayerFinished = false;
 					board.setHumanPlayerStatus(humanPlayerFinished);
-					dieBox.setText(String.valueOf(dieRoll));
-					board.calcTargets(current.getCol(), current.getRow(), dieRoll);
-					for(BoardCell c: board.getTargets()){
-						c.setHighlighted(false);
-					}
 				}
 				else{
-					JOptionPane.showMessageDialog(null, "You need to finish your turn!");
+					board.getCurrentPlayer().makeMove(current.getRow(), current.getCol()); //call makeMove
+					board.repaint(); //repaint
 				}
 			}
-			else{
-				current = board.getPlayersList().get(0);
-				board.setCurrentPlayer(current);
-				board.reorderPlayers();
-				turnBox.setText(current.getPlayerName());
-				dieRoll = die.nextInt(5) + 1;
-				dieBox.setText(String.valueOf(dieRoll));
-				board.calcTargets(current.getCol(), current.getRow(), dieRoll);
+			else{ //human has not finished 
+				JOptionPane.showMessageDialog(null, "You need to finish your turn!");
 			}
-			/*if(humanPlayerFinished){
-				current = board.getPlayersList().get(0);
-				board.setCurrentPlayer(current);
-				board.reorderPlayers();
-				turnBox.setText(current.getPlayerName());
-				dieRoll = die.nextInt(5) + 1;
-				humanPlayerFinished = false;
-				board.setHumanPlayerStatus(humanPlayerFinished);
-				dieBox.setText(String.valueOf(dieRoll));
-				board.calcTargets(current.getCol(), current.getRow(), dieRoll);
-			}
-			else{
-				for(BoardCell c: board.getTargets()){
-					c.setHighlighted(true);
-				}
-				if(current.getPlayerName().equalsIgnoreCase("Human")){
-					JOptionPane.showMessageDialog(null, "You need to finish your turn!");
-				}
-				else{
-					current = board.getPlayersList().get(0);
-					board.setCurrentPlayer(current);
-					board.reorderPlayers();
-					turnBox.setText(current.getPlayerName());
-					dieRoll = die.nextInt(5) + 1;
-					dieBox.setText(String.valueOf(dieRoll));
-					board.calcTargets(current.getCol(), current.getRow(), dieRoll);
-				}
-			}*/
 		}
 	}
 

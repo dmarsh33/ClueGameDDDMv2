@@ -5,12 +5,15 @@ import java.util.*;
 
 public class ComputerPlayer extends Player{
 	private int row, col;
+	Board board;
 	public ComputerPlayer(String playerName, int row, int col, Color color) {
 		super(playerName, row, col, color);
+		board = Board.getInstance();
 		this.row = row;
 		this.col = col;
 	}
 	public BoardCell pickLocation(Set<BoardCell> targets, BoardCell location){
+		
 		for(BoardCell b: targets){
 			if(b.isDoorway() && b.getInitial()!=location.getInitial()){
 				return b;
@@ -18,7 +21,8 @@ public class ComputerPlayer extends Player{
 		}
 		ArrayList<BoardCell> tar = new ArrayList<BoardCell>(targets);
 		Collections.shuffle(tar);
-		return tar.get(1);
+		System.out.println(targets.size());
+		return tar.get(0);
 	}
 	public void makeAccusation(){
 		
@@ -44,5 +48,11 @@ public class ComputerPlayer extends Player{
 	}
 	
 	@Override
-	public void makeMove(){};
+	public void makeMove(int r, int c){
+		BoardCell newCell = pickLocation(board.getTargets(), board.getCellAt(r, c)); //pick location
+		board.getPlayersList().get(board.getPlayersList().size() - 1).setLocation(newCell.getRow(), newCell.getColumn());
+		//in room?
+			//set last visited
+			//make suggestion
+	}
 }

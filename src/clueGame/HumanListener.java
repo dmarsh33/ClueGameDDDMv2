@@ -7,7 +7,7 @@ import java.util.Set;
 
 import javax.swing.JOptionPane;
 
-public class HumanListener implements MouseListener{
+public class HumanListener implements MouseListener{ //follows first column in flow chart
 	private Board board;
 	public void mousePressed (MouseEvent event) {}
 	public void mouseReleased (MouseEvent event) {}
@@ -17,46 +17,26 @@ public class HumanListener implements MouseListener{
 		board = board.getInstance();
 		Set<BoardCell> targets = board.getTargets();
 		BoardCell newLocation = null;
-		/*for(BoardCell c: targets){
-			if(c.containsClick(event.getX(), event.getY())){
-				newLocation = c;
-				break;
-			}
-				
-		}*/
-		//for(BoardCell c: targets){
-			//Color color = c.getColor();
-			//if(c.containsClick(event.getX(), event.getY())){
-			//	newLocation = c;
-			//	break;
-			//}
-				
-		//}
-		//Color c = getColor(event.getX(), event.getY());
-		//if()
-		
-		for(int i = 0; i < board.getNumRows(); i++){
-			for(int j = 0; j < board.getNumColumns(); j++){
-				
-				if(board.getCellAt(i, j).containsClick(event.getY(), event.getX())){
-					System.out.println(i + " " + j);
-					System.out.println(targets.size());
-					//for(BoardCell b : targets){
-						//System.out.println(b.getRow() + " " + b.getColumn());
-					//}
-					if(targets.contains(board.getCellAt(i, j))){
-						newLocation = board.getCellAt(i, j);
-						System.out.println(newLocation.getRow() + " - " + newLocation.getColumn());
-						//call move?
-						
-						break;
-					}
+		if(!board.getHumanPlayerStatus()){ //is it the human's turn?
+			for(BoardCell c : targets){	 //is it a valid target?
+				if(c.containsClick(event.getY() - 50, event.getX())){
+					newLocation = c;
+					break;
 				}
 			}
-		}
-		
-		if(newLocation == null){
-			JOptionPane.showMessageDialog(null, "That is not a target!");
+			if(newLocation == null){
+				JOptionPane.showMessageDialog(null, "That is not a target!"); //if not, return error
+			}
+			else{ //if it is, 
+				board.getCurrentPlayer().makeMove(newLocation.getRow(), newLocation.getColumn()); //update location
+				board.setHumanPlayerStatus(true); //reset flag
+				for(BoardCell c: board.getTargets()){ //remove highlights
+					c.setHighlighted(false);
+				}
+				board.repaint(); //repaint
+				
+				//will check if it is in a room, display dialog, and handle suggestion
+			}
 		}
 	}
 }
