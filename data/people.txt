@@ -2,5 +2,5 @@ Human, blue, 0, 6
 Rader, red, 0, 18
 Hellman, cyan, 13, 24
 Snieder, white, 23, 17
-Sava, green, 23, 7
-CPW, magenta, 10, 0
+Sava, green, 10, 0
+CPW, magenta, 23, 7

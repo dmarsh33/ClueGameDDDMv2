@@ -21,7 +21,6 @@ public class ComputerPlayer extends Player{
 		}
 		ArrayList<BoardCell> tar = new ArrayList<BoardCell>(targets);
 		Collections.shuffle(tar);
-		System.out.println(targets.size());
 		return tar.get(0);
 	}
 	public void makeAccusation(){

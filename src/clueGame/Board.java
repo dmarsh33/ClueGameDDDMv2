@@ -137,6 +137,7 @@ public class Board extends JPanel {
 			deckPeople.add(card);
 			deck.put(name, card);
 		}	
+		
 	}
 
 	public Color convertColor(String strColor) {
@@ -314,9 +315,7 @@ public class Board extends JPanel {
 				visited.remove(cell);
 			}
 		}
-		//for (BoardCell c : targets){
-			//System.out.println(c.getRow() + " " + c.getColumn());
-		//}
+		
 		return;
 	}
 	
