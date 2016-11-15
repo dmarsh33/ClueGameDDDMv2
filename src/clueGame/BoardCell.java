@@ -144,4 +144,8 @@ public class BoardCell {
 	public boolean isName(){
 		return name;
 	}
+	
+	public String getRoomName(){
+		return roomName;
+	}
 }

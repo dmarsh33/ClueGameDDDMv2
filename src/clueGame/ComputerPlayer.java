@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.util.*;
 
 public class ComputerPlayer extends Player{
+	private BoardCell lastVisited = null;
+	private boolean noneDisproved = false; 
 	private int row, col;
 	Board board;
 	public ComputerPlayer(String playerName, int row, int col, Color color) {
@@ -12,10 +14,9 @@ public class ComputerPlayer extends Player{
 		this.row = row;
 		this.col = col;
 	}
-	public BoardCell pickLocation(Set<BoardCell> targets, BoardCell location){
-		
+	public BoardCell pickLocation(Set<BoardCell> targets, BoardCell location){ //--------------------------------------------------------
 		for(BoardCell b: targets){
-			if(b.isDoorway() && b.getInitial()!=location.getInitial()){
+			if(b.isDoorway() && b.getInitial()!=lastVisited.getInitial()){
 				return b;
 			}
 		}
@@ -48,10 +49,47 @@ public class ComputerPlayer extends Player{
 	
 	@Override
 	public void makeMove(int r, int c){
-		BoardCell newCell = pickLocation(board.getTargets(), board.getCellAt(r, c)); //pick location
-		board.getPlayersList().get(board.getPlayersList().size() - 1).setLocation(newCell.getRow(), newCell.getColumn());
+		//can they make an accusation?
+		if(noneDisproved){
+			makeAccusation();
+			return;
+		}
+		//no --> seenmove
+		else{
+			BoardCell newCell = pickLocation(board.getTargets(), board.getCellAt(r, c)); //pick location
+			board.getPlayersList().get(board.getPlayersList().size() - 1).setLocation(newCell.getRow(), newCell.getColumn());
+		}
 		//in room?
+		if(board.getCellAt(row, col).isDoorway()){
 			//set last visited
-			//make suggestion
+			lastVisited = board.getCellAt(row, col);
+			
+			ArrayList<Card> dealt = board.getDealtCards();
+			Set<Card> notSeen = new HashSet<Card>();
+			for(Card ca : dealt){
+				if(!seen.contains(ca)){
+					notSeen.add(ca);
+				}
+			}
+			Solution guess =createSuggestion(notSeen, lastVisited.getRoomName());
+			//other players disprove
+			Card disproving = board.handleSuggestion(board.getPlayersList(), guess);
+			if(disproving == null){
+				boolean hasCard = false;
+				for(Card s : hand){
+					if(s.getCardName().equals(board.getCellAt(row, col).getRoomName())){
+						hasCard = true;
+					}
+				}
+				if(!hasCard){
+					noneDisproved = true;
+				}
+			}
+		}
+			
+		//update control panel with guess and resule
+		//move suggested person to room
+		//let all players know which card was shown
+		//set flag if no one can disprove
 	}
 }
