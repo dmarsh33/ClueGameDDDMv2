@@ -6,6 +6,9 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
@@ -15,10 +18,22 @@ public class ClueGUI extends JFrame{
 	private Player current = null;
 	private int dieRoll;
 	private Random die = new Random();
-	JTextField turnBox = new JTextField(20);
-	JTextField dieBox = new JTextField(20);
+	public JTextField turnBox = new JTextField(20);
+	public JTextField dieBox = new JTextField(20);
+	public JTextField guessBox =new JTextField(20);
+	public JTextField resultBox = new JTextField(20);
 	Set<BoardCell> targets = null;
 	//private ClueDialog detectiveNotes;
+	
+	//private static ClueGUI theInstance = new ClueGUI();
+	// ctor is private to ensure only one can be created
+	
+	
+	// this method returns the only Board
+	//public static ClueGUI getInstance() {
+	//	return theInstance;
+	//}
+	
 	public ClueGUI(){
 		board = Board.getInstance();
 		board.setConfigFiles("data/boardLayout2.csv", "data/layout.txt", "data/people.txt", "data/weapons.txt");		
@@ -65,7 +80,6 @@ public class ClueGUI extends JFrame{
 		guessPanel.setLayout(new GridLayout(2,1));
 		guessPanel.setBorder(new TitledBorder (new EtchedBorder(), "Guess"));
 		JLabel guessLabel = new JLabel("Guess");
-		JTextField guessBox = new JTextField(20);
 		guessPanel.add(guessLabel);
 		guessPanel.add(guessBox);
 		panel.add(guessPanel);
@@ -73,7 +87,6 @@ public class ClueGUI extends JFrame{
 		resultPanel.setLayout(new GridLayout(1,2));
 		resultPanel.setBorder(new TitledBorder (new EtchedBorder(), "Guess Result"));
 		JLabel resultLabel = new JLabel("Response");
-		JTextField resultBox = new JTextField(20);
 		resultPanel.add(resultLabel);
 		resultPanel.add(resultBox);
 		panel.add(resultPanel);

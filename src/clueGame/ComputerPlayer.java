@@ -6,11 +6,14 @@ import java.util.*;
 public class ComputerPlayer extends Player{
 	private BoardCell lastVisited = null;
 	private boolean noneDisproved = false; 
+	private Solution accusation = null;
 	private int row, col;
+	//ClueGUI gui = null;
 	Board board;
 	public ComputerPlayer(String playerName, int row, int col, Color color) {
 		super(playerName, row, col, color);
 		board = Board.getInstance();
+		//gui = ClueGUI.getInstance();
 		this.row = row;
 		this.col = col;
 	}
@@ -24,8 +27,8 @@ public class ComputerPlayer extends Player{
 		Collections.shuffle(tar);
 		return tar.get(0);
 	}
-	public void makeAccusation(){
-		
+	public Solution makeAccusation(){
+		return accusation;
 	}
 	public Solution createSuggestion(Set<Card> notSeen, String room){
 		ArrayList<Card> people = new ArrayList<Card>();
@@ -72,6 +75,8 @@ public class ComputerPlayer extends Player{
 				}
 			}
 			Solution guess =createSuggestion(notSeen, lastVisited.getRoomName());
+			String guessText = guess.getPerson() + ", " + guess.getWeapon() + ", " + guess.getRoom();
+			//gui.guessBox.setText(guessText);
 			//other players disprove
 			Card disproving = board.handleSuggestion(board.getPlayersList(), guess);
 			if(disproving == null){
@@ -83,7 +88,11 @@ public class ComputerPlayer extends Player{
 				}
 				if(!hasCard){
 					noneDisproved = true;
+					accusation = guess;
 				}
+			}
+			else{
+				//gui.resultBox.setText(disproving.getCardName());
 			}
 		}
 			
