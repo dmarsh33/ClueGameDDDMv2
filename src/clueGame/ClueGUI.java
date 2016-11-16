@@ -121,11 +121,14 @@ public class ClueGUI extends JFrame{
 						c.setHighlighted(true);
 					}
 					repaint();
+					
 					humanPlayerFinished = false;
 					board.setHumanPlayerStatus(humanPlayerFinished);
 				}
 				else{
-					board.getCurrentPlayer().makeMove(current.getRow(), current.getCol()); //call makeMove
+					board.getCurrentPlayer().makeMove(current.getRow(), current.getCol());//call makeMove
+					guessBox.setText(board.getCurrentPlayer().getGuess());
+					resultBox.setText(board.getCurrentPlayer().getDisprovingCard());
 					board.repaint(); //repaint
 				}
 			}

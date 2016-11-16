@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 public class HumanListener implements MouseListener{ //follows first column in flow chart
 	private Board board;
+	private GuessDialog guessPanel;
 	public void mousePressed (MouseEvent event) {}
 	public void mouseReleased (MouseEvent event) {}
 	public void mouseEntered (MouseEvent event) {}
@@ -34,7 +35,11 @@ public class HumanListener implements MouseListener{ //follows first column in f
 					c.setHighlighted(false);
 				}
 				board.repaint(); //repaint
-				
+				if(!board.getCurrentPlayer().getPlayerRoom().equals("Sidewalk")){
+					//display guess dialog box
+					guessPanel = new GuessDialog();
+					guessPanel.setVisible(true);
+				}
 				//will check if it is in a room, display dialog, and handle suggestion
 			}
 		}

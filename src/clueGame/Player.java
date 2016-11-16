@@ -7,6 +7,8 @@ public abstract class Player {
 	private String playerName;
 	protected int row, col;
 	private Color color;
+	protected String guessText = null;
+	protected String disprovingCard;
 	protected Set<Card> hand, seen;
 	
 	public abstract void makeMove(int r, int c);
@@ -86,5 +88,16 @@ public abstract class Player {
 		// TODO Auto-generated method stub
 		row = r; 
 		col = c;
+	}
+	public String getGuess(){
+		return guessText;
+	}
+	
+	public String getDisprovingCard(){
+		return disprovingCard;
+	}
+	
+	public String getPlayerRoom(){
+		return Board.getInstance().getCellAt(row,  col).getRoomName();
 	}
 }

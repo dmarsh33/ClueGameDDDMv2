@@ -1,3 +1,9 @@
+commit 49454d4000a00a529a505eeb7f39515f96075a1c
+Author: Delaney Marsh <dmarsh@mymail.mines.edu>
+Date:   Mon Nov 14 15:38:08 2016 -0700
+
+    finalized clue game 1
+
 commit 87cfc5d1987beffa14132af9f1555c7bcde23624
 Author: Katrina Steinman <ksteinma@adit.mines.edu>
 Date:   Sun Nov 13 14:32:26 2016 -0700

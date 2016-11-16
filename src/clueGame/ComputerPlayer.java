@@ -19,7 +19,10 @@ public class ComputerPlayer extends Player{
 	}
 	public BoardCell pickLocation(Set<BoardCell> targets, BoardCell location){ //--------------------------------------------------------
 		for(BoardCell b: targets){
-			if(b.isDoorway() && b.getInitial()!=lastVisited.getInitial()){
+			if(lastVisited == null){
+				return b;
+			}
+			else if(b.isDoorway() && b.getInitial()!=lastVisited.getInitial()){
 				return b;
 			}
 		}
@@ -63,23 +66,31 @@ public class ComputerPlayer extends Player{
 			board.getPlayersList().get(board.getPlayersList().size() - 1).setLocation(newCell.getRow(), newCell.getColumn());
 		}
 		//in room?
-		if(board.getCellAt(row, col).isDoorway()){
+		//
+		if(board.getCellAt(board.getPlayersList().get(board.getPlayersList().size() - 1).getRow(), board.getPlayersList().get(board.getPlayersList().size() - 1).getCol()).isDoorway()){
 			//set last visited
-			lastVisited = board.getCellAt(row, col);
 			
+			lastVisited = board.getCellAt(board.getPlayersList().get(board.getPlayersList().size() - 1).getRow(), board.getPlayersList().get(board.getPlayersList().size() - 1).getCol());
+			System.out.println(lastVisited.getRoomName());
 			ArrayList<Card> dealt = board.getDealtCards();
 			Set<Card> notSeen = new HashSet<Card>();
 			for(Card ca : dealt){
+				//System.out.println(ca.getCardName());
 				if(!seen.contains(ca)){
 					notSeen.add(ca);
 				}
 			}
-			Solution guess =createSuggestion(notSeen, lastVisited.getRoomName());
-			String guessText = guess.getPerson() + ", " + guess.getWeapon() + ", " + guess.getRoom();
+			Solution guess = createSuggestion(notSeen, lastVisited.getRoomName());
+			Player guessedPlayer = board.getPlayers().get(guess.getPerson());
+			guessedPlayer.setLocation(board.getPlayersList().get(board.getPlayersList().size() - 1).getRow(), board.getPlayersList().get(board.getPlayersList().size() - 1).getCol());
+			guessText = guess.getPerson() + ", " + guess.getWeapon() + ", " + guess.getRoom();
 			//gui.guessBox.setText(guessText);
 			//other players disprove
 			Card disproving = board.handleSuggestion(board.getPlayersList(), guess);
-			if(disproving == null){
+			if(disproving != null){
+				disprovingCard = disproving.getCardName();
+			}
+			else{
 				boolean hasCard = false;
 				for(Card s : hand){
 					if(s.getCardName().equals(board.getCellAt(row, col).getRoomName())){
@@ -89,16 +100,20 @@ public class ComputerPlayer extends Player{
 				if(!hasCard){
 					noneDisproved = true;
 					accusation = guess;
+					disprovingCard = "No one can disprove";
 				}
 			}
-			else{
-				//gui.resultBox.setText(disproving.getCardName());
-			}
+			
+		}
+		else{
+			disprovingCard = "";
+			guessText = "";
 		}
 			
-		//update control panel with guess and resule
+		//update control panel with guess and result
 		//move suggested person to room
 		//let all players know which card was shown
 		//set flag if no one can disprove
 	}
+	
 }
