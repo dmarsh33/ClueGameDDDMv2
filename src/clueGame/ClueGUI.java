@@ -3,6 +3,10 @@ package clueGame;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+
+import clueGame.GuessDialog.CancelButtonListener;
+import clueGame.GuessDialog.SubmitButtonListener;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -138,10 +142,14 @@ public class ClueGUI extends JFrame{
 			}
 			else{ //human has not finished 
 				JOptionPane.showMessageDialog(null, "You need to finish your turn!");
+				
 			}
+			
 			
 		}
 	}
+	
+	
 	
 	private class MakeAccusationListener implements ActionListener{ //follows second column in flow chart
 		public void actionPerformed(ActionEvent e){ //next player button clicked
