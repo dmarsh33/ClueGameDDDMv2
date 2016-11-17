@@ -53,7 +53,7 @@ public class GuessDialog extends JDialog{
 	}
 
 	
-	public class SubmitButtonListener implements ActionListener{ //listens to submit button click
+	private class SubmitButtonListener implements ActionListener{ //listens to submit button click
 		public void actionPerformed(ActionEvent e){ 
 			String guessedPerson = personSuggestion.getSelectedItem().toString();
 			String guessedWeapon = weaponSuggestion.getSelectedItem().toString();
@@ -70,7 +70,7 @@ public class GuessDialog extends JDialog{
 		}
 	}
 	
-	public class CancelButtonListener implements ActionListener{ //listens to submit button click
+	private class CancelButtonListener implements ActionListener{ //listens to submit button click
 		public void actionPerformed(ActionEvent e){ 
 			setVisible(false);
 		}

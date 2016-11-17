@@ -14,7 +14,7 @@ public class AccusationDialog extends JDialog{
 	JTextField yourRoom = new JTextField(20);
 	JTextField person = new JTextField(20);
 	JTextField weapon = new JTextField(20);
-	JComboBox roomSuggestion = new JComboBox<String>();
+	JComboBox<String> roomSuggestion = new JComboBox<String>();
 	JButton submitButton = new JButton("Submit");
 	JButton cancelButton = new JButton("Cancel");
 	

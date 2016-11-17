@@ -12,6 +12,7 @@ public class HumanListener implements MouseListener{ //follows first column in f
 	private GuessDialog guessPanel;
 	private String returnedCard = "";
 	private String newGuess = "";
+	ClueGUI gui = new ClueGUI();
 	public void mousePressed (MouseEvent event) {}
 	public void mouseReleased (MouseEvent event) {}
 	public void mouseEntered (MouseEvent event) {}

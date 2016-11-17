@@ -1,20 +1,12 @@
 package clueGame;
 
 import javax.swing.*;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
-
-import clueGame.GuessDialog.CancelButtonListener;
-import clueGame.GuessDialog.SubmitButtonListener;
+import javax.swing.border.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 public class ClueGUI extends JFrame{
 	Board board;
