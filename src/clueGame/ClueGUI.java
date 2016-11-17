@@ -14,6 +14,7 @@ import java.util.Set;
 
 public class ClueGUI extends JFrame{
 	Board board;
+	AccusationDialog accusationPanel;
 	boolean humanPlayerFinished = false;
 	private Player current = null;
 	private int dieRoll;
@@ -68,6 +69,7 @@ public class ClueGUI extends JFrame{
 		//panel.addMouseListener();
 		JButton makeAccusation = new JButton("Make Accusation");
 		panel.add(makeAccusation);
+		makeAccusation.addActionListener(new MakeAccusationListener());
 		JPanel diePanel = new JPanel();
 		diePanel.setLayout(new GridLayout(1,2));
 		diePanel.setBorder(new TitledBorder (new EtchedBorder(), "Die"));
@@ -134,6 +136,20 @@ public class ClueGUI extends JFrame{
 			}
 			else{ //human has not finished 
 				JOptionPane.showMessageDialog(null, "You need to finish your turn!");
+			}
+		}
+	}
+	
+	private class MakeAccusationListener implements ActionListener{ //follows second column in flow chart
+		public void actionPerformed(ActionEvent e){ //next player button clicked
+			if(!board.getCurrentPlayer().getPlayerName().equalsIgnoreCase("Human")){
+				JOptionPane.showMessageDialog(null, "It is not your turn!");
+			}
+			else{ //add logic - only at beginning of turn
+				if(!board.getHumanPlayerStatus()){
+					accusationPanel = new AccusationDialog();
+					accusationPanel.setVisible(true);
+				}
 			}
 		}
 	}
@@ -211,7 +227,6 @@ public class ClueGUI extends JFrame{
 	public static void main(String[] args){
 		ClueGUI clue = new ClueGUI();
 		clue.setVisible(true); 
-		JOptionPane.showMessageDialog(clue, "You are the human", "Welcome to Clue!!", JOptionPane.INFORMATION_MESSAGE);
-		
+		JOptionPane.showMessageDialog(clue, "You are the human, and it is your turn! Select a highlighted square to begin. ", "Welcome to Clue!!", JOptionPane.INFORMATION_MESSAGE);
 	}
 }

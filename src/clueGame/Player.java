@@ -5,6 +5,7 @@ import java.util.*;
 
 public abstract class Player {
 	private String playerName;
+	Solution suggestion;
 	protected int row, col;
 	private Color color;
 	protected String guessText = null;
@@ -99,5 +100,9 @@ public abstract class Player {
 	
 	public String getPlayerRoom(){
 		return Board.getInstance().getCellAt(row,  col).getRoomName();
+	}
+	
+	public void setSolution(String p, String w, String r){
+		suggestion = new Solution(p, w, r);
 	}
 }
