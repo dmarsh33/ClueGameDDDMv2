@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.*;
 
 public abstract class Player {
-	private String playerName;
+	protected String playerName;
 	Solution suggestion;
 	protected int row, col;
 	private Color color;
@@ -98,11 +98,16 @@ public abstract class Player {
 		return disprovingCard;
 	}
 	
+	public void setDisprovingCard(Card c){
+		disprovingCard = c.getCardName();
+	}
+	
 	public String getPlayerRoom(){
 		return Board.getInstance().getCellAt(row,  col).getRoomName();
 	}
 	
 	public void setSolution(String p, String w, String r){
 		suggestion = new Solution(p, w, r);
+		guessText = p + ", " + w + ", " + r;
 	}
 }

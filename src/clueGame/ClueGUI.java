@@ -23,6 +23,7 @@ public class ClueGUI extends JFrame{
 	public JTextField dieBox = new JTextField(20);
 	public JTextField guessBox =new JTextField(20);
 	public JTextField resultBox = new JTextField(20);
+	HumanListener humanClick = new HumanListener();
 	Set<BoardCell> targets = null;
 	//private ClueDialog detectiveNotes;
 	
@@ -94,7 +95,7 @@ public class ClueGUI extends JFrame{
 		panel.add(resultPanel);
 		add(panel, BorderLayout.SOUTH);
 		JPanel boardLayout = new JPanel();
-		addMouseListener(new HumanListener());
+		addMouseListener(humanClick);
 		add(board, BorderLayout.CENTER);
 		board.repaint();
 		add(createMyCardsPanel(), BorderLayout.EAST);
@@ -108,6 +109,7 @@ public class ClueGUI extends JFrame{
 	private class NextPlayerListener implements ActionListener{ //follows second column in flow chart
 		public void actionPerformed(ActionEvent e){ //next player button clicked
 			humanPlayerFinished = board.getHumanPlayerStatus();//is human finished?
+			
 			if(humanPlayerFinished){ // human turn has been finished
 				current = board.getPlayersList().get(0);
 				board.setCurrentPlayer(current); //rotate to next player
@@ -137,6 +139,7 @@ public class ClueGUI extends JFrame{
 			else{ //human has not finished 
 				JOptionPane.showMessageDialog(null, "You need to finish your turn!");
 			}
+			
 		}
 	}
 	
@@ -149,6 +152,9 @@ public class ClueGUI extends JFrame{
 				if(!board.getHumanPlayerStatus()){
 					accusationPanel = new AccusationDialog();
 					accusationPanel.setVisible(true);
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "You already finished your turn! Click next player.");
 				}
 			}
 		}

@@ -3,6 +3,8 @@ package clueGame;
 import java.awt.Color;
 import java.util.*;
 
+import javax.swing.JOptionPane;
+
 public class ComputerPlayer extends Player{
 	private BoardCell lastVisited = null;
 	private boolean noneDisproved = false; 
@@ -58,6 +60,13 @@ public class ComputerPlayer extends Player{
 		//can they make an accusation?
 		if(noneDisproved){
 			makeAccusation();
+			if(accusation.equals(board.getSolution())){
+				JOptionPane.showMessageDialog(null, playerName + " won the game! Sorry! They guessed: " + accusation.getPerson() + " with the " + accusation.getWeapon() + " in " + accusation.getRoom());
+			}
+			else{
+				JOptionPane.showMessageDialog(null, playerName + " made an accusation and they were wrong! They guessed: " + accusation.getPerson() + " with the " + accusation.getWeapon() + " in " + accusation.getRoom());
+				noneDisproved = false;
+			}
 			return;
 		}
 		//no --> seenmove
