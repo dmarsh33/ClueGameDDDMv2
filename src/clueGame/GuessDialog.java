@@ -67,6 +67,9 @@ public class GuessDialog extends JDialog{
 			setVisible(false);
 			Player guessedPlayer = board.getPlayers().get(guessedPerson);
 			guessedPlayer.setLocation(board.getPlayersList().get(board.getPlayersList().size() - 1).getRow(), board.getPlayersList().get(board.getPlayersList().size() - 1).getCol());
+			board.setNewGuess(guessString);
+			board.setDisprovingCard(c.getCardName());
+			//board.repaint();
 		}
 	}
 	

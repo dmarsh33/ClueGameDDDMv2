@@ -27,6 +27,10 @@ public class Board extends JPanel {
 	private Player currentPlayer = null;
 	private boolean humanPlayerStatus = false;
 	// variable used for singleton pattern
+	
+	private String disprovingCard = "";
+	private String newGuess = "";
+	
 	private static Board theInstance = new Board();
 	// ctor is private to ensure only one can be created
 	private Board() {
@@ -368,9 +372,11 @@ public class Board extends JPanel {
 		for(int i = 0; i < order.size()-1; i++){
 			Card c = order.get(i).disproveSuggestion(suggestion, order.get(i).getHand());
 			if(c!=null){
+				repaint();
 				return c;
 			}
 		}
+		repaint();
 		return null;
 	}
 	
@@ -430,7 +436,6 @@ public class Board extends JPanel {
 		players.add(players.get(0));
 		players.remove(0);
 		repaint();
-		
 	}
 	public Map<String, Card> getDeck(){
 		return deck;
@@ -438,6 +443,22 @@ public class Board extends JPanel {
 	
 	public Solution getSolution(){
 		return answer;
+	}
+	
+	public void setNewGuess(String nG){
+		newGuess = nG;
+	}
+	
+	public String getNewGuess(){
+		return newGuess;
+	}
+	
+	public void setDisprovingCard(String dC){
+		disprovingCard = dC;
+	}
+	
+	public String getDisprovingCard(){
+		return disprovingCard;
 	}
 	
 }

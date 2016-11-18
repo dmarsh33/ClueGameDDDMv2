@@ -8,8 +8,8 @@ public abstract class Player {
 	Solution suggestion;
 	protected int row, col;
 	private Color color;
-	protected String guessText = null;
-	protected String disprovingCard;
+	protected String guessText = "";
+	protected String disprovingCard = "";
 	protected Set<Card> hand, seen;
 	
 	public abstract void makeMove(int r, int c);
@@ -99,7 +99,12 @@ public abstract class Player {
 	}
 	
 	public void setDisprovingCard(Card c){
-		disprovingCard = c.getCardName();
+		if(c != null){
+			disprovingCard = c.getCardName();
+		}
+		else{
+			disprovingCard = "";
+		}
 	}
 	
 	public String getPlayerRoom(){
@@ -109,5 +114,8 @@ public abstract class Player {
 	public void setSolution(String p, String w, String r){
 		suggestion = new Solution(p, w, r);
 		guessText = p + ", " + w + ", " + r;
+		if(p.equals("")){
+			guessText = "";
+		}
 	}
 }

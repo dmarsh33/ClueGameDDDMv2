@@ -1,6 +1,7 @@
 package clueGame;
 
 import javax.swing.*;
+import javax.swing.Timer;
 import javax.swing.border.*;
 
 import java.awt.*;
@@ -21,16 +22,7 @@ public class ClueGUI extends JFrame{
 	public JTextField resultBox = new JTextField(20);
 	HumanListener humanClick = new HumanListener();
 	Set<BoardCell> targets = null;
-	//private ClueDialog detectiveNotes;
 	
-	//private static ClueGUI theInstance = new ClueGUI();
-	// ctor is private to ensure only one can be created
-	
-	
-	// this method returns the only Board
-	//public static ClueGUI getInstance() {
-	//	return theInstance;
-	//}
 	
 	public ClueGUI(){
 		board = Board.getInstance();
@@ -105,7 +97,6 @@ public class ClueGUI extends JFrame{
 	private class NextPlayerListener implements ActionListener{ //follows second column in flow chart
 		public void actionPerformed(ActionEvent e){ //next player button clicked
 			humanPlayerFinished = board.getHumanPlayerStatus();//is human finished?
-			
 			if(humanPlayerFinished){ // human turn has been finished
 				current = board.getPlayersList().get(0);
 				board.setCurrentPlayer(current); //rotate to next player
@@ -115,29 +106,35 @@ public class ClueGUI extends JFrame{
 				dieBox.setText(String.valueOf(dieRoll)); //set display
 				board.calcTargets(current.getRow(), current.getCol(), dieRoll); //calc targets
 				if(current.getPlayerName().equalsIgnoreCase("Human")){ //just changed to humans turn
+					if(!board.getCurrentPlayer().getDisprovingCard().equals("")){
+						board.getCurrentPlayer().setDisprovingCard(null);
+						board.getCurrentPlayer().setSolution("", "", "");
+					}
 					board.calcTargets(current.getRow(), current.getCol(), dieRoll);
 					targets = board.getTargets();
+					//guessBox.setText(board.getCurrentPlayer().getGuess());
+					//resultBox.setText(board.getCurrentPlayer().getDisprovingCard());
 					for(BoardCell c: targets){ //highlight targets
 						c.setHighlighted(true);
 					}
-					repaint();
-					
 					humanPlayerFinished = false;
 					board.setHumanPlayerStatus(humanPlayerFinished);
+					
+					//repaint();
 				}
 				else{
 					board.getCurrentPlayer().makeMove(current.getRow(), current.getCol());//call makeMove
 					guessBox.setText(board.getCurrentPlayer().getGuess());
 					resultBox.setText(board.getCurrentPlayer().getDisprovingCard());
 					board.repaint(); //repaint
+					//repaint();
 				}
 			}
 			else{ //human has not finished 
 				JOptionPane.showMessageDialog(null, "You need to finish your turn!");
 				
 			}
-			
-			
+			repaint();
 		}
 	}
 	
@@ -228,11 +225,30 @@ public class ClueGUI extends JFrame{
 		return notes;
 	}
 	
+	public void paintComponent(Graphics g){
+		//txtfieldWhoseTurn.setText(b.getCurrentPlayerName());
+		//txtfieldRoll.setText(b.getRollNum());
+		System.out.println("paint component gui");
+		guessBox.setText(board.getCurrentPlayer().getGuess());
+		resultBox.setText(board.getCurrentPlayer().getDisprovingCard());
+	}
 	
+	public void update(){
+		Timer t = new Timer(10, new TimerListener());
+		t.start();
+	}
+	
+	private class TimerListener implements ActionListener {
+		public void actionPerformed(ActionEvent e){
+			guessBox.setText(board.getCurrentPlayer().getGuess());
+			resultBox.setText(board.getCurrentPlayer().getDisprovingCard());
+		}
+	}
 	
 	public static void main(String[] args){
 		ClueGUI clue = new ClueGUI();
 		clue.setVisible(true); 
 		JOptionPane.showMessageDialog(clue, "You are the human, and it is your turn! Select a highlighted square to begin. ", "Welcome to Clue!!", JOptionPane.INFORMATION_MESSAGE);
+		clue.update();
 	}
 }
