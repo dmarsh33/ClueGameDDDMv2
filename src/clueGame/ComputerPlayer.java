@@ -10,18 +10,19 @@ public class ComputerPlayer extends Player{
 	private boolean noneDisproved = false; 
 	private Solution accusation = null;
 	private int row, col;
-	//ClueGUI gui = null;
 	Board board;
 	public ComputerPlayer(String playerName, int row, int col, Color color) {
 		super(playerName, row, col, color);
 		board = Board.getInstance();
-		//gui = ClueGUI.getInstance();
 		this.row = row;
 		this.col = col;
 	}
-	public BoardCell pickLocation(Set<BoardCell> targets, BoardCell location){ //--------------------------------------------------------
+	public BoardCell pickLocation(Set<BoardCell> targets, BoardCell location){ 
+		if(location.isDoorway()){
+			lastVisited = location;
+		}
 		for(BoardCell b: targets){
-			if(lastVisited == null){
+			if(lastVisited == null && b.isDoorway()){
 				return b;
 			}
 			else if(b.isDoorway() && b.getInitial()!=lastVisited.getInitial()){
@@ -32,6 +33,7 @@ public class ComputerPlayer extends Player{
 		Collections.shuffle(tar);
 		return tar.get(0);
 	}
+	
 	public Solution makeAccusation(){
 		return accusation;
 	}
@@ -75,16 +77,13 @@ public class ComputerPlayer extends Player{
 			board.getPlayersList().get(board.getPlayersList().size() - 1).setLocation(newCell.getRow(), newCell.getColumn());
 		}
 		//in room?
-		//
 		if(board.getCellAt(board.getPlayersList().get(board.getPlayersList().size() - 1).getRow(), board.getPlayersList().get(board.getPlayersList().size() - 1).getCol()).isDoorway()){
 			//set last visited
 			
 			lastVisited = board.getCellAt(board.getPlayersList().get(board.getPlayersList().size() - 1).getRow(), board.getPlayersList().get(board.getPlayersList().size() - 1).getCol());
-			System.out.println(lastVisited.getRoomName());
 			ArrayList<Card> dealt = board.getDealtCards();
 			Set<Card> notSeen = new HashSet<Card>();
 			for(Card ca : dealt){
-				//System.out.println(ca.getCardName());
 				if(!seen.contains(ca)){
 					notSeen.add(ca);
 				}
@@ -93,7 +92,6 @@ public class ComputerPlayer extends Player{
 			Player guessedPlayer = board.getPlayers().get(guess.getPerson());
 			guessedPlayer.setLocation(board.getPlayersList().get(board.getPlayersList().size() - 1).getRow(), board.getPlayersList().get(board.getPlayersList().size() - 1).getCol());
 			guessText = guess.getPerson() + ", " + guess.getWeapon() + ", " + guess.getRoom();
-			//gui.guessBox.setText(guessText);
 			//other players disprove
 			Card disproving = board.handleSuggestion(board.getPlayersList(), guess);
 			if(disproving != null){
@@ -117,8 +115,7 @@ public class ComputerPlayer extends Player{
 		else{
 			disprovingCard = "";
 			guessText = "";
-		}
-			
+		}	
 		//update control panel with guess and result
 		//move suggested person to room
 		//let all players know which card was shown

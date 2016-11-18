@@ -10,8 +10,6 @@ import javax.swing.JOptionPane;
 public class HumanListener implements MouseListener { //follows first column in flow chart
 	private Board board;
 	private GuessDialog guessPanel;
-	private String returnedCard = "";
-	private String newGuess = "";
 	public void mousePressed (MouseEvent event) {}
 	public void mouseReleased (MouseEvent event) {}
 	public void mouseEntered (MouseEvent event) {}
@@ -44,13 +42,5 @@ public class HumanListener implements MouseListener { //follows first column in 
 				}
 			}
 		}
-	}
-	
-	public String getNewGuess(){
-		return newGuess;
-	}
-	
-	public String getReturnedCard(){
-		return returnedCard;
 	}
 }

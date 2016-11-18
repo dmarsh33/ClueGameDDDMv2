@@ -60,8 +60,8 @@ public class gameSetupTests {
 		//test last computer player
 		Player testComputer2 = people.get("CPW");
 		assertEquals(Color.magenta, testComputer2.getColor());
-		assertEquals(10, testComputer2.getRow());
-		assertEquals(0, testComputer2.getCol());
+		assertEquals(23, testComputer2.getRow());
+		assertEquals(7, testComputer2.getCol());
 	}
 	@Test
 	//This tests that a deck of cards of people was created and that it has the right number of people.

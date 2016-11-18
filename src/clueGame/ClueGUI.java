@@ -90,8 +90,6 @@ public class ClueGUI extends JFrame{
 		JMenuBar menuButton = new JMenuBar();
 		setJMenuBar(menuButton);
 		menuButton.add(createFileMenu());
-		
-		
 	}
 	
 	private class NextPlayerListener implements ActionListener{ //follows second column in flow chart
@@ -112,27 +110,21 @@ public class ClueGUI extends JFrame{
 					}
 					board.calcTargets(current.getRow(), current.getCol(), dieRoll);
 					targets = board.getTargets();
-					//guessBox.setText(board.getCurrentPlayer().getGuess());
-					//resultBox.setText(board.getCurrentPlayer().getDisprovingCard());
 					for(BoardCell c: targets){ //highlight targets
 						c.setHighlighted(true);
 					}
 					humanPlayerFinished = false;
 					board.setHumanPlayerStatus(humanPlayerFinished);
-					
-					//repaint();
 				}
 				else{
 					board.getCurrentPlayer().makeMove(current.getRow(), current.getCol());//call makeMove
 					guessBox.setText(board.getCurrentPlayer().getGuess());
 					resultBox.setText(board.getCurrentPlayer().getDisprovingCard());
-					board.repaint(); //repaint
-					//repaint();
+					board.repaint(); 
 				}
 			}
 			else{ //human has not finished 
 				JOptionPane.showMessageDialog(null, "You need to finish your turn!");
-				
 			}
 			repaint();
 		}
@@ -145,7 +137,7 @@ public class ClueGUI extends JFrame{
 			if(!board.getCurrentPlayer().getPlayerName().equalsIgnoreCase("Human")){
 				JOptionPane.showMessageDialog(null, "It is not your turn!");
 			}
-			else{ //add logic - only at beginning of turn
+			else{ //only at beginning of turn
 				if(!board.getHumanPlayerStatus()){
 					accusationPanel = new AccusationDialog();
 					accusationPanel.setVisible(true);
@@ -223,14 +215,6 @@ public class ClueGUI extends JFrame{
 		}
 		notes.addActionListener(new MenuItemListener());
 		return notes;
-	}
-	
-	public void paintComponent(Graphics g){
-		//txtfieldWhoseTurn.setText(b.getCurrentPlayerName());
-		//txtfieldRoll.setText(b.getRollNum());
-		System.out.println("paint component gui");
-		guessBox.setText(board.getCurrentPlayer().getGuess());
-		resultBox.setText(board.getCurrentPlayer().getDisprovingCard());
 	}
 	
 	public void update(){
